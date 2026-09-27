@@ -7,13 +7,14 @@
 <meta name="description" content="عروض التجميل والعناية — صيدلية د. أنس نحيلة، المعمورة الشاطئ. توصيل مجاني خلال 30 دقيقة، 24 ساعة.">
 <meta property="og:title" content="عروض صيدلية د. أنس نحيلة">
 <meta property="og:description" content="خصومات على منتجات التجميل والعناية — توصيل مجاني خلال 30 دقيقة">
-<meta name="theme-color" content="#063d2e">
+<meta name="theme-color" content="#073a4b">
+<meta property="og:image" content="https://karimyahia25.github.io/offers/img/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --g-900:#063d2e; --g-800:#0a5240; --g-600:#0e8a5f; --g-500:#12a36f; --g-50:#eaf6f0;
+  --g-900:#073a4b; --g-800:#0a5770; --g-600:#0781a0; --g-500:#14b5d6; --g-50:#e5f6fa; --leaf:#7fae3f;
   --red:#ff3b2f; --red-dk:#d92a20;
   --yel:#ffd23f; --yel-lt:#fff4c7;
   --ink:#0f1b16; --ink-2:#44524c; --muted:#7a8781;
@@ -49,9 +50,10 @@ header{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.92);backdro
 header.scrolled{border-color:var(--line);box-shadow:0 4px 20px -12px rgba(0,0,0,.2)}
 header .wrap{display:flex;align-items:center;gap:14px;height:64px}
 .logo{display:flex;align-items:center;gap:10px;margin-inline-end:auto}
-.logo .mk{width:38px;height:38px;border-radius:11px;background:var(--g-600);display:grid;place-items:center;position:relative;overflow:hidden}
-.logo .mk::after{content:"";position:absolute;inset:auto -6px -6px auto;width:18px;height:18px;background:var(--yel);border-radius:50%}
-.logo .mk svg{width:20px;height:20px;stroke:#fff;stroke-width:3.2;position:relative;z-index:1}
+.logo .mk{width:40px;height:40px;border-radius:12px;background:var(--g-900);display:grid;place-items:center;flex:none}
+.logo .mk svg{width:26px;height:26px;fill:#fff}
+.logo .mk svg .lf{fill:var(--leaf)}
+footer .logo .mk{background:var(--g-600)}
 .logo b{font-family:var(--fh);font-weight:800;font-size:17px;line-height:1.1;display:block;letter-spacing:-.2px}
 .logo small{font-size:11px;color:var(--muted);font-weight:600;display:block}
 nav.links{display:none;gap:4px}
@@ -60,7 +62,7 @@ nav.links a:hover{background:var(--g-50);color:var(--g-800)}
 .hbtn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 14px;border-radius:12px;font-weight:700;font-size:14px;transition:transform .15s var(--ease),background .2s}
 .hbtn:active{transform:scale(.96)}
 .hbtn.call{background:var(--g-50);color:var(--g-800)}
-.hbtn.call:hover{background:#dcefe6}
+.hbtn.call:hover{background:#d3eff6}
 .hbtn .t{display:none}
 @media(min-width:760px){nav.links{display:flex}.hbtn .t{display:inline}}
 
@@ -68,7 +70,7 @@ nav.links a:hover{background:var(--g-50);color:var(--g-800)}
 .hero{position:relative;background:var(--g-900);color:#fff;overflow:hidden;isolation:isolate}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;
   background:
-    radial-gradient(600px 300px at 85% -10%,rgba(18,163,111,.55),transparent 70%),
+    radial-gradient(600px 300px at 85% -10%,rgba(20,181,214,.6),transparent 70%),
     radial-gradient(500px 280px at 0% 110%,rgba(255,210,63,.18),transparent 70%)}
 .hero::after{content:"";position:absolute;inset:0;z-index:-1;opacity:.06;
   background-image:repeating-linear-gradient(135deg,#fff 0 1px,transparent 1px 14px)}
@@ -134,7 +136,7 @@ section{padding:44px 0;scroll-margin-top:120px}
 .tabs button{flex:none;scroll-snap-align:start;display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 16px;border-radius:12px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:14px;color:var(--ink-2);transition:all .25s var(--ease)}
 .tabs button svg.i{width:17px;height:17px}
 .tabs button small{font-family:var(--fh);font-size:11px;font-weight:700;background:var(--bg);border-radius:6px;padding:1px 6px;color:var(--muted);transition:all .25s}
-.tabs button:hover{border-color:#cfd4cc}
+.tabs button:hover{border-color:#c7d3d6}
 .tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
 .tabs button.on small{background:rgba(255,255,255,.16);color:#fff}
 
@@ -174,7 +176,7 @@ section{padding:44px 0;scroll-margin-top:120px}
 .add svg.i{width:18px;height:18px;stroke-width:2.6}
 .stp{height:100%;display:flex;align-items:center;justify-content:space-between;background:var(--g-50);border:1.5px solid var(--g-600);border-radius:12px;padding:0 4px;animation:pop .3s var(--ease)}
 .stp button{width:36px;height:36px;border-radius:9px;display:grid;place-items:center;color:var(--g-800);transition:background .15s}
-.stp button:hover{background:#d6ede2}
+.stp button:hover{background:#cdeef6}
 .stp button svg.i{width:18px;height:18px;stroke-width:2.6}
 .stp b{font-family:var(--fh);font-weight:800;font-size:16px;color:var(--g-800)}
 @keyframes pop{from{transform:scale(.92);opacity:.4}}
@@ -236,6 +238,31 @@ section{padding:44px 0;scroll-margin-top:120px}
 .band p{color:#4b4424;font-size:15px;margin-top:4px}
 .band .btn{background:var(--ink);color:#fff;position:relative;z-index:1}
 .band .btn:hover{background:#22332c}
+
+/* visit */
+.visit{display:grid;background:#fff;border-radius:24px;overflow:hidden;box-shadow:var(--sh-1)}
+@media(min-width:900px){.visit{grid-template-columns:1.15fr .85fr}}
+.visit .vp{position:relative;aspect-ratio:4/3;background:var(--g-50);overflow:hidden}
+@media(min-width:900px){.visit .vp{aspect-ratio:auto;min-height:420px}}
+.visit .vp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+@media(hover:hover){.visit:hover .vp img{transform:scale(1.04)}}
+.open{position:absolute;top:14px;right:14px;background:#fff;color:var(--ink);font-weight:700;font-size:13px;padding:7px 12px;border-radius:999px;display:flex;align-items:center;gap:8px;box-shadow:0 8px 20px -10px rgba(0,0,0,.4)}
+.open i{width:9px;height:9px;border-radius:50%;background:#1fb855;box-shadow:0 0 0 0 rgba(31,184,85,.6);animation:ping2 1.8s infinite}
+@keyframes ping2{70%{box-shadow:0 0 0 9px rgba(31,184,85,0)}100%{box-shadow:0 0 0 0 rgba(31,184,85,0)}}
+.visit .vb{padding:24px 20px;display:flex;flex-direction:column;gap:14px;justify-content:center}
+@media(min-width:900px){.visit .vb{padding:40px}}
+.visit .kick{color:var(--g-600);font-weight:700;font-size:14px}
+.visit h2{font-family:var(--fh);font-weight:800;font-size:clamp(24px,5vw,34px);line-height:1.2;letter-spacing:-.5px}
+.visit ul{list-style:none;display:grid;gap:10px}
+.visit li{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink-2)}
+.visit li svg.i{color:var(--g-600);margin-top:3px}
+.visit li b{color:var(--ink)}
+.visit .vbtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.visit .vbtns .btn{height:48px;font-size:15px}
+.btn-dark{background:var(--g-900);color:#fff}
+.btn-dark:hover{background:var(--g-800)}
+.btn-line{border:1.5px solid var(--line);color:var(--ink)}
+.btn-line:hover{border-color:var(--g-600);background:var(--g-50)}
 
 /* perks */
 .perks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -356,6 +383,7 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:28px;padding-t
     <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
     <symbol id="i-cross" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+    <symbol id="i-mortar" viewBox="0 0 24 24"><path class="lf" d="M7.6 9.2C4.9 9.1 3.2 7.4 3 4.8c2.6.1 4.4 1.8 4.6 4.4Z"/><path class="lf" d="M9 9.2c0-2.5 1.3-4 3.4-4.4.2 2.3-1.1 4-3.4 4.4Z"/><path d="M12.6 9.4 18.2 3.8a1.9 1.9 0 1 1 2.2 2.6l-5.7 3Z"/><rect x="3" y="10.2" width="18" height="1.7" rx=".85"/><path d="M4.3 13h15.4c-.3 3.4-2.4 5.6-4.9 6.4l.7 1.8H8.5l.7-1.8C6.7 18.6 4.6 16.4 4.3 13Z"/></symbol>
   </defs>
 </svg>
 
@@ -366,12 +394,13 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:28px;padding-t
 <header id="top">
   <div class="wrap">
     <a class="logo" href="#">
-      <span class="mk"><svg class="i"><use href="#i-cross"/></svg></span>
+      <span class="mk"><svg><use href="#i-mortar"/></svg></span>
       <span><b>د. أنس نحيلة</b><small>صيدلية · المعمورة الشاطئ</small></span>
     </a>
     <nav class="links">
       <a href="#offers">العروض</a>
       <a href="#products">متوفر عندنا</a>
+      <a href="#visit">الصيدلية</a>
       <a href="#delivery">التوصيل</a>
     </nav>
     <a class="hbtn call" href="tel:035650501" aria-label="اتصل بينا"><svg class="i"><use href="#i-phone"/></svg><span class="t">035650501</span></a>
@@ -447,6 +476,30 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:28px;padding-t
   </div>
 </section>
 
+<section id="visit" style="padding-top:8px">
+  <div class="wrap">
+    <div class="visit rv">
+      <div class="vp">
+        <img src="img/storefront-800.jpg" srcset="img/storefront-800.jpg 800w, img/storefront-1400.jpg 1400w" sizes="(min-width:900px) 640px, 100vw" alt="واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ" loading="lazy">
+        <span class="open"><i></i>مفتوح دلوقتي · 24 ساعة</span>
+      </div>
+      <div class="vb">
+        <span class="kick">صيدلية د. أنس محمد نحيلة</span>
+        <h2>إحنا جنبك في المعمورة الشاطئ</h2>
+        <ul>
+          <li><svg class="i"><use href="#i-pin"/></svg><span>جنب البوابة الرئيسية، <b>عمارة لافي</b> — المعمورة الشاطئ، إسكندرية</span></li>
+          <li><svg class="i"><use href="#i-clock"/></svg><span>مفتوحين <b>24 ساعة</b> طول أيام الأسبوع</span></li>
+          <li><svg class="i"><use href="#i-truck"/></svg><span>مش فاضي تنزل؟ <b>بنوصلك مجاناً</b> خلال 30 دقيقة</span></li>
+        </ul>
+        <div class="vbtns">
+          <a class="btn btn-dark" href="https://www.google.com/maps/search/?api=1&query=%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9+%D8%AF.+%D8%A3%D9%86%D8%B3+%D9%86%D8%AD%D9%8A%D9%84%D8%A9+%D8%A7%D9%84%D9%85%D8%B9%D9%85%D9%88%D8%B1%D8%A9" target="_blank" rel="noopener"><svg class="i"><use href="#i-pin"/></svg>افتح على الخريطة</a>
+          <a class="btn btn-line" href="tel:035650501"><svg class="i"><use href="#i-phone"/></svg><bdi class="num">5650501</bdi></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="delivery" style="padding-top:8px">
   <div class="wrap">
     <div class="sh"><div><h2>ليه تطلب مننا؟</h2></div></div>
@@ -467,7 +520,7 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:28px;padding-t
   <div class="wrap">
     <div class="cols">
       <div>
-        <a class="logo" href="#"><span class="mk"><svg class="i"><use href="#i-cross"/></svg></span><span><b>د. أنس نحيلة</b><small>صيدلية · المعمورة الشاطئ</small></span></a>
+        <a class="logo" href="#"><span class="mk"><svg><use href="#i-mortar"/></svg></span><span><b>د. أنس نحيلة</b><small>صيدلية · المعمورة الشاطئ</small></span></a>
         <p>المعمورة الشاطئ — جنب البوابة الرئيسية، عمارة لافي، إسكندرية.</p>
       </div>
       <div>
@@ -593,6 +646,7 @@ function parseDate(v){
   }
   const d = new Date(v); return isNaN(d) ? null : d;
 }
+function offersTxt(n){ return n==1 ? "عرض واحد" : n==2 ? "عرضين" : n<=10 ? `${n} عروض` : `${n} عرض`; }
 function daysTxt(n){ return n<=1 ? "آخر يوم" : n==2 ? "باقي يومين" : n<=10 ? `باقي ${n} أيام` : `باقي ${n} يوم`; }
 
 /* CSV parser بيدعم الكوتس والسطور جوه الخانة */
@@ -763,7 +817,7 @@ function renderTabs(offers){
 function renderHero(offers){
   const max = Math.max(0, ...offers.map(o=>o.pct));
   $("#heroHl").textContent = max>=10 ? `لحد ${max}%` : "وهدايا";
-  $("#liveCount").textContent = offers.length ? `${offers.length} ${offers.length<=10&&offers.length>2?"عروض":"عرض"} شغال دلوقتي` : "عروض جديدة قريب";
+  $("#liveCount").textContent = offers.length ? `${offersTxt(offers.length)} ${offers.length==1?"شغال":offers.length==2?"شغالين":offers.length<=10?"شغالة":"شغال"} دلوقتي` : "عروض جديدة قريب";
   const pick = [...offers].sort((a,b)=>(!!b.img-!!a.img)||(b.pct-a.pct)).slice(0,3);
   const show = $("#show");
   if(!pick.length){ show.hidden = true; return; }
@@ -817,7 +871,7 @@ function render(rows){
   renderHero(offers);
   renderFeatured(offers);
   renderTabs(offers);
-  $("#offerCount").textContent = offers.length ? `${offers.length} عرض` : "";
+  $("#offerCount").textContent = offers.length ? offersTxt(offers.length) : "";
   $("#offerGrid").innerHTML = offers.length ? offers.map(offerCard).join("") : `<div class="empty">العروض الجديدة جاية قريب — تابعنا</div>`;
   $("#products").hidden = !prods.length;
   $("#prodRail").innerHTML = prods.map(prodCard).join("");
