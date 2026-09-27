@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>عروض صيدلية د. أنس نحيلة</title>
+<meta name="description" content="عروض منتجات التجميل والعناية — صيدلية د. أنس نحيلة، المعمورة الشاطئ. توصيل مجاني خلال 30 دقيقة، 24 ساعة.">
+<meta property="og:title" content="عروض صيدلية د. أنس نحيلة">
+<meta property="og:description" content="توصيل مجاني خلال 30 دقيقة — اطلب على واتساب">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ====== الإعدادات السهلة ====== */
+:root{
+  --green:#0f8a5f; --green-dk:#0a6446; --green-lt:#e7f5ef;
+  --accent:#e0457b; --ink:#1d2b26; --muted:#5f6f68; --line:#e3ebe7;
+  --bg:#f6faf8; --card:#fff; --wa:#25d366;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+
+/* Header */
+header{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;color:var(--green-dk)}
+.brand .mark{width:36px;height:36px;border-radius:10px;background:var(--green);color:#fff;display:grid;place-items:center;font-size:20px}
+.brand small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.5px}
+.hcall{font-weight:700;font-size:14px;color:var(--green);border:1.5px solid var(--green);padding:6px 12px;border-radius:999px;white-space:nowrap}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,var(--green) 0%,var(--green-dk) 100%);color:#fff;padding:36px 0 44px;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -80px -120px auto;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero h1{font-size:clamp(26px,6vw,40px);font-weight:800;line-height:1.3;margin-bottom:10px}
+.hero p{font-size:16px;opacity:.92;max-width:560px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+.chips span{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:16px;padding:13px 22px;border-radius:14px;border:0;cursor:pointer;font-family:inherit;transition:transform .1s}
+.btn:active{transform:scale(.97)}
+.btn-wa{background:var(--wa);color:#fff}
+.btn-white{background:#fff;color:var(--green-dk)}
+.btn svg{width:20px;height:20px;flex:none}
+
+/* Sections */
+section{padding:34px 0;scroll-margin-top:64px}
+.sec-h{display:flex;align-items:end;justify-content:space-between;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.sec-h h2{font-size:24px;font-weight:800}
+.sec-h p{color:var(--muted);font-size:14px}
+
+.filters{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:16px;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:none;font-family:inherit;font-size:14px;font-weight:600;padding:7px 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink);cursor:pointer}
+.filters button.on{background:var(--green);border-color:var(--green);color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+@media(min-width:700px){.grid{grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.card .img{aspect-ratio:1/1;background:var(--green-lt);position:relative;overflow:hidden}
+.card .img img{width:100%;height:100%;object-fit:cover}
+.card .ph{width:100%;height:100%;display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,#eaf6f0,#fbeef3)}
+.badge{position:absolute;top:10px;right:10px;background:var(--accent);color:#fff;font-weight:800;font-size:14px;padding:3px 10px;border-radius:999px;z-index:2}
+.card .body{padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{font-size:15px;font-weight:700;line-height:1.45}
+.card .desc{font-size:13px;color:var(--muted);line-height:1.5}
+.price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:auto}
+.price .now{font-size:20px;font-weight:800;color:var(--green-dk)}
+.price .was{font-size:14px;color:var(--muted);text-decoration:line-through}
+.ends{font-size:12px;color:var(--accent);font-weight:600}
+.card .btn{font-size:14px;padding:10px 12px;border-radius:12px;width:100%;margin-top:6px}
+
+.empty{text-align:center;color:var(--muted);padding:30px 10px;background:#fff;border:1px dashed var(--line);border-radius:16px}
+
+/* Strip */
+.strip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.strip h3{font-size:19px;font-weight:800;margin-bottom:4px}
+.strip p{color:var(--muted);font-size:14px}
+
+/* Features */
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.feat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+.feat b{display:block;font-size:26px;margin-bottom:4px}
+.feat span{font-size:14px;font-weight:700}
+.feat small{display:block;color:var(--muted);font-size:12px}
+
+.areas{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.areas span{background:var(--green-lt);color:var(--green-dk);font-weight:700;font-size:14px;padding:6px 14px;border-radius:999px}
+
+/* Footer */
+footer{background:var(--ink);color:#d5e0db;padding:30px 0 100px;margin-top:20px}
+footer h4{color:#fff;font-size:18px;margin-bottom:10px}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+footer a{color:#fff;font-weight:600}
+footer li{list-style:none;margin-bottom:6px;font-size:14px}
+footer .copy{margin-top:22px;font-size:12px;opacity:.6}
+
+/* Floating WA */
+.fab{position:fixed;bottom:18px;left:18px;z-index:50;width:60px;height:60px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.fab svg{width:32px;height:32px;fill:#fff}
+
+.demo{background:#fff4d6;color:#7a5b00;text-align:center;font-size:13px;padding:6px 16px;font-weight:600}
+.skeleton{height:280px;border-radius:18px;background:linear-gradient(90deg,#eef3f1 25%,#f7faf9 50%,#eef3f1 75%);background-size:200% 100%;animation:sh 1.2s infinite}
+@keyframes sh{to{background-position:-200% 0}}
+</style>
+</head>
+<body>
+
+<div id="demoBar" class="demo" hidden>⚠️ بيانات تجريبية — اربط Google Sheet علشان تظهر العروض الحقيقية</div>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#">
+      <span class="mark">✚</span>
+      <span>صيدلية د. أنس نحيلة<small>DR. ANAS NEHILA PHARMACY</small></span>
+    </a>
+    <a class="hcall" href="tel:035650501">📞 اتصل بينا</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap" style="position:relative;z-index:1">
+    <h1>عروض الجمال والعناية<br>لحد باب البيت 🚚</h1>
+    <p>أحسن منتجات التجميل والعناية بأسعار خاصة. اختار العرض واطلبه على الواتساب في ثانية.</p>
+    <div class="chips">
+      <span>⚡ توصيل خلال 30 دقيقة</span>
+      <span>🆓 توصيل مجاني</span>
+      <span>🕐 شغالين 24 ساعة</span>
+    </div>
+    <div class="cta">
+      <a class="btn btn-wa" data-wa="السلام عليكم، عايز أستفسر عن العروض">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.6 2.1 1.1 1 2.1 1.3 2.4 1.4.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg>
+        اطلب على واتساب
+      </a>
+      <a class="btn btn-white" href="#offers">شوف العروض ↓</a>
+    </div>
+  </div>
+</div>
+
+<section id="offers">
+  <div class="wrap">
+    <div class="sec-h">
+      <div><h2>🔥 العروض الحالية</h2><p>العروض لفترة محدودة ولحد نفاد الكمية</p></div>
+    </div>
+    <div class="filters" id="offerFilters"></div>
+    <div class="grid" id="offerGrid">
+      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    </div>
+  </div>
+</section>
+
+<section id="products" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-h">
+      <div><h2>✨ متوفر عندنا</h2><p>منتجات تجميل وعناية موجودة في الصيدلية — اسأل عليها</p></div>
+    </div>
+    <div class="filters" id="prodFilters"></div>
+    <div class="grid" id="prodGrid"></div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="strip">
+      <div>
+        <h3>مش لاقي المنتج اللي بتدور عليه؟ 🔍</h3>
+        <p>ابعتلنا اسمه أو صورته على الواتساب وإحنا نوفرهولك.</p>
+      </div>
+      <a class="btn btn-wa" data-wa="السلام عليكم، بدور على منتج: ">ابعت اسم المنتج</a>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="feats">
+      <div class="feat"><b>⚡</b><span>30 دقيقة</span><small>وقت التوصيل</small></div>
+      <div class="feat"><b>🆓</b><span>توصيل مجاني</span><small>من غير أي رسوم</small></div>
+      <div class="feat"><b>🕐</b><span>24 ساعة</span><small>طول اليوم وطول الأسبوع</small></div>
+      <div class="feat"><b>✅</b><span>منتجات أصلية</span><small>من موزعين معتمدين</small></div>
+    </div>
+    <div style="margin-top:22px">
+      <h2 style="font-size:20px;font-weight:800">📍 بنوصل لحد عندك في</h2>
+      <div class="areas">
+        <span>المعمورة الشاطئ</span><span>المعمورة البلد</span><span>الإصلاح</span><span>المندرة</span><span>أبو قير</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4>صيدلية د. أنس نحيلة</h4>
+        <ul>
+          <li>المعمورة الشاطئ — جنب البوابة الرئيسية، عمارة لافي، إسكندرية</li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9+%D8%AF.+%D8%A3%D9%86%D8%B3+%D9%86%D8%AD%D9%8A%D9%84%D8%A9+%D8%A7%D9%84%D9%85%D8%B9%D9%85%D9%88%D8%B1%D8%A9" target="_blank" rel="noopener">🗺️ افتح على الخريطة</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>تواصل معانا</h4>
+        <ul>
+          <li>واتساب: <a data-wa="السلام عليكم">01011050024</a> — <a href="https://wa.me/201288827555" target="_blank" rel="noopener">01288827555</a></li>
+          <li>أرضي: <a href="tel:035650501">035650501</a> — <a href="tel:035650502">035650502</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">© <span id="yr"></span> صيدلية د. أنس نحيلة — الأسعار قابلة للتغيير والعروض لحد نفاد الكمية.</div>
+  </div>
+</footer>
+
+<a class="fab" data-wa="السلام عليكم، عايز أطلب" aria-label="واتساب">
+  <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.6 2.1 1.1 1 2.1 1.3 2.4 1.4.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg>
+</a>
+
+<script>
+/* =========================================================
+   الإعداد الوحيد: لينك الـ Google Sheet المنشور كـ CSV
+   (File → Share → Publish to web → CSV)
+   لو فاضي، الصفحة بتعرض بيانات تجريبية.
+   ========================================================= */
+const SHEET_CSV_URL = "";
+const WA_NUMBER = "201011050024";
+
+/* أعمدة الشيت (بالاسم، الترتيب مش مهم):
+   النوع | الاسم | الوصف | السعر قبل | السعر بعد | الفئة | الصورة | ينتهي | ظاهر | الكود */
+
+const DEMO = [
+  {"النوع":"عرض","الاسم":"واقي شمس SPF 50 — 50 مل","الوصف":"للبشرة الدهنية، ملمس خفيف","السعر قبل":"650","السعر بعد":"520","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"2026-10-31","ظاهر":"نعم","الكود":"OF1"},
+  {"النوع":"عرض","الاسم":"سيروم فيتامين C","الوصف":"لنضارة البشرة وتوحيد اللون","السعر قبل":"900","السعر بعد":"720","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"2026-10-15","ظاهر":"نعم","الكود":"OF2"},
+  {"النوع":"عرض","الاسم":"شامبو + بلسم ضد التساقط","الوصف":"العرض على الاتنين مع بعض","السعر قبل":"780","السعر بعد":"590","الفئة":"عناية بالشعر","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":"OF3"},
+  {"النوع":"عرض","الاسم":"كريم ترطيب للأطفال","الوصف":"للبشرة الحساسة","السعر قبل":"320","السعر بعد":"260","الفئة":"أطفال","الصورة":"","ينتهي":"2026-11-10","ظاهر":"نعم","الكود":"OF4"},
+  {"النوع":"عرض","الاسم":"غسول وش + تونر","الوصف":"روتين تنظيف كامل","السعر قبل":"560","السعر بعد":"450","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":"OF5"},
+  {"النوع":"منتج","الاسم":"كريم تفتيح تحت العين","الوصف":"","السعر قبل":"","السعر بعد":"","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":""},
+  {"النوع":"منتج","الاسم":"زيت شعر طبيعي","الوصف":"","السعر قبل":"","السعر بعد":"380","الفئة":"عناية بالشعر","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":""},
+  {"النوع":"منتج","الاسم":"مزيل عرق بدون ألومنيوم","الوصف":"","السعر قبل":"","السعر بعد":"","الفئة":"عناية شخصية","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":""},
+  {"النوع":"منتج","الاسم":"بلسم شفايف","الوصف":"","السعر قبل":"","السعر بعد":"","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":""}
+];
+
+const EMOJI = {"عناية بالبشرة":"🧴","عناية بالشعر":"💆‍♀️","أطفال":"👶","عناية شخصية":"🧼","مكياج":"💄","عطور":"🌸"};
+
+/* ---------- helpers ---------- */
+const SRC = new URLSearchParams(location.search).get("src") || "";
+function waLink(msg){
+  const tag = SRC ? `\n(مصدر: ${SRC})` : "";
+  return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg + tag)}`;
+}
+function bindWa(root){
+  root.querySelectorAll("[data-wa]").forEach(a=>{
+    a.href = waLink(a.dataset.wa); a.target = "_blank"; a.rel = "noopener";
+  });
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function num(v){
+  if(v==null) return NaN;
+  const s = String(v).replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[^\d.]/g,"");
+  return s ? parseFloat(s) : NaN;
+}
+function fmt(n){return Math.round(n).toLocaleString("en-US")}
+
+/* صورة: اسم ملف في فولدر img/ أو لينك مباشر أو لينك Google Drive */
+function imgUrl(v){
+  v = String(v||"").trim();
+  if(!v) return "";
+  const m = v.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?id=)([\w-]+)/);
+  if(m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w800`;
+  if(/^https?:\/\//.test(v)) return v;
+  return "img/" + v;
+}
+
+/* تاريخ: يقبل 2026-10-31 أو 31/10/2026 */
+function parseDate(v){
+  v = String(v||"").trim(); if(!v) return null;
+  let m = v.match(/^(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+  if(m) return new Date(+m[1], m[2]-1, +m[3], 23, 59, 59);
+  m = v.match(/^(\d{1,2})[-\/](\d{1,2})[-\/](\d{4})/);
+  if(m) return new Date(+m[3], m[2]-1, +m[1], 23, 59, 59);
+  const d = new Date(v); return isNaN(d) ? null : d;
+}
+
+/* CSV parser بيدعم الكوتس والسطور جوه الخانة */
+function parseCSV(text){
+  const rows=[]; let row=[], f="", q=false;
+  for(let i=0;i<text.length;i++){
+    const c=text[i];
+    if(q){ if(c=='"'){ if(text[i+1]=='"'){f+='"';i++} else q=false } else f+=c; }
+    else if(c=='"') q=true;
+    else if(c==','){ row.push(f); f=""; }
+    else if(c=='\n'){ row.push(f); rows.push(row); row=[]; f=""; }
+    else if(c!='\r') f+=c;
+  }
+  if(f||row.length){ row.push(f); rows.push(row); }
+  const head = (rows.shift()||[]).map(h=>h.replace(/^﻿/,"").trim());
+  return rows.filter(r=>r.some(x=>x.trim())).map(r=>Object.fromEntries(head.map((h,i)=>[h,(r[i]||"").trim()])));
+}
+
+/* ---------- render ---------- */
+function cardHTML(r, isOffer){
+  const name = r["الاسم"], was = num(r["السعر قبل"]), now = num(r["السعر بعد"]);
+  const cat = r["الفئة"]||"";
+  const pct = (!isNaN(was) && !isNaN(now) && was>now) ? Math.round((1-now/was)*100) : 0;
+  const src = imgUrl(r["الصورة"]);
+  const ph = `<div class="ph">${EMOJI[cat]||"✨"}</div>`;
+  const img = src ? `<img src="${esc(src)}" alt="${esc(name)}" loading="lazy" onerror="this.outerHTML='${ph.replace(/"/g,"&quot;")}'">` : ph;
+
+  let ends = "";
+  const d = parseDate(r["ينتهي"]);
+  if(isOffer && d){
+    const days = Math.ceil((d - new Date())/86400000);
+    ends = days<=1 ? `<div class="ends">⏰ آخر يوم للعرض</div>` : days<=7 ? `<div class="ends">⏰ باقي ${days} أيام</div>` : "";
+  }
+
+  let price = "";
+  if(!isNaN(now)) price = `<div class="price"><span class="now">${fmt(now)} ج</span>${pct?`<span class="was">${fmt(was)} ج</span>`:""}</div>`;
+
+  const code = r["الكود"] ? ` (كود ${r["الكود"]})` : "";
+  const msg = isOffer ? `السلام عليكم، عايز عرض: ${name}${code}` : `السلام عليكم، عايز أسأل على: ${name}`;
+  const label = isOffer ? "اطلب العرض" : "اسأل عليه";
+
+  return `<div class="card" data-cat="${esc(cat)}">
+    ${pct?`<span class="badge">خصم ${pct}%</span>`:""}
+    <div class="img">${img}</div>
+    <div class="body">
+      <h3>${esc(name)}</h3>
+      ${r["الوصف"]?`<div class="desc">${esc(r["الوصف"])}</div>`:""}
+      ${ends}${price}
+      <a class="btn btn-wa" data-wa="${esc(msg)}">${label}</a>
+    </div>
+  </div>`;
+}
+
+function renderList(items, gridId, filtersId, isOffer, emptyMsg){
+  const grid = document.getElementById(gridId), fl = document.getElementById(filtersId);
+  if(!items.length){ grid.innerHTML = `<div class="empty">${emptyMsg}</div>`; fl.innerHTML=""; if(!isOffer) grid.closest("section").hidden = true; return; }
+  const cats = [...new Set(items.map(r=>r["الفئة"]).filter(Boolean))];
+  fl.innerHTML = cats.length>1 ? [`<button class="on" data-c="">الكل</button>`, ...cats.map(c=>`<button data-c="${esc(c)}">${esc(c)}</button>`)].join("") : "";
+  grid.innerHTML = items.map(r=>cardHTML(r,isOffer)).join("");
+  bindWa(grid);
+  fl.onclick = e=>{
+    const b = e.target.closest("button"); if(!b) return;
+    fl.querySelectorAll("button").forEach(x=>x.classList.toggle("on", x===b));
+    grid.querySelectorAll(".card").forEach(c=>c.hidden = b.dataset.c && c.dataset.cat!==b.dataset.c);
+  };
+}
+
+function render(rows){
+  const now = new Date();
+  const visible = rows.filter(r=>{
+    if(!r["الاسم"]) return false;
+    const show = (r["ظاهر"]||"نعم").trim();
+    if(/^(لا|no|0|مخفي)$/i.test(show)) return false;
+    const d = parseDate(r["ينتهي"]);
+    return !(d && d < now);
+  });
+  const offers = visible.filter(r=>(r["النوع"]||"عرض").trim()!=="منتج");
+  const prods  = visible.filter(r=>(r["النوع"]||"").trim()==="منتج");
+  renderList(offers,"offerGrid","offerFilters",true,"العروض الجديدة جاية قريب — تابعنا 💚");
+  renderList(prods,"prodGrid","prodFilters",false,"");
+}
+
+async function load(){
+  if(!SHEET_CSV_URL){ document.getElementById("demoBar").hidden=false; return render(DEMO); }
+  try{
+    const res = await fetch(SHEET_CSV_URL + (SHEET_CSV_URL.includes("?")?"&":"?") + "t=" + Date.now());
+    if(!res.ok) throw new Error(res.status);
+    render(parseCSV(await res.text()));
+  }catch(e){
+    console.error(e);
+    document.getElementById("offerGrid").innerHTML = `<div class="empty">مش قادرين نحمّل العروض دلوقتي — كلمنا على الواتساب وهنقولك كل العروض 💚</div>`;
+  }
+}
+
+document.getElementById("yr").textContent = new Date().getFullYear();
+bindWa(document);
+load();
+</script>
+</body>
+</html>
