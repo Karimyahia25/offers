@@ -9,6 +9,15 @@
 <meta property="og:description" content="خصومات على منتجات التجميل والعناية، والتوصيل مجاني خلال 30 دقيقة">
 <meta name="theme-color" content="#073a4b">
 <meta property="og:image" content="https://karimyahia25.github.io/offers/img/og.jpg">
+<script>
+/* اللغة قبل ما الصفحة ترسم علشان متقلبش قدام العميل */
+(function(){
+  var q = new URLSearchParams(location.search).get("lang"), l = "ar";
+  try{ l = q || localStorage.getItem("anas_lang") || "ar"; }catch(e){ l = q || "ar"; }
+  l = l === "en" ? "en" : "ar";
+  document.documentElement.lang = l; document.documentElement.dir = l === "en" ? "ltr" : "rtl";
+})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,12 +30,13 @@
   --line:#e3e5e0; --bg:#f6f6f3; --card:#fff;
   --wa:#14803f;
   --r:10px;
+  --eo:cubic-bezier(.22,1,.36,1);
   --fh:'Alexandria',system-ui,sans-serif;
   --fb:'IBM Plex Sans Arabic',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+body{font-family:var(--fb);background:var(--bg);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:calc(80px + env(safe-area-inset-bottom));overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 img{max-width:100%;display:block}
@@ -37,8 +47,9 @@ bdi{unicode-bidi:isolate}
 :focus-visible{outline:2px solid var(--g-600);outline-offset:2px}
 
 /* header */
-header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
-header .wrap{display:flex;align-items:center;gap:14px;height:60px}
+header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line);transition:box-shadow .3s}
+header.scrolled{box-shadow:0 4px 18px -10px rgba(0,0,0,.25)}
+header .wrap{display:flex;align-items:center;gap:10px;height:60px}
 .logo{display:flex;align-items:center;gap:10px;margin-inline-end:auto}
 .logo .mk{width:38px;height:38px;border-radius:8px;background:var(--g-900);display:grid;place-items:center;flex:none}
 .logo .mk svg{width:25px;height:25px;fill:#fff}
@@ -46,37 +57,51 @@ header .wrap{display:flex;align-items:center;gap:14px;height:60px}
 .logo b{font-family:var(--fh);font-weight:800;font-size:16px;line-height:1.2;display:block}
 .logo small{font-size:11.5px;color:var(--muted);font-weight:500;display:block}
 nav.links{display:none;gap:2px}
-nav.links a{font-weight:600;font-size:14px;padding:8px 12px;border-radius:6px;color:var(--ink-2)}
-nav.links a:hover{color:var(--g-800);text-decoration:underline;text-underline-offset:6px}
+nav.links a{font-weight:600;font-size:14px;padding:8px 12px;border-radius:6px;color:var(--ink-2);background-image:linear-gradient(var(--g-600),var(--g-600));background-size:0 2px;background-repeat:no-repeat;background-position:50% 88%;transition:background-size .25s var(--eo),color .2s}
+nav.links a:hover{color:var(--g-800);background-size:60% 2px}
 @media(min-width:760px){nav.links{display:flex}}
+.lang{height:44px;min-width:44px;padding:0 12px;border-radius:8px;border:1px solid var(--line);font-weight:700;font-size:14px;color:var(--g-800);font-family:var(--fb);transition:background .2s,border-color .2s}
+.lang:hover{background:var(--g-50);border-color:var(--g-600)}
+
 /* buttons */
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:50px;padding:0 20px;border-radius:8px;font-weight:700;font-size:16px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:50px;padding:0 20px;border-radius:8px;font-weight:700;font-size:16px;transition:background .18s,border-color .18s,transform .15s var(--eo)}
+.btn:active,.add:active,.dock a:active,.dock button:active{transform:scale(.97)}
 .btn-yel{background:var(--yel);color:var(--ink)}
 .btn-yel:hover{background:#ffdb5c}
 .btn-ghost{color:#fff;border:1.5px solid rgba(255,255,255,.55)}
-.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
 .btn-wa{background:var(--wa);color:#fff}
 .btn-wa:hover{background:#106b34}
 .btn-dark{background:var(--g-900);color:#fff}
 .btn-dark:hover{background:var(--g-800)}
-.btn-line{border:1.5px solid var(--line);color:var(--ink)}
-.btn-line:hover{border-color:var(--g-600)}
 .btn svg.wa{width:21px;height:21px;fill:currentColor;stroke:none}
 
 /* hero */
 .whero{position:relative;min-height:78vh;max-height:720px;display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate}
 @media(min-width:900px){.whero{min-height:560px;align-items:center}}
-.whero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
-.whero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.25) 40%,rgba(10,14,12,.85) 100%)}
-@media(min-width:900px){.whero::after{background:linear-gradient(270deg,rgba(10,14,12,.82) 0%,rgba(10,14,12,.5) 50%,rgba(0,0,0,0) 100%)}}
+.whero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;animation:kb 22s ease-in-out infinite alternate;transform-origin:60% 40%}
+@keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.16) translate3d(-2%,-1.5%,0)}}
+.whero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.05) 0%,rgba(0,0,0,.25) 40%,rgba(10,14,12,.86) 100%)}
+@media(min-width:900px){.whero::after{background:linear-gradient(270deg,rgba(10,14,12,.82) 0%,rgba(10,14,12,.5) 50%,rgba(0,0,0,0) 100%)}
+  [dir=ltr] .whero::after{background:linear-gradient(90deg,rgba(10,14,12,.82) 0%,rgba(10,14,12,.5) 50%,rgba(0,0,0,0) 100%)}}
 .whero .wrap{width:100%;padding-top:40px;padding-bottom:32px}
 .whero .in{max-width:540px}
 .hello{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:14px;color:rgba(255,255,255,.9)}
 .hello svg.i{width:16px;height:16px}
 .whero h1{font-family:var(--fh);font-weight:800;font-size:clamp(40px,10.5vw,72px);line-height:1.15;margin:10px 0 12px}
+.whero h1 .ln{display:block;overflow:hidden;padding-bottom:.06em}
+.whero h1 .ln>span{display:inline-block}
 .whero p{font-size:17px;color:rgba(255,255,255,.9);max-width:470px}
-.deal{display:inline-block;margin-top:18px;background:var(--yel);color:var(--ink);padding:6px 14px;border-radius:6px;font-weight:700;font-size:16px}
+/* الشريط الأصفر: كلامه بيتغير لوحده */
+.rot{display:inline-flex;margin-top:18px;background:var(--yel);color:var(--ink);padding:6px 14px;border-radius:6px;font-weight:700;font-size:16px;overflow:hidden;height:38px;align-items:center;max-width:100%}
+.rot span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* دخول أول شاشة */
+.whero.play .a{animation:rise .8s var(--eo) both;animation-delay:var(--d,0s)}
+.whero.play h1 .ln>span{animation:lineUp .95s var(--eo) both}
+.whero.play h1 .ln:nth-child(2)>span{animation-delay:.12s}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}}
+@keyframes lineUp{from{transform:translateY(105%)}}
 
 /* how to order */
 .how{list-style:none;display:grid;gap:0;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
@@ -85,6 +110,23 @@ nav.links a:hover{color:var(--g-800);text-decoration:underline;text-underline-of
 .how li b{font-family:var(--fh);width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:15px;flex:none}
 .how li strong{color:var(--ink)}
 @media(min-width:760px){.how{grid-template-columns:repeat(3,1fr)}.how li+li{border-top:0;border-inline-start:1px solid var(--line)}}
+.how.wait li{opacity:0}
+.how.anim li{animation:rise .6s var(--eo) both;animation-delay:calc(var(--i)*.12s)}
+.how.anim li b{animation:pop .55s cubic-bezier(.34,1.56,.64,1) both;animation-delay:calc(var(--i)*.12s + .15s)}
+@keyframes pop{from{transform:scale(0)}}
+
+/* طرق الدفع */
+.pay{padding:22px 0 0}
+.pay .lbl{font-weight:700;font-size:14px;color:var(--ink-2);margin-bottom:10px}
+.marq{overflow:hidden;direction:ltr;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marq .track{display:flex;gap:10px;width:max-content;animation:marq 28s linear infinite}
+.marq:hover .track{animation-play-state:paused}
+@keyframes marq{to{transform:translateX(-50%)}}
+.pm{flex:none;height:56px;min-width:120px;padding:0 16px;background:#fff;border:1px solid var(--line);border-radius:var(--r);display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:14px;color:var(--ink);font-family:var(--fb)}
+.pm svg{flex:none}
+.pm svg.i{width:24px;height:24px}
+.pm .vf{color:#b30000}
+.pm .ip{color:#4b2a83;font-family:var(--fh);font-weight:800;font-size:17px;letter-spacing:0}
 
 /* sections */
 section{padding:40px 0;scroll-margin-top:72px}
@@ -97,7 +139,7 @@ section{padding:40px 0;scroll-margin-top:72px}
 .tabs-wrap{position:sticky;top:60px;z-index:30;background:var(--bg);padding:8px 0 10px;margin:-4px 0 8px}
 .tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tabs button{flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:8px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:14px;color:var(--ink-2)}
+.tabs button{flex:none;display:inline-flex;align-items:center;gap:6px;height:44px;padding:0 14px;border-radius:8px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:14px;color:var(--ink-2);transition:background .25s var(--eo),color .25s,border-color .25s}
 .tabs button small{font-size:12px;color:var(--muted)}
 .tabs button.on{background:var(--ink);border-color:var(--ink);color:#fff}
 .tabs button.on small{color:rgba(255,255,255,.7)}
@@ -108,13 +150,16 @@ section{padding:40px 0;scroll-margin-top:72px}
 @media(min-width:1000px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;position:relative}
 .card.hide{display:none}
+.grid.wait .card{opacity:0}
+.grid.anim .card{animation:rise .6s var(--eo) both;animation-delay:calc(var(--i)*.07s)}
 .media{position:relative;aspect-ratio:1/1;background:#fff;overflow:hidden;border-bottom:1px solid var(--line)}
-.media img{width:100%;height:100%;object-fit:contain;opacity:0}
+.media img{width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .4s,transform .6s var(--eo)}
 .media img.ok{opacity:1}
+@media(hover:hover){.card:hover .media img{transform:scale(1.05)}}
 .ph{position:absolute;inset:0;display:grid;place-items:center;background:var(--bg)}
 .ph ~ img{position:relative;z-index:1}
 .ph svg{width:36%;height:36%;stroke:var(--muted);stroke-width:1.2;opacity:.4}
-.tag{position:absolute;top:0;right:0;z-index:2;background:var(--red);color:#fff;font-family:var(--fh);font-weight:800;font-size:13px;line-height:1;padding:7px 10px;border-radius:0 0 0 8px}
+.tag{position:absolute;top:0;inset-inline-end:0;z-index:2;background:var(--red);color:#fff;font-family:var(--fh);font-weight:800;font-size:13px;line-height:1;padding:7px 10px;border-end-start-radius:8px}
 .tag b{font-size:16px}
 .promo{background:var(--yel);color:var(--ink);font-weight:700;font-size:13.5px;line-height:1.4;padding:6px 10px;border-radius:6px;display:flex;align-items:center;gap:6px;align-self:flex-start}
 .promo svg.i{width:16px;height:16px;flex:none}
@@ -128,31 +173,35 @@ section{padding:40px 0;scroll-margin-top:72px}
 .pr .was{font-size:14px;color:var(--muted);text-decoration:line-through}
 .pr .unit{font-size:11.5px;color:var(--muted);font-weight:600;width:100%;margin-bottom:-6px}
 .ends{font-size:12.5px;font-weight:700;color:var(--red-dk)}
+.ends.far{color:var(--muted);font-weight:600}
 .act{margin-top:8px;height:48px}
-.add{width:100%;height:100%;border-radius:8px;background:var(--g-600);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px}
+.add{width:100%;height:100%;border-radius:8px;background:var(--g-600);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .18s,transform .15s var(--eo)}
 .add:hover{background:var(--g-800)}
 .add svg.i{width:18px;height:18px;stroke-width:2.6}
-.stp{height:100%;display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--g-600);border-radius:8px;padding:0 4px}
-.stp button{width:44px;height:44px;border-radius:6px;display:grid;place-items:center;color:var(--g-800)}
+.stp{height:100%;display:flex;align-items:center;justify-content:space-between;border:1.5px solid var(--g-600);border-radius:8px;padding:0 4px;animation:swap .35s var(--eo)}
+@keyframes swap{from{transform:scale(.9);opacity:.3}}
+[dir=ltr] .stp{flex-direction:row-reverse}
+.stp button{width:44px;height:44px;border-radius:6px;display:grid;place-items:center;color:var(--g-800);transition:background .15s}
 .stp button:hover{background:var(--g-50)}
 .stp button svg.i{width:18px;height:18px;stroke-width:2.6}
-.stp b{font-family:var(--fh);font-weight:800;font-size:16px;color:var(--g-800)}
-.ask{width:100%;height:100%;border-radius:8px;border:1.5px solid var(--line);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:7px}
-.ask:hover{border-color:var(--wa)}
+.stp b{font-family:var(--fh);font-weight:800;font-size:16px;color:var(--g-800);display:inline-block}
+.ask{width:100%;height:100%;border-radius:8px;border:1.5px solid var(--line);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:7px;transition:border-color .2s,background .2s}
+.ask:hover{border-color:var(--wa);background:#eef8f2}
 .ask svg.wa{width:18px;height:18px;fill:var(--wa)}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:36px 16px;background:#fff;border:1px dashed #cfd3cc;border-radius:var(--r)}
 
 /* skeleton */
 .sk{border-radius:var(--r);background:#fff;border:1px solid var(--line);overflow:hidden}
-.sk i{display:block;background:#eef0ea}
+.sk i{display:block;background:linear-gradient(90deg,#eef0ea 25%,#f7f8f4 50%,#eef0ea 75%);background-size:200% 100%;animation:shim 1.2s infinite}
 .sk i:first-child{aspect-ratio:1/1}
 .sk i+i{height:12px;margin:12px;border-radius:4px}
 .sk i+i+i{width:50%}
+@keyframes shim{to{background-position:-200% 0}}
 
 /* featured: العرض اللي بيخلص قريب */
 .feat{display:grid;background:var(--g-900);color:#fff;border-radius:var(--r);overflow:hidden}
 @media(min-width:760px){.feat{grid-template-columns:.9fr 1.1fr}}
-.feat .fm{position:relative;aspect-ratio:4/3;background:#fff}
+.feat .fm{position:relative;aspect-ratio:4/3;background:#fff;overflow:hidden}
 @media(min-width:760px){.feat .fm{aspect-ratio:auto;min-height:300px}}
 .feat .fm img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .feat .fb{padding:20px;display:flex;flex-direction:column;gap:12px;justify-content:center}
@@ -164,6 +213,7 @@ section{padding:40px 0;scroll-margin-top:72px}
 .feat .fpr .was{color:rgba(255,255,255,.55);text-decoration:line-through}
 .cd{font-size:14px;color:rgba(255,255,255,.8)}
 .cd b{font-weight:700;color:#fff}
+.cd .u{display:inline-block;min-width:1.2em;text-align:center}
 .feat .act{height:50px;max-width:340px}
 .feat .add{background:var(--yel);color:var(--ink);font-size:16px}
 .feat .add:hover{background:#ffdb5c}
@@ -177,7 +227,7 @@ section{padding:40px 0;scroll-margin-top:72px}
 .plist li{display:flex;align-items:center;gap:12px;padding:10px 14px}
 .plist li+li{border-top:1px solid var(--line)}
 .plist .th{width:52px;height:52px;border-radius:6px;overflow:hidden;flex:none;position:relative;background:#fff}
-.plist .th img{width:100%;height:100%;object-fit:contain;opacity:0}
+.plist .th img{width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .4s}
 .plist .th img.ok{opacity:1}
 .plist .th .ph svg{width:50%;height:50%}
 .plist .nm{flex:1;min-width:0}
@@ -190,6 +240,7 @@ section{padding:40px 0;scroll-margin-top:72px}
 .band h3{font-family:var(--fh);font-weight:800;font-size:clamp(19px,4.4vw,24px);line-height:1.35}
 .band p{color:#4b4424;font-size:15px;margin-top:2px}
 .band .btn{background:var(--ink);color:#fff}
+.band .btn:hover{background:#27352f}
 
 /* visit */
 .visit{display:grid;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
@@ -211,29 +262,33 @@ section{padding:40px 0;scroll-margin-top:72px}
 footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
 
 /* bottom bar */
-.dock{position:fixed;z-index:60;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:6px;background:var(--ink);border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.25);width:min(calc(100% - 24px),440px)}
-.dock a,.dock button{height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:9px;font-weight:700;font-size:15px;color:#fff}
+.dock{position:fixed;z-index:60;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:6px;background:var(--ink);border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.25);width:min(calc(100% - 24px),440px);animation:dockIn .7s .9s var(--eo) both}
+@keyframes dockIn{from{transform:translate(-50%,140%)}}
+.dock a,.dock button{height:48px;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:9px;font-weight:700;font-size:15px;color:#fff;transition:background .2s,transform .15s var(--eo)}
 .dock .d-wa{flex:1;background:var(--wa)}
 .dock .d-wa svg{width:21px;height:21px;fill:#fff}
 .dock .d-call{width:48px;background:rgba(255,255,255,.12)}
 .dock .d-cart{flex:1;background:var(--yel);color:var(--ink);display:none}
-.dock.has .d-cart{display:flex}
+.dock.has .d-cart{display:flex;animation:swap .4s var(--eo)}
 .dock.has .d-wa{flex:0 0 48px}
 .dock.has .d-wa .t{display:none}
 .d-cart .n{background:var(--ink);color:var(--yel);min-width:26px;height:26px;border-radius:6px;display:grid;place-items:center;font-size:14px;padding:0 6px}
+.fly{position:fixed;z-index:95;width:44px;height:44px;border-radius:50%;background:var(--yel) center/cover no-repeat;border:2px solid #fff;box-shadow:0 6px 16px rgba(0,0,0,.3);pointer-events:none;left:0;top:0}
 
 /* cart sheet */
-.ov{position:fixed;inset:0;z-index:80;background:rgba(10,18,15,.5);display:none}
-.ov.open{display:block}
-.sheet{position:fixed;z-index:90;left:0;right:0;bottom:0;max-height:86vh;background:#fff;border-radius:14px 14px 0 0;transform:translateY(105%);transition:transform .25s ease-out;display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
+.ov{position:fixed;inset:0;z-index:80;background:rgba(10,18,15,.5);opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.ov.open{opacity:1;visibility:visible}
+.sheet{position:fixed;z-index:90;left:0;right:0;bottom:0;max-height:86vh;background:#fff;border-radius:14px 14px 0 0;transform:translateY(105%);transition:transform .45s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
 @media(min-width:640px){.sheet{left:50%;right:auto;width:480px;margin-left:-240px}}
 .sheet.open{transform:none}
 .sheet header{position:static;display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);border-radius:14px 14px 0 0}
 .sheet header h3{font-family:var(--fh);font-weight:800;font-size:19px}
-.sheet .x{width:44px;height:44px;border-radius:8px;background:var(--bg);display:grid;place-items:center}
+.sheet .x{width:44px;height:44px;border-radius:8px;background:var(--bg);display:grid;place-items:center;transition:background .2s}
+.sheet .x:hover{background:var(--line)}
 .sheet .list{overflow-y:auto;padding:4px 18px;flex:1}
 .li{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
 .li:last-child{border-bottom:0}
+.sheet.open .li{animation:rise .45s var(--eo) both;animation-delay:calc(var(--i)*.05s + .1s)}
 .li .th{width:54px;height:54px;border-radius:8px;border:1px solid var(--line);background:#fff;overflow:hidden;flex:none;position:relative}
 .li .th img{width:100%;height:100%;object-fit:contain}
 .li .th .ph svg{width:55%;height:55%}
@@ -241,20 +296,26 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
 .li .nm b{display:block;font-size:14px;font-weight:700;line-height:1.4}
 .li .nm span{font-size:12.5px;color:var(--muted)}
 .li .nm .pp{font-weight:700;color:var(--ink-2)}
-.li .stp{height:48px;width:128px;flex:none}
+.li .stp{height:48px;width:128px;flex:none;animation:none}
 .sheet .foot{padding:14px 18px 18px;border-top:1px solid var(--line);display:grid;gap:10px}
 .sheet .foot .note{font-size:13px;color:var(--muted);text-align:center}
 .sheet .foot .btn{width:100%}
 .sheet .clr{min-height:44px;padding:0 12px;font-size:13px;color:var(--muted);font-weight:600;text-decoration:underline;justify-self:center}
 
 /* toast */
-.toast{position:fixed;z-index:70;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translateX(-50%);display:none;background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:10px 16px;border-radius:8px;align-items:center;gap:8px;white-space:nowrap}
-.toast.on{display:flex}
+.toast{position:fixed;z-index:70;left:50%;bottom:calc(80px + env(safe-area-inset-bottom));transform:translate(-50%,16px);opacity:0;display:flex;background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:10px 16px;border-radius:8px;align-items:center;gap:8px;white-space:nowrap;pointer-events:none;transition:opacity .25s,transform .35s var(--eo)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
 .toast svg.i{color:var(--yel);width:18px;height:18px}
 
 .demo{background:#fff4c7;color:#6b5400;text-align:center;font-size:13px;padding:7px 16px;font-weight:600}
 
-@media(prefers-reduced-motion:reduce){.sheet{transition:none}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .grid.wait .card,.how.wait li{opacity:1}
+  .marq{-webkit-mask-image:none;mask-image:none}
+  .marq .track{flex-wrap:wrap;width:auto}
+  .marq .dup{display:none}
+}
 </style>
 </head>
 <body>
@@ -267,46 +328,43 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>
-    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.6a1 1 0 0 0-.2-.6l-3.5-4.4a1 1 0 0 0-.8-.4H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
-    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
     <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></symbol>
     <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13"/><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
-    <symbol id="i-box" viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5Z"/><path d="m3 8 9 5 9-5M12 13v8"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
-    <symbol id="i-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
-    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></symbol>
     <symbol id="i-mortar" viewBox="0 0 24 24"><path class="lf" d="M7.6 9.2C4.9 9.1 3.2 7.4 3 4.8c2.6.1 4.4 1.8 4.6 4.4Z"/><path class="lf" d="M9 9.2c0-2.5 1.3-4 3.4-4.4.2 2.3-1.1 4-3.4 4.4Z"/><path d="M12.6 9.4 18.2 3.8a1.9 1.9 0 1 1 2.2 2.6l-5.7 3Z"/><rect x="3" y="10.2" width="18" height="1.7" rx=".85"/><path d="M4.3 13h15.4c-.3 3.4-2.4 5.6-4.9 6.4l.7 1.8H8.5l.7-1.8C6.7 18.6 4.6 16.4 4.3 13Z"/></symbol>
   </defs>
 </svg>
 
-<div id="demoBar" class="demo" hidden>بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية</div>
+<div id="demoBar" class="demo" data-t="demo" hidden></div>
 
 <header id="top">
   <div class="wrap">
     <a class="logo" href="#">
       <span class="mk"><svg><use href="#i-mortar"/></svg></span>
-      <span><b>د. أنس نحيلة</b><small>صيدلية</small></span>
+      <span><b data-t="brand">د. أنس نحيلة</b><small data-t="brandSub">صيدلية</small></span>
     </a>
     <nav class="links">
-      <a href="#offers">العروض</a>
-      <a href="#products">متوفر عندنا</a>
-      <a href="#visit">العنوان</a>
+      <a href="#offers" data-t="navOffers">العروض</a>
+      <a href="#products" data-t="navProducts">متوفر عندنا</a>
+      <a href="#visit" data-t="navVisit">العنوان</a>
     </nav>
+    <button class="lang" id="langBtn" data-ta="langAria" aria-label="English">EN</button>
   </div>
 </header>
 
-<div class="whero">
-  <img class="bg" src="img/storefront-1400.jpg" srcset="img/storefront-800.jpg 800w, img/storefront-1400.jpg 1400w" sizes="100vw" alt="واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ">
+<div class="whero play" id="hero">
+  <img class="bg" src="img/storefront-1400.jpg" srcset="img/storefront-800.jpg 800w, img/storefront-1400.jpg 1400w" sizes="100vw" alt="" data-talt="heroAlt">
   <div class="wrap"><div class="in">
-    <span class="hello"><svg class="i"><use href="#i-pin"/></svg>المعمورة الشاطئ، جنب البوابة الرئيسية</span>
-    <h1>صيدليتك<br>اللي عارفاك</h1>
-    <p>مفتوحين 24 ساعة طول الأسبوع. اختار من العروض وابعت طلبك على الواتساب.</p>
-    <span class="deal" id="heroHl">عروض الأسبوع: خصومات وهدايا</span>
-    <div class="cta">
-      <a class="btn btn-yel" href="#offers">شوف العروض</a>
-      <a class="btn btn-ghost" data-wa="السلام عليكم، عايز أستفسر عن العروض"><svg class="wa"><use href="#i-wa"/></svg>كلمنا واتساب</a>
+    <span class="hello a" style="--d:.05s"><svg class="i"><use href="#i-pin"/></svg><span data-t="hello">المعمورة الشاطئ، جنب البوابة الرئيسية</span></span>
+    <h1 data-t="h1"><span class="ln"><span>صيدليتك</span></span><span class="ln"><span>اللي عارفاك</span></span></h1>
+    <p class="a" style="--d:.35s" data-t="heroP">مفتوحين 24 ساعة طول الأسبوع. اختار من العروض وابعت طلبك على الواتساب.</p>
+    <div class="rot a" style="--d:.5s" aria-live="polite"><span id="rot">عروض الأسبوع: خصومات وهدايا</span></div>
+    <div class="cta a" style="--d:.62s">
+      <a class="btn btn-yel" href="#offers" data-t="cta1">شوف العروض</a>
+      <a class="btn btn-ghost" data-wa-t="waAskOffers"><svg class="wa"><use href="#i-wa"/></svg><span data-t="cta2">كلمنا واتساب</span></a>
     </div>
   </div></div>
 </div>
@@ -314,12 +372,19 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
 <section id="how" style="padding:20px 0 0">
   <div class="wrap">
     <ol class="how">
-      <li><b>1</b><span><strong>اختار</strong> العروض اللي عاجباك وضيفها لطلبك</span></li>
-      <li><b>2</b><span><strong>ابعت الطلب</strong> على الواتساب، هيتكتب لوحده</span></li>
-      <li><b>3</b><span><strong>يوصلك في 30 دقيقة</strong> والتوصيل ببلاش</span></li>
+      <li style="--i:0"><b>1</b><span data-t="s1"></span></li>
+      <li style="--i:1"><b>2</b><span data-t="s2"></span></li>
+      <li style="--i:2"><b>3</b><span data-t="s3"></span></li>
     </ol>
   </div>
 </section>
+
+<div class="pay">
+  <div class="wrap">
+    <div class="lbl" data-t="payLbl">ادفع زي ما يريحك</div>
+    <div class="marq"><div class="track" id="payTrack"></div></div>
+  </div>
+</div>
 
 <section id="featured" hidden>
   <div class="wrap"><div class="feat" id="featBox"></div></div>
@@ -329,12 +394,12 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
   <div class="wrap">
     <div class="sh">
       <div>
-        <h2>العروض الحالية</h2>
-        <p>لفترة محدودة ولحد نفاد الكمية</p>
+        <h2 data-t="offersH">العروض الحالية</h2>
+        <p data-t="offersP">لفترة محدودة ولحد نفاد الكمية</p>
       </div>
       <span class="count" id="offerCount"></span>
     </div>
-    <div class="tabs-wrap"><div class="tabs" id="tabs"></div></div>
+    <div class="tabs-wrap" hidden><div class="tabs" id="tabs"></div></div>
     <div class="grid" id="offerGrid">
       <div class="sk"><i></i><i></i><i></i></div><div class="sk"><i></i><i></i><i></i></div>
       <div class="sk"><i></i><i></i><i></i></div><div class="sk"><i></i><i></i><i></i></div>
@@ -342,12 +407,12 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
   </div>
 </section>
 
-<section id="products" style="padding-top:8px">
+<section id="products" style="padding-top:8px" hidden>
   <div class="wrap">
     <div class="sh">
       <div>
-        <h2>متوفر عندنا</h2>
-        <p>منتجات تجميل وعناية موجودة في الصيدلية، اسأل عليها</p>
+        <h2 data-t="prodH">متوفر عندنا</h2>
+        <p data-t="prodP">منتجات تجميل وعناية موجودة في الصيدلية، اسأل عليها</p>
       </div>
     </div>
     <ul class="plist" id="prodRail"></ul>
@@ -358,10 +423,10 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
   <div class="wrap">
     <div class="band">
       <div>
-        <h3>مش لاقي المنتج اللي بتدور عليه؟</h3>
-        <p>ابعتلنا اسمه أو صورته على الواتساب ونوفرهولك.</p>
+        <h3 data-t="bandH">مش لاقي المنتج اللي بتدور عليه؟</h3>
+        <p data-t="bandP">ابعتلنا اسمه أو صورته على الواتساب ونوفرهولك.</p>
       </div>
-      <a class="btn" data-wa="السلام عليكم، بدور على منتج: "><svg class="i"><use href="#i-search"/></svg>ابعت اسم المنتج</a>
+      <a class="btn" data-wa-t="waLooking"><svg class="i"><use href="#i-search"/></svg><span data-t="bandBtn">ابعت اسم المنتج</span></a>
     </div>
   </div>
 </section>
@@ -370,15 +435,15 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
   <div class="wrap">
     <div class="visit">
       <div class="vb">
-        <h2>العنوان والتليفونات</h2>
+        <h2 data-t="visitH">العنوان والتليفونات</h2>
         <ul>
-          <li><svg class="i"><use href="#i-pin"/></svg><span>جنب البوابة الرئيسية، <b>عمارة لافي</b>، المعمورة الشاطئ، إسكندرية</span></li>
-          <li><svg class="i"><use href="#i-phone"/></svg><span><a href="tel:035650501"><bdi class="num">03 5650501</bdi></a> و <a href="tel:035650502"><bdi class="num">03 5650502</bdi></a></span></li>
-          <li><svg class="wa"><use href="#i-wa"/></svg><span>واتساب <a data-wa="السلام عليكم"><bdi class="num">01288827555</bdi></a></span></li>
+          <li><svg class="i"><use href="#i-pin"/></svg><span data-t="addr"></span></li>
+          <li><svg class="i"><use href="#i-phone"/></svg><span><a href="tel:035650501"><bdi class="num">03 5650501</bdi></a> <span data-t="and">و</span> <a href="tel:035650502"><bdi class="num">03 5650502</bdi></a></span></li>
+          <li><svg class="wa"><use href="#i-wa"/></svg><span><span data-t="waLbl">واتساب</span> <a data-wa-t="waHello"><bdi class="num">01288827555</bdi></a></span></li>
         </ul>
-        <div class="areas">بنوصل ببلاش لـ: <b>المعمورة الشاطئ، المعمورة البلد، الإصلاح، المندرة، أبو قير</b></div>
+        <div class="areas" data-t="areas"></div>
         <div class="vbtns">
-          <a class="btn btn-dark" href="https://www.google.com/maps/search/?api=1&query=%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9+%D8%AF.+%D8%A3%D9%86%D8%B3+%D9%86%D8%AD%D9%8A%D9%84%D8%A9+%D8%A7%D9%84%D9%85%D8%B9%D9%85%D9%88%D8%B1%D8%A9" target="_blank" rel="noopener"><svg class="i"><use href="#i-pin"/></svg>افتح على الخريطة</a>
+          <a class="btn btn-dark" href="https://www.google.com/maps/search/?api=1&query=%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9+%D8%AF.+%D8%A3%D9%86%D8%B3+%D9%86%D8%AD%D9%8A%D9%84%D8%A9+%D8%A7%D9%84%D9%85%D8%B9%D9%85%D9%88%D8%B1%D8%A9" target="_blank" rel="noopener"><svg class="i"><use href="#i-pin"/></svg><span data-t="mapBtn">افتح على الخريطة</span></a>
         </div>
       </div>
     </div>
@@ -386,28 +451,28 @@ footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
 </section>
 
 <footer>
-  <div class="wrap">© <span id="yr"></span> صيدلية د. أنس نحيلة. الأسعار قابلة للتغيير والعروض لحد نفاد الكمية.</div>
+  <div class="wrap">© <span id="yr"></span> <span data-t="foot"></span></div>
 </footer>
 
 <!-- الشريط اللي تحت -->
 <div class="dock" id="dock">
-  <a class="d-call" href="tel:035650501" aria-label="اتصل"><svg class="i"><use href="#i-phone"/></svg></a>
-  <a class="d-wa" data-wa="السلام عليكم، عايز أطلب"><svg class="wa"><use href="#i-wa"/></svg><span class="t">اطلب على واتساب</span></a>
-  <button class="d-cart" id="cartBtn"><svg class="i"><use href="#i-bag"/></svg>ابعت طلبك<span class="n num" id="cartN">0</span></button>
+  <a class="d-call" href="tel:035650501" data-ta="callAria" aria-label="اتصل"><svg class="i"><use href="#i-phone"/></svg></a>
+  <a class="d-wa" data-wa-t="waOrderStart"><svg class="wa"><use href="#i-wa"/></svg><span class="t" data-t="dockWa">اطلب على واتساب</span></a>
+  <button class="d-cart" id="cartBtn"><svg class="i"><use href="#i-bag"/></svg><span data-t="dockCart">ابعت طلبك</span><span class="n num" id="cartN">0</span></button>
 </div>
 
 <div class="ov" id="ov"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetT">
-  <header><h3 id="sheetT">طلبك</h3><button class="x" id="sheetX" aria-label="قفل"><svg class="i"><use href="#i-x"/></svg></button></header>
+  <header><h3 id="sheetT" data-t="sheetH">طلبك</h3><button class="x" id="sheetX" data-ta="closeAria" aria-label="قفل"><svg class="i"><use href="#i-x"/></svg></button></header>
   <div class="list" id="cartList"></div>
   <div class="foot">
-    <a class="btn btn-wa" id="sendBtn" target="_blank" rel="noopener"><svg class="wa"><use href="#i-wa"/></svg>ابعت الطلب على واتساب</a>
-    <div class="note">هيفتحلك الواتساب والطلب مكتوب، وهنأكد معاك السعر والعنوان.</div>
-    <button class="clr" id="clearBtn">امسح الطلب</button>
+    <a class="btn btn-wa" id="sendBtn" target="_blank" rel="noopener"><svg class="wa"><use href="#i-wa"/></svg><span data-t="sendBtn">ابعت الطلب على واتساب</span></a>
+    <div class="note" data-t="sheetNote"></div>
+    <button class="clr" id="clearBtn" data-t="clearBtn">امسح الطلب</button>
   </div>
 </div>
 
-<div class="toast" id="toast"><svg class="i"><use href="#i-check"/></svg><span></span></div>
+<div class="toast" id="toast" role="status"><svg class="i"><use href="#i-check"/></svg><span></span></div>
 
 <script>
 /* =========================================================
@@ -419,7 +484,8 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSxI8MUQV
 const WA_NUMBER = "201288827555";
 
 /* أعمدة الشيت (بالاسم، الترتيب مش مهم):
-   النوع | الاسم | الوصف | السعر قبل | السعر بعد | الفئة | الصورة | ينتهي | ظاهر | الكود | العرض */
+   النوع | الاسم | الوصف | السعر قبل | السعر بعد | الفئة | الصورة | ينتهي | ظاهر | الكود | العرض
+   اختياري للإنجليزي: الاسم EN | الوصف EN | الفئة EN | العرض EN  (لو فاضية بيظهر العربي) */
 
 const DEMO = [
   {"النوع":"عرض","الاسم":"واقي شمس SPF 50 — 50 مل","الوصف":"للبشرة الدهنية، ملمس خفيف","السعر قبل":"650","السعر بعد":"520","الفئة":"عناية بالبشرة","ينتهي":"2026-10-31","الكود":"OF1"},
@@ -433,13 +499,98 @@ const DEMO = [
   {"النوع":"منتج","الاسم":"بلسم شفايف","الفئة":"عناية بالبشرة"}
 ];
 
+/* ---------- النصوص بالعربي والإنجليزي ---------- */
+const I18N = {
+  ar:{
+    title:"عروض صيدلية د. أنس نحيلة",
+    demo:"بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية",
+    brand:"د. أنس نحيلة", brandSub:"صيدلية",
+    navOffers:"العروض", navProducts:"متوفر عندنا", navVisit:"العنوان",
+    langBtn:"EN", langAria:"English",
+    heroAlt:"واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ",
+    hello:"المعمورة الشاطئ، جنب البوابة الرئيسية",
+    h1:'<span class="ln"><span>صيدليتك</span></span><span class="ln"><span>اللي عارفاك</span></span>',
+    heroP:"مفتوحين 24 ساعة طول الأسبوع. اختار من العروض وابعت طلبك على الواتساب.",
+    dealMax:"عروض الأسبوع: خصومات لحد {n}%", dealGifts:"عروض الأسبوع: خصومات وهدايا",
+    rot:["توصيل ببلاش في 30 دقيقة","مفتوحين 24 ساعة","ادفع كاش أو فيزا أو فودافون كاش أو إنستاباي"],
+    cta1:"شوف العروض", cta2:"كلمنا واتساب",
+    s1:"<strong>اختار</strong> العروض اللي عاجباك وضيفها لطلبك",
+    s2:"<strong>ابعت الطلب</strong> على الواتساب، هيتكتب لوحده",
+    s3:"<strong>يوصلك في 30 دقيقة</strong> والتوصيل ببلاش",
+    payLbl:"ادفع زي ما يريحك", cash:"كاش", vfcash:"فودافون كاش",
+    offersH:"العروض الحالية", offersP:"لفترة محدودة ولحد نفاد الكمية", all:"الكل",
+    prodH:"متوفر عندنا", prodP:"منتجات تجميل وعناية موجودة في الصيدلية، اسأل عليها",
+    bandH:"مش لاقي المنتج اللي بتدور عليه؟", bandP:"ابعتلنا اسمه أو صورته على الواتساب ونوفرهولك.", bandBtn:"ابعت اسم المنتج",
+    visitH:"العنوان والتليفونات",
+    addr:"جنب البوابة الرئيسية، <b>عمارة لافي</b>، المعمورة الشاطئ، إسكندرية",
+    and:"و", waLbl:"واتساب",
+    areas:"بنوصل ببلاش لـ: <b>المعمورة الشاطئ، المعمورة البلد، الإصلاح، المندرة، أبو قير</b>",
+    mapBtn:"افتح على الخريطة",
+    foot:"صيدلية د. أنس نحيلة. الأسعار قابلة للتغيير والعروض لحد نفاد الكمية.",
+    callAria:"اتصل", dockWa:"اطلب على واتساب", dockCart:"ابعت طلبك",
+    sheetH:"طلبك", closeAria:"قفل", sendBtn:"ابعت الطلب على واتساب",
+    sheetNote:"هيفتحلك الواتساب والطلب مكتوب، وهنأكد معاك السعر والعنوان.", clearBtn:"امسح الطلب",
+    cartEmpty:"طلبك فاضي، اختار من العروض", added:"اتضاف لطلبك",
+    add:"أضف للطلب", ask:"اسأل عليه", unit:"سعر القطعة", cur:"ج.م", off:"خصم",
+    inc:"زوّد", dec:"قلّل",
+    until:"لحد {d}", endsOn:"العرض ده بيخلص {d}", left:"باقي", day:"يوم", andT:"و",
+    noOffers:"العروض الجديدة نازلة قريب",
+    loadErr:"مش قادرين نحمّل العروض دلوقتي. كلمنا على الواتساب ونقولك كل العروض",
+    waHello:"السلام عليكم", waOrderStart:"السلام عليكم، عايز أطلب", waAskOffers:"السلام عليكم، عايز أستفسر عن العروض",
+    waLooking:"السلام عليكم، بدور على منتج: ", waAsk:"السلام عليكم، عايز أسأل على: ",
+    waOrder:"السلام عليكم، عايز أطلب:", code:"كود", src:"مصدر"
+  },
+  en:{
+    title:"Dr. Anas Nehila Pharmacy Offers",
+    demo:"Demo data. Connect the Google Sheet to show the real offers",
+    brand:"Dr. Anas Nehila", brandSub:"Pharmacy",
+    navOffers:"Offers", navProducts:"In stock", navVisit:"Address",
+    langBtn:"ع", langAria:"العربية",
+    heroAlt:"Dr. Anas Mohamed Nehila pharmacy storefront in El Maamoura Beach",
+    hello:"El Maamoura Beach, next to the main gate",
+    h1:'<span class="ln"><span>The pharmacy</span></span><span class="ln"><span>that knows you</span></span>',
+    heroP:"Open 24 hours, every day. Pick your offers and send your order on WhatsApp.",
+    dealMax:"This week: up to {n}% off", dealGifts:"This week: discounts and gifts",
+    rot:["Free delivery in 30 minutes","Open 24 hours","Pay cash, Visa, Vodafone Cash or InstaPay"],
+    cta1:"See offers", cta2:"Chat on WhatsApp",
+    s1:"<strong>Pick</strong> the offers you like and add them to your order",
+    s2:"<strong>Send your order</strong> on WhatsApp, it's written for you",
+    s3:"<strong>Delivered in 30 minutes</strong>, free of charge",
+    payLbl:"Pay the way you like", cash:"Cash", vfcash:"Vodafone Cash",
+    offersH:"Current offers", offersP:"Limited time, while stocks last", all:"All",
+    prodH:"In stock", prodP:"Beauty and care products available at the pharmacy. Ask about them",
+    bandH:"Can't find what you're looking for?", bandP:"Send us its name or a photo on WhatsApp and we'll get it for you.", bandBtn:"Send the product name",
+    visitH:"Address and phones",
+    addr:"Next to the main gate, <b>Lavy Building</b>, El Maamoura Beach, Alexandria",
+    and:"and", waLbl:"WhatsApp",
+    areas:"Free delivery to: <b>El Maamoura Beach, El Maamoura El Balad, El Eslah, El Mandara, Abu Qir</b>",
+    mapBtn:"Open in Maps",
+    foot:"Dr. Anas Nehila Pharmacy. Prices may change; offers while stocks last.",
+    callAria:"Call", dockWa:"Order on WhatsApp", dockCart:"Send order",
+    sheetH:"Your order", closeAria:"Close", sendBtn:"Send order on WhatsApp",
+    sheetNote:"WhatsApp opens with your order written. We'll confirm the price and address with you.", clearBtn:"Clear order",
+    cartEmpty:"Your order is empty. Pick from the offers", added:"Added to your order",
+    add:"Add to order", ask:"Ask about it", unit:"Price per piece", cur:"EGP", off:"Off",
+    inc:"Increase", dec:"Decrease",
+    until:"Until {d}", endsOn:"This offer ends {d}", left:"Ends in", day:"d", andT:"",
+    noOffers:"New offers coming soon",
+    loadErr:"We couldn't load the offers right now. Message us on WhatsApp and we'll tell you all of them",
+    waHello:"Hello", waOrderStart:"Hello, I'd like to order", waAskOffers:"Hello, I'd like to ask about the offers",
+    waLooking:"Hello, I'm looking for a product: ", waAsk:"Hello, I'd like to ask about: ",
+    waOrder:"Hello, I'd like to order:", code:"code", src:"source"
+  }
+};
+let L = document.documentElement.lang === "en" ? "en" : "ar";
+const t = k => (I18N[L][k] ?? I18N.ar[k] ?? "");
+
 /* ---------- helpers ---------- */
 const $ = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const SRC = new URLSearchParams(location.search).get("src") || "";
 const icon = (id,cls="i")=>`<svg class="${cls}"><use href="#i-${id}"/></svg>`;
 function waLink(msg){
-  const tag = SRC ? `\n(مصدر: ${SRC})` : "";
+  const tag = SRC ? `\n(${t("src")}: ${SRC})` : "";
   return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg + tag)}`;
 }
 function bindWa(root){
@@ -485,10 +636,19 @@ function parseDate(v){
   }
   const d = new Date(v); return isNaN(d) ? null : d;
 }
-const MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
-function dateTxt(d){ return `${d.getDate()} ${MONTHS[d.getMonth()]}`; }
-function offersTxt(n){ return n==1 ? "عرض واحد" : n==2 ? "عرضين" : n<=10 ? `${n} عروض` : `${n} عرض`; }
-function daysTxt(n){ return n<=1 ? "آخر يوم النهارده" : n==2 ? "باقي يومين" : n<=10 ? `باقي ${n} أيام` : `باقي ${n} يوم`; }
+const MONTHS = {
+  ar:["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"],
+  en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+};
+function dateTxt(d){ return L==="en" ? `${MONTHS.en[d.getMonth()]} ${d.getDate()}` : `${d.getDate()} ${MONTHS.ar[d.getMonth()]}`; }
+function offersTxt(n){
+  if(L==="en") return n==1 ? "1 offer" : `${n} offers`;
+  return n==1 ? "عرض واحد" : n==2 ? "عرضين" : n<=10 ? `${n} عروض` : `${n} عرض`;
+}
+function daysTxt(n){
+  if(L==="en") return n<=1 ? "Last day today" : `${n} days left`;
+  return n<=1 ? "آخر يوم النهارده" : n==2 ? "باقي يومين" : n<=10 ? `باقي ${n} أيام` : `باقي ${n} يوم`;
+}
 
 /* CSV parser بيدعم الكوتس والسطور جوه الخانة */
 function parseCSV(text){
@@ -507,21 +667,23 @@ function parseCSV(text){
 }
 
 /* ---------- data ---------- */
+let ROWS = null;         // آخر بيانات اتحملت (علشان تغيير اللغة)
 let ITEMS = {};          // id -> item
 let catLabel = {};       // norm -> first label seen
+const col = (r,k) => ((L==="en" && (r[k+" EN"]||"").trim()) || (r[k]||"")).trim();
 function toItem(r, i){
   const was = num(r["السعر قبل"]), now = num(r["السعر بعد"]);
-  const cat = (r["الفئة"]||"").trim();
-  const ck = norm(cat);
+  const ck = norm(r["الفئة"]);
+  const cat = col(r,"الفئة");
   if(ck && !catLabel[ck]) catLabel[ck] = cat;
-  const name = (r["الاسم"]||"").trim();
+  const name = col(r,"الاسم");
   return {
-    id: (r["الكود"]||"").trim() || ("n"+i+"_"+name),
-    name, desc:(r["الوصف"]||"").trim(),
+    id: (r["الكود"]||"").trim() || ("n"+i+"_"+(r["الاسم"]||"").trim()),
+    name, desc:col(r,"الوصف"),
     was, now, pct:(!isNaN(was)&&!isNaN(now)&&was>now) ? Math.round((1-now/was)*100) : 0,
     cat: ck ? catLabel[ck] : "", ck,
     img: imgUrl(r["الصورة"]), end: parseDate(r["ينتهي"]),
-    code:(r["الكود"]||"").trim(), promo:(r["العرض"]||"").trim(),
+    code:(r["الكود"]||"").trim(), promo:col(r,"العرض"),
     offer: norm(r["النوع"]||"عرض") !== "منتج"
   };
 }
@@ -531,84 +693,123 @@ let cart = {};
 try{ cart = JSON.parse(localStorage.getItem("anas_cart")||"{}") || {}; }catch(e){ cart = {}; }
 function saveCart(){ try{ localStorage.setItem("anas_cart", JSON.stringify(cart)); }catch(e){} }
 function qty(id){ return cart[id]?.q || 0; }
+function cartEntry(it, q){ return {q, name:it.name, promo:it.promo, code:it.code, now:it.now, img:it.img, cat:it.cat}; }
 function setQty(id, q){
   const it = ITEMS[id] || cart[id];
   if(!it) return;
+  const before = qty(id);
   if(q<=0) delete cart[id];
-  else cart[id] = {q, name:it.name, promo:it.promo, code:it.code, now:it.now, img:it.img, cat:it.cat};
-  saveCart(); refreshActs(id); updateDock();
+  else cart[id] = cartEntry(it, q);
+  saveCart(); refreshActs(id, before && q>0); updateDock();
+}
+function stepHTML(id, q){
+  return `<div class="stp"><button data-inc="${esc(id)}" aria-label="${t("inc")}">${icon("plus")}</button><b class="num">${q}</b><button data-dec="${esc(id)}" aria-label="${t("dec")}">${icon("minus")}</button></div>`;
 }
 function actHTML(id){
   const q = qty(id);
-  return q
-    ? `<div class="stp"><button data-inc="${esc(id)}" aria-label="زوّد">${icon("plus")}</button><b class="num">${q}</b><button data-dec="${esc(id)}" aria-label="قلّل">${icon("minus")}</button></div>`
-    : `<button class="add" data-add="${esc(id)}">${icon("plus")}أضف للطلب</button>`;
+  return q ? stepHTML(id, q) : `<button class="add" data-add="${esc(id)}">${icon("plus")}${t("add")}</button>`;
 }
-function refreshActs(id){
-  $$(`.act[data-id]`).forEach(el=>{ if(el.dataset.id===id) el.innerHTML = actHTML(id); });
-  if($("#sheet").classList.contains("open")) renderCart();
+/* لو الكمية بس اتغيرت: غيّر الرقم بحركة بدل ما نرسم الزرار من جديد */
+function refreshActs(id, onlyNum){
+  $$(`.act[data-id]`).forEach(el=>{
+    if(el.dataset.id!==id) return;
+    const b = $(".stp b", el);
+    if(onlyNum && b){ b.textContent = qty(id); bumpEl(b); }
+    else el.innerHTML = actHTML(id);
+  });
+  if($("#sheet").classList.contains("open")) renderCart(false);
+}
+function bumpEl(el){
+  if(RM || !el.animate) return;
+  el.animate([{transform:"translateY(-6px) scale(1.15)",opacity:.4},{transform:"none",opacity:1}],{duration:260,easing:"cubic-bezier(.22,1,.36,1)"});
 }
 function cartCount(){ return Object.values(cart).reduce((s,x)=>s+x.q,0); }
 function updateDock(){
-  const n = cartCount();
+  const n = cartCount(), el = $("#cartN");
   $("#dock").classList.toggle("has", n>0);
-  $("#cartN").textContent = n;
+  if(el.textContent !== String(n)){ el.textContent = n; bumpEl(el); }
 }
 function cartMsg(){
-  const lines = Object.values(cart).map((x,i)=>`${i+1}) ${x.name}${x.promo?` (${x.promo})`:""}${x.code?` (كود ${x.code})`:""} × ${x.q}`);
-  return `السلام عليكم، عايز أطلب:\n${lines.join("\n")}`;
+  const lines = Object.values(cart).map((x,i)=>`${i+1}) ${x.name}${x.promo?` (${x.promo})`:""}${x.code?` (${t("code")} ${x.code})`:""} × ${x.q}`);
+  return `${t("waOrder")}\n${lines.join("\n")}`;
 }
-function renderCart(){
+function renderCart(stagger){
   const ids = Object.keys(cart);
-  $("#cartList").innerHTML = ids.length ? ids.map(id=>{
+  $("#cartList").innerHTML = ids.length ? ids.map((id,i)=>{
     const x = cart[id];
-    return `<div class="li">
+    return `<div class="li" style="--i:${stagger?i:0};${stagger?"":"animation:none"}">
       <div class="th">${x.img?`${ph()}<img src="${esc(x.img)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()" style="position:relative">`:ph()}</div>
-      <div class="nm"><b>${esc(x.name)}</b><span>${x.promo?esc(x.promo):""}${x.promo&&!isNaN(x.now)?"، ":""}${!isNaN(x.now)?`<bdi class="pp">${fmt(x.now)} ج.م</bdi>`:""}</span></div>
-      <div class="stp"><button data-inc="${esc(id)}" aria-label="زوّد">${icon("plus")}</button><b class="num">${x.q}</b><button data-dec="${esc(id)}" aria-label="قلّل">${icon("minus")}</button></div>
+      <div class="nm"><b>${esc(x.name)}</b><span>${x.promo?esc(x.promo):""}${x.promo&&!isNaN(x.now)?"، ":""}${!isNaN(x.now)?`<bdi class="pp">${fmt(x.now)} ${t("cur")}</bdi>`:""}</span></div>
+      ${stepHTML(id, x.q)}
     </div>`;
-  }).join("") : `<div class="empty" style="margin:12px 0">طلبك فاضي، اختار من العروض</div>`;
+  }).join("") : `<div class="empty" style="margin:12px 0">${t("cartEmpty")}</div>`;
   $("#sendBtn").href = waLink(cartMsg());
   $("#sendBtn").style.display = ids.length ? "" : "none";
   $("#clearBtn").style.display = ids.length ? "" : "none";
 }
 function openSheet(o){
-  if(o) renderCart();
+  if(o) renderCart(true);
   $("#sheet").classList.toggle("open", o); $("#ov").classList.toggle("open", o);
   document.body.style.overflow = o ? "hidden" : "";
 }
 let toastT;
-function toast(t){
-  const el=$("#toast"); $("span",el).textContent=t; el.classList.add("on");
+function toast(msg){
+  const el=$("#toast"); $("span",el).textContent=msg; el.classList.add("on");
   clearTimeout(toastT); toastT=setTimeout(()=>el.classList.remove("on"),1500);
+}
+/* المنتج بيطير لحد زرار السلة */
+function flyToCart(fromEl, img){
+  const to = $("#cartBtn");
+  if(RM || !fromEl || !to.animate) return;
+  const a = fromEl.getBoundingClientRect(), b = to.getBoundingClientRect();
+  if(!b.width) return;
+  const d = document.createElement("div"); d.className = "fly";
+  if(img) d.style.backgroundImage = `url("${img}")`;
+  document.body.appendChild(d);
+  const x0 = a.left + a.width/2 - 22, y0 = a.top + a.height/2 - 22;
+  const x1 = b.left + b.width/2 - 22, y1 = b.top + b.height/2 - 22;
+  d.animate([
+    {transform:`translate(${x0}px,${y0}px) scale(1)`,opacity:1},
+    {transform:`translate(${(x0+x1)/2}px,${Math.min(y0,y1)-80}px) scale(.9)`,opacity:1,offset:.45},
+    {transform:`translate(${x1}px,${y1}px) scale(.35)`,opacity:.6}
+  ],{duration:700,easing:"cubic-bezier(.45,0,.2,1)",fill:"forwards"});
+  setTimeout(()=>{
+    d.remove();
+    to.animate([{transform:"scale(1)"},{transform:"scale(1.08)"},{transform:"scale(1)"}],{duration:320,easing:"ease-out"});
+  }, 700);
 }
 
 document.addEventListener("click", e=>{
   const a = e.target.closest("[data-add],[data-inc],[data-dec]");
   if(!a) return;
-  if(a.dataset.add){ setQty(a.dataset.add, 1); toast("اتضاف لطلبك"); }
+  if(a.dataset.add){
+    const id = a.dataset.add, it = ITEMS[id];
+    const src = a.closest(".card,.feat");
+    setQty(id, 1); toast(t("added"));
+    flyToCart(src ? (src.querySelector(".media,.fm")||a) : a, it && it.img);
+  }
   else if(a.dataset.inc){ setQty(a.dataset.inc, qty(a.dataset.inc)+1); }
   else if(a.dataset.dec){ setQty(a.dataset.dec, qty(a.dataset.dec)-1); if(!cartCount()) openSheet(false); }
 });
 $("#cartBtn").onclick = ()=>openSheet(true);
 $("#ov").onclick = $("#sheetX").onclick = ()=>openSheet(false);
-$("#clearBtn").onclick = ()=>{ const ids=Object.keys(cart); cart={}; saveCart(); ids.forEach(refreshActs); updateDock(); openSheet(false); };
+$("#clearBtn").onclick = ()=>{ const ids=Object.keys(cart); cart={}; saveCart(); ids.forEach(id=>refreshActs(id)); updateDock(); openSheet(false); };
 document.addEventListener("keydown", e=>{ if(e.key==="Escape") openSheet(false); });
 
 /* ---------- render ---------- */
 function priceHTML(it){
   if(isNaN(it.now)) return "";
-  return `<div class="pr">${it.promo?`<span class="unit">سعر القطعة</span>`:""}<span class="now">${fmt(it.now)}<small>ج.م</small></span>${it.pct?`<span class="was">${fmt(it.was)}</span>`:""}</div>`;
+  return `<div class="pr">${it.promo?`<span class="unit">${t("unit")}</span>`:""}<span class="now">${fmt(it.now)}<small>${t("cur")}</small></span>${it.pct?`<span class="was">${fmt(it.was)}</span>`:""}</div>`;
 }
 function endsHTML(it){
   if(!it.end) return "";
   const days = Math.ceil((it.end - new Date())/86400000);
-  return days<=7 ? `<span class="ends">${daysTxt(days)}</span>` : `<span class="ends" style="color:var(--muted);font-weight:600">لحد ${dateTxt(it.end)}</span>`;
+  return days<=7 ? `<span class="ends">${daysTxt(days)}</span>` : `<span class="ends far">${t("until").replace("{d}",dateTxt(it.end))}</span>`;
 }
-function offerCard(it){
-  return `<article class="card" data-ck="${esc(it.ck)}">
+function offerCard(it, i){
+  return `<article class="card" data-ck="${esc(it.ck)}" style="--i:${i}">
     <div class="media">${imgHTML(it)}
-      ${it.pct?`<span class="tag">خصم <b class="num">${it.pct}%</b></span>`:""}
+      ${it.pct?`<span class="tag">${L==="en"?`<b class="num">${it.pct}%</b> ${t("off")}`:`${t("off")} <b class="num">${it.pct}%</b>`}</span>`:""}
     </div>
     <div class="cbody">
       ${it.cat?`<span class="cat">${esc(it.cat)}</span>`:""}
@@ -622,11 +823,11 @@ function offerCard(it){
   </article>`;
 }
 function prodCard(it){
-  const sub = [it.cat, !isNaN(it.now) ? `${fmt(it.now)} ج.م` : ""].filter(Boolean).join("، ");
+  const sub = [it.cat, !isNaN(it.now) ? `${fmt(it.now)} ${t("cur")}` : ""].filter(Boolean).join(L==="en"?", ":"، ");
   return `<li>
     <div class="th">${imgHTML(it)}</div>
     <div class="nm"><b>${esc(it.name)}</b>${sub?`<span>${esc(sub)}</span>`:""}</div>
-    <a class="ask" data-wa="${esc(`السلام عليكم، عايز أسأل على: ${it.name}`)}">${icon("wa","wa")}اسأل عليه</a>
+    <a class="ask" data-wa="${esc(t("waAsk") + it.name)}">${icon("wa","wa")}${t("ask")}</a>
   </li>`;
 }
 
@@ -637,18 +838,37 @@ function renderTabs(offers){
   const tabs = $("#tabs");
   if(keys.length<2 || offers.length<6){ tabs.parentElement.hidden = true; return; }
   tabs.parentElement.hidden = false;
-  tabs.innerHTML = `<button class="on" data-c="">الكل <small>${offers.length}</small></button>` +
+  tabs.innerHTML = `<button class="on" data-c="">${t("all")} <small>${offers.length}</small></button>` +
     keys.map(k=>`<button data-c="${esc(k)}">${esc(catLabel[k])} <small>${counts[k]}</small></button>`).join("");
   tabs.onclick = e=>{
     const b = e.target.closest("button"); if(!b) return;
     $$("button",tabs).forEach(x=>x.classList.toggle("on", x===b));
-    $$("#offerGrid .card").forEach(c=>c.classList.toggle("hide", !!b.dataset.c && c.dataset.ck!==b.dataset.c));
+    let n = 0;
+    $$("#offerGrid .card").forEach(c=>{
+      const show = !b.dataset.c || c.dataset.ck===b.dataset.c;
+      c.classList.toggle("hide", !show);
+      if(show && !RM && c.animate) c.animate([{opacity:0,transform:"translateY(12px) scale(.98)"},{opacity:1,transform:"none"}],{duration:420,delay:n++*50,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"});
+    });
   };
 }
 
-function renderHero(offers){
+/* الشريط الأصفر: أعلى خصم، وبعدين التوصيل والساعات والدفع */
+let rotT, rotI = 0;
+function startRot(offers){
   const max = Math.max(0, ...offers.map(o=>o.pct));
-  $("#heroHl").textContent = "عروض الأسبوع: " + (max>=10 ? `خصومات لحد ${max}%` : "خصومات وهدايا");
+  const list = [max>=10 ? t("dealMax").replace("{n}",max) : t("dealGifts"), ...t("rot")];
+  const el = $("#rot");
+  clearInterval(rotT); rotI = 0; el.textContent = list[0];
+  if(RM || !el.animate) return;
+  rotT = setInterval(()=>{
+    rotI = (rotI+1) % list.length;
+    el.animate([{transform:"none",opacity:1},{transform:"translateY(-110%)",opacity:0}],{duration:280,easing:"ease-in",fill:"forwards"});
+    setTimeout(()=>{
+      el.getAnimations().forEach(a=>a.cancel());
+      el.textContent = list[rotI];
+      el.animate([{transform:"translateY(110%)",opacity:0},{transform:"none",opacity:1}],{duration:420,easing:"cubic-bezier(.22,1,.36,1)"});
+    }, 280);
+  }, 3000);
 }
 
 let cdTimer;
@@ -662,25 +882,38 @@ function renderFeatured(offers){
   $("#featBox").innerHTML = `
     <div class="fm">${imgHTML(soon)}</div>
     <div class="fb">
-      <span class="lbl">العرض ده بيخلص ${dateTxt(soon.end)}</span>
+      <span class="lbl">${t("endsOn").replace("{d}",dateTxt(soon.end))}</span>
       <h3>${esc(soon.name)}</h3>
       ${soon.promo?`<div class="promo">${icon("gift")}<span>${esc(soon.promo)}</span></div>`:""}
-      ${!isNaN(soon.now)?`<div class="fpr"><span class="now">${fmt(soon.now)} <small style="font-size:15px">ج.م</small></span>${soon.pct?`<span class="was">${fmt(soon.was)}</span>`:""}</div>`:""}
-      <div class="cd" id="cd"></div>
+      ${!isNaN(soon.now)?`<div class="fpr"><span class="now">${fmt(soon.now)} <small style="font-size:15px">${t("cur")}</small></span>${soon.pct?`<span class="was">${fmt(soon.was)}</span>`:""}</div>`:""}
+      <div class="cd">${t("left")} <b class="num"><span id="cdD"></span><bdi><span class="u" id="cdH"></span>:<span class="u" id="cdM"></span>:<span class="u" id="cdS"></span></bdi></b></div>
       <div class="act" data-id="${esc(soon.id)}">${actHTML(soon.id)}</div>
     </div>`;
+  const p = n=>String(n).padStart(2,"0");
+  const set = (id,v)=>{ const el=$("#"+id); if(el && el.textContent!==v){ el.textContent=v; if(id!=="cdD") bumpEl(el); } };
   const tick = ()=>{
     let s = Math.max(0, Math.floor((soon.end - new Date())/1000));
     const d = Math.floor(s/86400); s%=86400;
     const h = Math.floor(s/3600); s%=3600;
     const m = Math.floor(s/60); s%=60;
-    const p = n=>String(n).padStart(2,"0");
-    $("#cd").innerHTML = `باقي <b class="num">${d ? d+" يوم و " : ""}<bdi>${p(h)}:${p(m)}:${p(s)}</bdi></b>`;
+    set("cdD", d ? `${d} ${t("day")} ${t("andT")} `.replace(/\s+/g," ") : "");
+    set("cdH", p(h)); set("cdM", p(m)); set("cdS", p(s));
   };
   tick(); cdTimer = setInterval(tick, 1000);
 }
 
+/* ظهور مرة واحدة لما العنصر يدخل الشاشة */
+function revealOnce(el){
+  if(RM || !("IntersectionObserver" in window)) return;
+  el.classList.add("wait"); el.classList.remove("anim");
+  const io = new IntersectionObserver(es=>{
+    if(es.some(e=>e.isIntersecting)){ el.classList.remove("wait"); el.classList.add("anim"); io.disconnect(); }
+  },{rootMargin:"0px 0px -10% 0px"});
+  io.observe(el);
+}
+
 function render(rows){
+  ROWS = rows;
   ITEMS = {}; catLabel = {};
   const now = new Date();
   const items = rows.map(toItem).filter((it,i)=>{
@@ -692,20 +925,69 @@ function render(rows){
   items.forEach(it=>ITEMS[it.id]=it);
   const offers = items.filter(i=>i.offer), prods = items.filter(i=>!i.offer);
 
-  // امسح من السلة أي عرض خلص
-  Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; }); saveCart();
+  // امسح من السلة أي عرض خلص، وحدّث الأسماء باللغة الحالية
+  Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; else cart[id] = cartEntry(ITEMS[id], cart[id].q); }); saveCart();
 
-  renderHero(offers);
+  startRot(offers);
   renderFeatured(offers);
   renderTabs(offers);
   $("#offerCount").textContent = offers.length ? offersTxt(offers.length) : "";
-  $("#offerGrid").innerHTML = offers.length ? offers.map(offerCard).join("") : `<div class="empty">العروض الجديدة نازلة قريب</div>`;
+  const grid = $("#offerGrid");
+  grid.innerHTML = offers.length ? offers.map(offerCard).join("") : `<div class="empty">${t("noOffers")}</div>`;
+  grid.classList.remove("anim");
+  if(offers.length) revealOnce(grid);
   $("#products").hidden = !prods.length;
   $("#prodRail").innerHTML = prods.map(prodCard).join("");
   bindWa(document);
   updateDock();
 }
 
+/* ---------- طرق الدفع ---------- */
+function payHTML(){
+  const visa = `<svg width="58" height="20" viewBox="0 0 64 22" aria-hidden="true"><text x="32" y="18" text-anchor="middle" font-family="Arial Black,Arial,sans-serif" font-weight="900" font-style="italic" font-size="21" fill="#1a1f71">VISA</text></svg>`;
+  const mc = `<svg width="40" height="26" viewBox="0 0 40 26" aria-hidden="true"><circle cx="14" cy="13" r="12" fill="#eb001b"/><circle cx="26" cy="13" r="12" fill="#f79e1b"/><path d="M20 2.6a12 12 0 0 1 0 20.8 12 12 0 0 1 0-20.8Z" fill="#ff5f00"/></svg>`;
+  const vf = `<svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12.5" fill="#e60000"/><path d="M14.6 6.2c-3.9.3-6.8 3.4-6.8 7.2 0 3.6 2.7 6.3 6.1 6.3 3.3 0 5.8-2.5 5.8-5.6 0-2.9-2-4.8-4.4-5.3.1-1.2.7-2.1 1.7-2.6-.8 0-1.6 0-2.4 0Z" fill="#fff"/></svg>`;
+  const items = [
+    `<div class="pm">${icon("cash")}<span>${t("cash")}</span></div>`,
+    `<div class="pm" aria-label="Visa">${visa}</div>`,
+    `<div class="pm" aria-label="Mastercard">${mc}<span>Mastercard</span></div>`,
+    `<div class="pm">${vf}<span class="vf">${t("vfcash")}</span></div>`,
+    `<div class="pm" aria-label="InstaPay"><span class="ip">InstaPay</span></div>`
+  ].join("");
+  /* نسخ مكررة علشان الشريط يلف من غير فراغ */
+  return items + `<div class="dup" style="display:contents" aria-hidden="true">${items}${items}${items}</div>`;
+}
+
+/* ---------- اللغة ---------- */
+function applyLang(){
+  const h = document.documentElement;
+  h.lang = L; h.dir = L==="en" ? "ltr" : "rtl";
+  document.title = t("title");
+  $$("[data-t]").forEach(e=>{ e.innerHTML = t(e.dataset.t); });
+  $$("[data-ta]").forEach(e=>e.setAttribute("aria-label", t(e.dataset.ta)));
+  $$("[data-talt]").forEach(e=>e.setAttribute("alt", t(e.dataset.talt)));
+  $$("[data-wa-t]").forEach(e=>{ e.dataset.wa = t(e.dataset.waT); });
+  $("#langBtn").textContent = t("langBtn");
+  $("#payTrack").innerHTML = payHTML();
+  bindWa(document);
+  if(ROWS) render(ROWS); else startRot([]);
+}
+$("#langBtn").onclick = ()=>{
+  const swap = ()=>{
+    L = L==="ar" ? "en" : "ar";
+    try{ localStorage.setItem("anas_lang", L); }catch(e){}
+    applyLang();
+    const hero = $("#hero"); hero.classList.remove("play"); void hero.offsetWidth; hero.classList.add("play");
+  };
+  if(RM || !document.body.animate) return swap();
+  document.body.animate([{opacity:1},{opacity:0}],{duration:140,easing:"ease-in",fill:"forwards"});
+  setTimeout(()=>{
+    swap(); document.body.getAnimations().forEach(a=>a.cancel());
+    document.body.animate([{opacity:0},{opacity:1}],{duration:260,easing:"ease-out"});
+  }, 140);
+};
+
+addEventListener("scroll", ()=>$("#top").classList.toggle("scrolled", scrollY>10), {passive:true});
 
 async function load(){
   if(!SHEET_CSV_URL){ $("#demoBar").hidden=false; return render(DEMO); }
@@ -715,13 +997,14 @@ async function load(){
     render(parseCSV(await res.text()));
   }catch(e){
     console.error(e);
-    $("#offerGrid").innerHTML = `<div class="empty">مش قادرين نحمّل العروض دلوقتي. كلمنا على الواتساب ونقولك كل العروض</div>`;
+    $("#offerGrid").innerHTML = `<div class="empty">${t("loadErr")}</div>`;
     bindWa(document);
   }
 }
 
 $("#yr").textContent = new Date().getFullYear();
-bindWa(document);
+applyLang();
+revealOnce($(".how"));
 updateDock();
 load();
 </script>
