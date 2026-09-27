@@ -48,10 +48,7 @@ header .wrap{display:flex;align-items:center;gap:14px;height:60px}
 nav.links{display:none;gap:2px}
 nav.links a{font-weight:600;font-size:14px;padding:8px 12px;border-radius:6px;color:var(--ink-2)}
 nav.links a:hover{color:var(--g-800);text-decoration:underline;text-underline-offset:6px}
-.hbtn{display:inline-flex;align-items:center;gap:8px;height:44px;min-width:44px;justify-content:center;padding:0 12px;border-radius:8px;font-weight:700;font-size:14px;border:1px solid var(--line);color:var(--g-800)}
-.hbtn .t{display:none}
-@media(min-width:760px){nav.links{display:flex}.hbtn .t{display:inline}}
-
+@media(min-width:760px){nav.links{display:flex}}
 /* buttons */
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;height:50px;padding:0 20px;border-radius:8px;font-weight:700;font-size:16px}
@@ -85,7 +82,7 @@ nav.links a:hover{color:var(--g-800);text-decoration:underline;text-underline-of
 .how{list-style:none;display:grid;gap:0;background:#fff;border:1px solid var(--line);border-radius:var(--r)}
 .how li{display:flex;align-items:center;gap:12px;padding:14px 16px;font-size:15px;color:var(--ink-2)}
 .how li+li{border-top:1px solid var(--line)}
-.how li b{font-family:var(--fh);width:28px;height:28px;border-radius:50%;background:var(--g-900);color:#fff;display:grid;place-items:center;font-size:14px;flex:none}
+.how li b{font-family:var(--fh);width:32px;height:32px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font-size:15px;flex:none}
 .how li strong{color:var(--ink)}
 @media(min-width:760px){.how{grid-template-columns:repeat(3,1fr)}.how li+li{border-top:0;border-inline-start:1px solid var(--line)}}
 
@@ -198,31 +195,20 @@ section{padding:40px 0;scroll-margin-top:72px}
 .visit{display:grid;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .visit .vb{padding:22px 20px;display:flex;flex-direction:column;gap:14px;justify-content:center}
 @media(min-width:900px){.visit .vb{padding:36px}}
-.visit .kick{color:var(--g-600);font-weight:700;font-size:14px}
 .visit h2{font-family:var(--fh);font-weight:800;font-size:clamp(23px,5vw,30px);line-height:1.3}
 .visit ul{list-style:none;display:grid;gap:10px}
 .visit li{display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink-2)}
 .visit li svg.i{color:var(--g-600);margin-top:3px}
 .visit li b{color:var(--ink)}
+.visit li a{color:var(--g-800);font-weight:700;text-decoration:underline;text-underline-offset:4px;display:inline-block;padding:8px 0;margin:-8px 0}
+.visit li svg.wa{width:20px;height:20px;flex:none;fill:var(--wa);margin-top:3px}
 .areas{font-size:14px;color:var(--ink-2);border-top:1px solid var(--line);padding-top:12px}
 .areas b{color:var(--ink)}
 .visit .vbtns{display:flex;flex-wrap:wrap;gap:10px}
 .visit .vbtns .btn{height:48px;font-size:15px}
 
 /* footer */
-footer{background:var(--ink);color:#c3cbc7;padding:36px 0 28px;margin-top:16px}
-footer .cols{display:grid;gap:24px}
-@media(min-width:760px){footer .cols{grid-template-columns:1.4fr 1fr 1fr}}
-footer .logo b{color:#fff}
-footer .logo small{color:#8e9a94}
-footer .logo .mk{background:var(--g-600)}
-footer p{font-size:14px;margin-top:12px;max-width:340px}
-footer h5{color:#fff;font-family:var(--fh);font-weight:600;font-size:15px;margin-bottom:10px}
-footer li{list-style:none;margin-bottom:8px;font-size:14px}
-footer li a{display:inline-flex;align-items:center;gap:8px;color:#fff;font-weight:600}
-footer li a:hover{text-decoration:underline}
-footer li svg.i{width:16px;height:16px;color:#8e9a94}
-footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:26px;padding-top:16px;font-size:12.5px;color:#8e9a94}
+footer{padding:20px 0 24px;font-size:13px;color:var(--muted)}
 
 /* bottom bar */
 .dock{position:fixed;z-index:60;left:50%;bottom:calc(12px + env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;align-items:center;gap:6px;padding:6px;background:var(--ink);border-radius:12px;box-shadow:0 6px 20px rgba(0,0,0,.25);width:min(calc(100% - 24px),440px)}
@@ -301,14 +287,13 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:26px;padding-t
   <div class="wrap">
     <a class="logo" href="#">
       <span class="mk"><svg><use href="#i-mortar"/></svg></span>
-      <span><b>د. أنس نحيلة</b><small>صيدلية في المعمورة الشاطئ</small></span>
+      <span><b>د. أنس نحيلة</b><small>صيدلية</small></span>
     </a>
     <nav class="links">
       <a href="#offers">العروض</a>
       <a href="#products">متوفر عندنا</a>
-      <a href="#visit">العنوان والتوصيل</a>
+      <a href="#visit">العنوان</a>
     </nav>
-    <a class="hbtn" href="tel:035650501" aria-label="اتصل بينا"><svg class="i"><use href="#i-phone"/></svg><span class="t num">03 5650501</span></a>
   </div>
 </header>
 
@@ -317,7 +302,7 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:26px;padding-t
   <div class="wrap"><div class="in">
     <span class="hello"><svg class="i"><use href="#i-pin"/></svg>المعمورة الشاطئ، جنب البوابة الرئيسية</span>
     <h1>صيدليتك<br>اللي عارفاك</h1>
-    <p>مفتوحين 24 ساعة. ولو مش فاضي تنزل، ابعتلنا على الواتساب ونوصلك لحد البيت ببلاش خلال 30 دقيقة.</p>
+    <p>مفتوحين 24 ساعة طول الأسبوع. اختار من العروض وابعت طلبك على الواتساب.</p>
     <span class="deal" id="heroHl">عروض الأسبوع: خصومات وهدايا</span>
     <div class="cta">
       <a class="btn btn-yel" href="#offers">شوف العروض</a>
@@ -385,18 +370,15 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:26px;padding-t
   <div class="wrap">
     <div class="visit">
       <div class="vb">
-        <span class="kick">صيدلية د. أنس محمد نحيلة</span>
-        <h2>إحنا جنبك في المعمورة الشاطئ</h2>
+        <h2>العنوان والتليفونات</h2>
         <ul>
           <li><svg class="i"><use href="#i-pin"/></svg><span>جنب البوابة الرئيسية، <b>عمارة لافي</b>، المعمورة الشاطئ، إسكندرية</span></li>
-          <li><svg class="i"><use href="#i-clock"/></svg><span>مفتوحين <b>24 ساعة</b> طول أيام الأسبوع</span></li>
-          <li><svg class="i"><use href="#i-truck"/></svg><span><b>توصيل مجاني</b> خلال 30 دقيقة</span></li>
-          <li><svg class="i"><use href="#i-box"/></svg><span>لو الصنف مش موجود، <b>بنوفرهولك</b></span></li>
+          <li><svg class="i"><use href="#i-phone"/></svg><span><a href="tel:035650501"><bdi class="num">03 5650501</bdi></a> و <a href="tel:035650502"><bdi class="num">03 5650502</bdi></a></span></li>
+          <li><svg class="wa"><use href="#i-wa"/></svg><span>واتساب <a data-wa="السلام عليكم"><bdi class="num">01288827555</bdi></a></span></li>
         </ul>
-        <div class="areas">بنوصل لـ: <b>المعمورة الشاطئ، المعمورة البلد، الإصلاح، المندرة، أبو قير</b></div>
+        <div class="areas">بنوصل ببلاش لـ: <b>المعمورة الشاطئ، المعمورة البلد، الإصلاح، المندرة، أبو قير</b></div>
         <div class="vbtns">
           <a class="btn btn-dark" href="https://www.google.com/maps/search/?api=1&query=%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9+%D8%AF.+%D8%A3%D9%86%D8%B3+%D9%86%D8%AD%D9%8A%D9%84%D8%A9+%D8%A7%D9%84%D9%85%D8%B9%D9%85%D9%88%D8%B1%D8%A9" target="_blank" rel="noopener"><svg class="i"><use href="#i-pin"/></svg>افتح على الخريطة</a>
-          <a class="btn btn-line" href="tel:035650501"><svg class="i"><use href="#i-phone"/></svg><bdi class="num">03 5650501</bdi></a>
         </div>
       </div>
     </div>
@@ -404,29 +386,7 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:26px;padding-t
 </section>
 
 <footer>
-  <div class="wrap">
-    <div class="cols">
-      <div>
-        <a class="logo" href="#"><span class="mk"><svg><use href="#i-mortar"/></svg></span><span><b>د. أنس نحيلة</b><small>صيدلية في المعمورة الشاطئ</small></span></a>
-        <p>المعمورة الشاطئ، جنب البوابة الرئيسية، عمارة لافي، إسكندرية.</p>
-      </div>
-      <div>
-        <h5>تواصل معانا</h5>
-        <ul>
-          <li><a data-wa="السلام عليكم"><svg class="i"><use href="#i-wa"/></svg><bdi class="num">01288827555</bdi></a></li>
-          <li><a href="tel:035650501"><svg class="i"><use href="#i-phone"/></svg><bdi class="num">035650501</bdi></a></li>
-          <li><a href="tel:035650502"><svg class="i"><use href="#i-phone"/></svg><bdi class="num">035650502</bdi></a></li>
-        </ul>
-      </div>
-      <div>
-        <h5>العنوان</h5>
-        <ul>
-          <li><a href="https://www.google.com/maps/search/?api=1&query=%D8%B5%D9%8A%D8%AF%D9%84%D9%8A%D8%A9+%D8%AF.+%D8%A3%D9%86%D8%B3+%D9%86%D8%AD%D9%8A%D9%84%D8%A9+%D8%A7%D9%84%D9%85%D8%B9%D9%85%D9%88%D8%B1%D8%A9" target="_blank" rel="noopener"><svg class="i"><use href="#i-pin"/></svg>افتح على الخريطة</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="copy">© <span id="yr"></span> صيدلية د. أنس نحيلة. الأسعار قابلة للتغيير والعروض لحد نفاد الكمية.</div>
-  </div>
+  <div class="wrap">© <span id="yr"></span> صيدلية د. أنس نحيلة. الأسعار قابلة للتغيير والعروض لحد نفاد الكمية.</div>
 </footer>
 
 <!-- الشريط اللي تحت -->
