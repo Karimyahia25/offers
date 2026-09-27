@@ -137,6 +137,19 @@ nav.links a:hover{background:var(--g-50);color:var(--g-800)}
 .whero.play .burst{animation:spinIn .9s 1.1s var(--spring) both}
 @keyframes rot{to{transform:rotate(360deg)}}
 @keyframes spinIn{from{opacity:0;transform:scale(.2) rotate(-120deg)}}
+/* سوشيال أول شاشة */
+.hsoc{display:flex;gap:10px;margin-top:18px}
+.hsoc a{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:transform .35s var(--spring),background .25s,border-color .25s}
+.hsoc svg{width:20px;height:20px;fill:currentColor}
+.hsoc a:hover{transform:translateY(-4px) rotate(-8deg) scale(1.08)}
+.hsoc a.fb:hover{background:#1877f2;border-color:#1877f2}
+.hsoc a.ig:hover{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285aeb 90%);border-color:transparent}
+.hsoc a.tt:hover{background:#000;border-color:#000}
+.whero.play .hsoc a{animation:pop .6s var(--spring) both}
+.whero.play .hsoc a:nth-child(1){animation-delay:1s}
+.whero.play .hsoc a:nth-child(2){animation-delay:1.1s}
+.whero.play .hsoc a:nth-child(3){animation-delay:1.2s}
+
 /* دخول أول شاشة */
 .whero.play .a{animation:rise .8s var(--eo) both;animation-delay:var(--d,0s)}
 .whero.play h1 .ln>span{animation:lineUp 1s var(--eo) both;animation-delay:.15s}
@@ -482,6 +495,11 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
       <a class="btn btn-yel" href="#offers"><svg class="i"><use href="#i-flame"/></svg><span data-t="cta1">شوف العروض</span></a>
       <a class="btn btn-ghost" data-wa-t="waAskOffers"><svg class="wa"><use href="#i-wa"/></svg><span data-t="cta2">كلمنا واتساب</span></a>
     </div>
+    <div class="hsoc a" style="--d:.85s">
+      <a class="fb" href="https://www.facebook.com/profile.php?id=61563038765949" target="_blank" rel="noopener" aria-label="Facebook"><svg><use href="#b-fb"/></svg></a>
+      <a class="ig" href="https://www.instagram.com/anasnehila/" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#b-ig"/></svg></a>
+      <a class="tt" href="https://www.tiktok.com/@anas.nehila" target="_blank" rel="noopener" aria-label="TikTok"><svg><use href="#b-tt"/></svg></a>
+    </div>
   </div></div>
 </div>
 
@@ -636,7 +654,7 @@ const I18N = {
     h1:`<span class="ln"><span>صيدليتك</span></span><span class="ln"><span>اللي <em>عارفاك${UL}</em></span></span>`,
     heroP:"فاتحين 24 ساعة والتوصيل علينا. ابعت طلبك واتساب.",
     dealMax:"عروض الأسبوع: خصومات لحد {n}%", dealGifts:"عروض الأسبوع: خصومات وهدايا",
-    rot:["التوصيل في 30 دقيقة","ادفع كاش أو فيزا أو فودافون كاش أو إنستاباي"],
+    rot:["التوصيل في 30 دقيقة","ادفع كاش أو فيزا أو إنستاباي"],
     burstMax:"خصم لحد", burstGift:"عروض", burstGiftB:"وهدايا",
     cta1:"شوف العروض", cta2:"كلمنا واتساب",
     s1h:"اختار عروضك", s1p:"ضيف اللي عاجبك لطلبك",
@@ -677,7 +695,7 @@ const I18N = {
     h1:`<span class="ln"><span>The pharmacy</span></span><span class="ln"><span>that <em>knows you${UL}</em></span></span>`,
     heroP:"Open 24 hours and delivery is on us. Send your order on WhatsApp.",
     dealMax:"This week: up to {n}% off", dealGifts:"This week: discounts and gifts",
-    rot:["Delivered in 30 minutes","Pay cash, Visa, Vodafone Cash or InstaPay"],
+    rot:["Delivered in 30 minutes","Pay cash, card or InstaPay"],
     burstMax:"Up to", burstGift:"Offers", burstGiftB:"& gifts",
     cta1:"See offers", cta2:"Chat on WhatsApp",
     s1h:"Pick your offers", s1p:"Add what you like to your order",
