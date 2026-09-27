@@ -353,6 +353,42 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:28px;padding-t
   .rv{opacity:1;transform:none}
   .hero h1 .hl::before{transform:rotate(-1.5deg)}
 }
+
+/* ===== أول شاشة (صورة الصيدلية) + خطوات الطلب ===== */
+.whero{position:relative;min-height:86vh;max-height:780px;display:flex;align-items:flex-end;color:#fff;overflow:hidden;isolation:isolate}
+@media(min-width:900px){.whero{min-height:640px;align-items:center}}
+.whero img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transform:scale(1.08);animation:zoomOut 2.4s var(--ease) forwards}
+@keyframes zoomOut{to{transform:scale(1)}}
+.whero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,40,48,.1) 0%,rgba(11,40,48,.3) 35%,rgba(26,17,9,.88) 100%)}
+@media(min-width:900px){.whero::after{background:linear-gradient(270deg,rgba(26,17,9,.85) 0%,rgba(26,17,9,.55) 45%,rgba(11,40,48,.05) 100%)}}
+.whero .wrap{width:100%;padding-top:40px;padding-bottom:34px}
+.whero .in{max-width:560px}
+.hello{display:inline-flex;align-items:center;gap:7px;background:#fff;color:var(--ink);font-weight:700;font-size:13px;padding:7px 14px;border-radius:999px}
+.hello svg.i{width:16px;height:16px;color:var(--red)}
+.whero h1{font-family:var(--fh);font-weight:800;font-size:clamp(42px,11vw,78px);line-height:1.08;margin:14px 0 10px}
+.whero h1 em{font-style:normal;color:var(--yel);position:relative;white-space:nowrap;display:inline-block}
+.whero h1 em svg{position:absolute;left:0;right:0;bottom:-.1em;width:100%;height:.28em;stroke:var(--yel);stroke-width:5;stroke-linecap:round;fill:none;stroke-dasharray:320;stroke-dashoffset:320;animation:draw 1.1s .7s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.whero p{font-size:17px;color:rgba(255,255,255,.9);max-width:480px}
+.sticker{display:inline-flex;margin-top:18px;background:var(--yel);color:var(--ink);font-weight:800;font-family:var(--fh);font-size:19px;padding:6px 16px;border-radius:14px;transform:rotate(-2deg);box-shadow:0 10px 20px -10px rgba(0,0,0,.45)}
+.whero .cta{margin-top:20px}
+.steps{display:grid;gap:12px}
+@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr);gap:20px}}
+.step{background:#fff;border-radius:var(--r);padding:18px;box-shadow:var(--sh-1);display:flex;gap:14px;align-items:center}
+.step .n{width:54px;height:54px;border-radius:50%;background:var(--g-50);color:var(--g-600);display:grid;place-items:center;flex:none;position:relative}
+.step .n svg{width:26px;height:26px}
+.step .n svg.wa{fill:var(--g-600)}
+.step .n b{position:absolute;top:-3px;right:-3px;width:22px;height:22px;border-radius:50%;background:var(--red);color:#fff;font-family:var(--fh);font-size:13px;display:grid;place-items:center;line-height:1}
+.step h3{font-family:var(--fh);font-weight:800;font-size:19px;line-height:1.25}
+.step p{font-size:14px;color:var(--muted)}
+.whero .btn{border-radius:14px}
+.whero .btn-ghost{backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.whero h1{letter-spacing:-.5px}
+.step{border-radius:var(--r)}
+.step h3{font-weight:800;font-size:18px}
+.step .n b{top:-2px;right:-2px}
+#how{padding-top:24px}
+
 </style>
 </head>
 <body>
@@ -407,25 +443,31 @@ footer .copy{border-top:1px solid rgba(255,255,255,.1);margin-top:28px;padding-t
   </div>
 </header>
 
-<div class="hero">
-  <div class="wrap">
-    <div>
-      <span class="eyebrow"><i class="dot"></i><span id="liveCount">عروض الأسبوع شغالة دلوقتي</span></span>
-      <h1>خصومات <span class="hl" id="heroHl">لحد 50%</span><br>على التجميل والعناية</h1>
-      <p class="lead">اختار عروضك وابعت طلبك على الواتساب في رسالة واحدة. هيوصلك لحد باب البيت خلال 30 دقيقة ومن غير رسوم توصيل.</p>
-      <div class="cta">
-        <a class="btn btn-yel" href="#offers"><svg class="i"><use href="#i-flame"/></svg>شوف العروض</a>
-        <a class="btn btn-ghost" data-wa="السلام عليكم، عايز أستفسر عن العروض"><svg class="wa"><use href="#i-wa"/></svg>كلمنا واتساب</a>
-      </div>
-      <div class="stats">
-        <div class="stat"><b class="num">30</b><span>دقيقة توصيل</span></div>
-        <div class="stat"><b class="num">0</b><span>جنيه رسوم توصيل</span></div>
-        <div class="stat"><b class="num">24/7</b><span>شغالين طول اليوم</span></div>
-      </div>
+<div class="whero">
+  <img class="bg" src="img/storefront-1400.jpg" srcset="img/storefront-800.jpg 800w, img/storefront-1400.jpg 1400w" sizes="100vw" alt="واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ">
+  <div class="wrap"><div class="in">
+    <span class="hello"><svg class="i"><use href="#i-pin"/></svg>المعمورة الشاطئ · جنب البوابة الرئيسية</span>
+    <h1>صيدليتك<br>اللي <em>عارفاك<svg viewBox="0 0 200 20" preserveAspectRatio="none"><path d="M3 13C40 4 78 18 118 9s62-4 79 3"/></svg></em></h1>
+    <p>جيرانك في المعمورة، ومفتوحين 24 ساعة. ولو مش فاضي تنزل، ابعتلنا على الواتساب ونوصلك لحد البيت ببلاش خلال 30 دقيقة.</p>
+    <span class="sticker">عروض الأسبوع: خصومات&nbsp;<span id="heroHl">لحد 50%</span></span>
+    <div class="cta">
+      <a class="btn btn-yel" href="#offers"><svg class="i"><use href="#i-flame"/></svg>شوف العروض</a>
+      <a class="btn btn-ghost" data-wa="السلام عليكم، عايز أستفسر عن العروض"><svg class="wa"><use href="#i-wa"/></svg>كلمنا واتساب</a>
     </div>
-    <div class="show" id="show" aria-hidden="true"></div>
-  </div>
+    <span id="liveCount" hidden></span>
+  </div></div>
+  <div id="show" hidden></div>
 </div>
+
+<section id="how" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="steps">
+      <div class="step rv"><div class="n"><svg class="i"><use href="#i-bag"/></svg><b>1</b></div><div><h3>اختار عروضك</h3><p>ضيف اللي عاجبك لطلبك</p></div></div>
+      <div class="step rv" style="--d:.08s"><div class="n"><svg class="wa"><use href="#i-wa"/></svg><b>2</b></div><div><h3>ابعت على الواتساب</h3><p>الطلب بيتكتب لوحده في رسالة</p></div></div>
+      <div class="step rv" style="--d:.16s"><div class="n"><svg class="i"><use href="#i-truck"/></svg><b>3</b></div><div><h3>عندك في 30 دقيقة</h3><p>والتوصيل ببلاش</p></div></div>
+    </div>
+  </div>
+</section>
 
 <section id="featured" hidden>
   <div class="wrap"><div class="feat rv" id="featBox"></div></div>
