@@ -63,6 +63,8 @@ section{padding:34px 0;scroll-margin-top:64px}
 .card .img img{width:100%;height:100%;object-fit:cover}
 .card .ph{width:100%;height:100%;display:grid;place-items:center;font-size:54px;background:linear-gradient(135deg,#eaf6f0,#fbeef3)}
 .badge{position:absolute;top:10px;right:10px;background:var(--accent);color:#fff;font-weight:800;font-size:14px;padding:3px 10px;border-radius:999px;z-index:2}
+.promo{position:absolute;left:0;right:0;bottom:0;background:rgba(224,69,123,.93);color:#fff;font-weight:800;font-size:15px;text-align:center;padding:7px 8px;line-height:1.35}
+.price .unit{font-size:12px;color:var(--muted);font-weight:600}
 .card .body{padding:12px 12px 14px;display:flex;flex-direction:column;gap:6px;flex:1}
 .card h3{font-size:15px;font-weight:700;line-height:1.45}
 .card .desc{font-size:13px;color:var(--muted);line-height:1.5}
@@ -231,9 +233,9 @@ const WA_NUMBER = "201288827555";
 const DEMO = [
   {"النوع":"عرض","الاسم":"واقي شمس SPF 50 — 50 مل","الوصف":"للبشرة الدهنية، ملمس خفيف","السعر قبل":"650","السعر بعد":"520","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"2026-10-31","ظاهر":"نعم","الكود":"OF1"},
   {"النوع":"عرض","الاسم":"سيروم فيتامين C","الوصف":"لنضارة البشرة وتوحيد اللون","السعر قبل":"900","السعر بعد":"720","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"2026-10-15","ظاهر":"نعم","الكود":"OF2"},
-  {"النوع":"عرض","الاسم":"شامبو + بلسم ضد التساقط","الوصف":"العرض على الاتنين مع بعض","السعر قبل":"780","السعر بعد":"590","الفئة":"عناية بالشعر","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":"OF3"},
+  {"النوع":"عرض","الاسم":"شامبو + بلسم ضد التساقط","الوصف":"العرض على الاتنين مع بعض","السعر قبل":"780","السعر بعد":"590","الفئة":"عناية بالشعر","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":"OF3","العرض":"القطعة التانية بـ 50%"},
   {"النوع":"عرض","الاسم":"كريم ترطيب للأطفال","الوصف":"للبشرة الحساسة","السعر قبل":"320","السعر بعد":"260","الفئة":"أطفال","الصورة":"","ينتهي":"2026-11-10","ظاهر":"نعم","الكود":"OF4"},
-  {"النوع":"عرض","الاسم":"غسول وش + تونر","الوصف":"روتين تنظيف كامل","السعر قبل":"560","السعر بعد":"450","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":"OF5"},
+  {"النوع":"عرض","الاسم":"غسول وش + تونر","الوصف":"روتين تنظيف كامل","السعر قبل":"560","السعر بعد":"450","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":"OF5","العرض":"2 + 1 هدية"},
   {"النوع":"منتج","الاسم":"كريم تفتيح تحت العين","الوصف":"","السعر قبل":"","السعر بعد":"","الفئة":"عناية بالبشرة","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":""},
   {"النوع":"منتج","الاسم":"زيت شعر طبيعي","الوصف":"","السعر قبل":"","السعر بعد":"380","الفئة":"عناية بالشعر","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":""},
   {"النوع":"منتج","الاسم":"مزيل عرق بدون ألومنيوم","الوصف":"","السعر قبل":"","السعر بعد":"","الفئة":"عناية شخصية","الصورة":"","ينتهي":"","ظاهر":"نعم","الكود":""},
@@ -306,6 +308,7 @@ function cardHTML(r, isOffer){
   const name = r["الاسم"], was = num(r["السعر قبل"]), now = num(r["السعر بعد"]);
   const cat = r["الفئة"]||"";
   const pct = (!isNaN(was) && !isNaN(now) && was>now) ? Math.round((1-now/was)*100) : 0;
+  const promo = (r["العرض"]||"").trim();   // مثال: 1 + 1 هدية — القطعة التانية بـ 50%
   const src = imgUrl(r["الصورة"]);
   const ph = `<div class="ph">${EMOJI[cat]||"✨"}</div>`;
   const img = src ? `<img src="${esc(src)}" alt="${esc(name)}" loading="lazy" onerror="this.outerHTML='${ph.replace(/"/g,"&quot;")}'">` : ph;
@@ -318,15 +321,15 @@ function cardHTML(r, isOffer){
   }
 
   let price = "";
-  if(!isNaN(now)) price = `<div class="price"><span class="now">${fmt(now)} ج</span>${pct?`<span class="was">${fmt(was)} ج</span>`:""}</div>`;
+  if(!isNaN(now)) price = `<div class="price">${promo?`<span class="unit">سعر القطعة</span>`:""}<span class="now">${fmt(now)} ج</span>${pct?`<span class="was">${fmt(was)} ج</span>`:""}</div>`;
 
   const code = r["الكود"] ? ` (كود ${r["الكود"]})` : "";
-  const msg = isOffer ? `السلام عليكم، عايز عرض: ${name}${code}` : `السلام عليكم، عايز أسأل على: ${name}`;
+  const msg = isOffer ? `السلام عليكم، عايز عرض: ${name}${promo?` — ${promo}`:""}${code}` : `السلام عليكم، عايز أسأل على: ${name}`;
   const label = isOffer ? "اطلب العرض" : "اسأل عليه";
 
   return `<div class="card" data-cat="${esc(cat)}">
     ${pct?`<span class="badge">خصم ${pct}%</span>`:""}
-    <div class="img">${img}</div>
+    <div class="img">${img}${promo?`<div class="promo">🎁 ${esc(promo)}</div>`:""}</div>
     <div class="body">
       <h3>${esc(name)}</h3>
       ${r["الوصف"]?`<div class="desc">${esc(r["الوصف"])}</div>`:""}
