@@ -11,6 +11,18 @@
 <link rel="alternate" hreflang="x-default" href="https://karimyahia25.github.io/offers/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="google-site-verification" content="r7ACVnAPEByXWcExhblrcHgxJzo6HhLTzI30CXI1F88" />
+<!-- Google Analytics (عداد الزوار) — property "موقع العروض" -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SK4WXJPFK9"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+(function(){
+  var src = new URLSearchParams(location.search).get("src");
+  if(src) gtag('set', 'user_properties', {ad_src: src});
+})();
+gtag('config', 'G-SK4WXJPFK9');
+</script>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ar_EG">
 <meta property="og:url" content="https://karimyahia25.github.io/offers/">
@@ -1440,6 +1452,29 @@ async function load(){
     else if(vis && v.paused && !RM && !saveData && !v.dataset.userPaused) v.play().catch(()=>{});
   },{passive:true});
 })();
+
+/* ---------- تتبع الأحداث في Google Analytics ---------- */
+function track(name, params){ try{ if(window.gtag) gtag("event", name, Object.assign({ad_src: SRC || "(none)", lang: L}, params||{})); }catch(e){} }
+document.addEventListener("click", e=>{
+  const add = e.target.closest("[data-add]");
+  if(add){ const it = ITEMS[add.dataset.add]; track("add_to_cart", {currency:"EGP", value: it && !isNaN(it.now) ? it.now : 0, items:[{item_id: add.dataset.add, item_name: it ? it.name : "", item_category: it ? it.cat : ""}], hot: !!(it && it.hot)}); return; }
+  if(e.target.closest("#sendBtn")){
+    const xs = Object.entries(cart);
+    track("generate_lead", {method:"whatsapp_order", currency:"EGP", items_count: cartCount(),
+      value: xs.reduce((s,[,x])=>s + (isNaN(x.now)?0:x.now*x.q), 0),
+      items: xs.map(([id,x])=>({item_id:id, item_name:x.name, quantity:x.q}))});
+    return;
+  }
+  const wa = e.target.closest("a[data-wa]");
+  if(wa){ const where = wa.closest("section,header,.whero,.dock,footer"); track("whatsapp_click", {where: where ? (where.id || where.className.split(" ")[0]) : "page"}); return; }
+  const tel = e.target.closest('a[href^="tel:"]');
+  if(tel){ track("phone_call", {number: tel.getAttribute("href").slice(4)}); return; }
+  const so = e.target.closest(".so,.hsoc a");
+  if(so){ track("social_click", {network: so.getAttribute("aria-label")}); return; }
+  if(e.target.closest("#langBtn")) track("language_switch", {to: L==="ar" ? "en" : "ar"});
+}, true);
+let searchT;
+$("#pq").addEventListener("input", e=>{ clearTimeout(searchT); const q = e.target.value.trim(); if(q.length>=2) searchT = setTimeout(()=>track("search", {search_term: q}), 1200); });
 
 setInterval(()=>{
   $$(".ends[data-end]").forEach(el=>{
