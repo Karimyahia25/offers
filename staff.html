@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>أسعار الستاف | صيدلية د. أنس نحيلة</title>
+<style>
+:root{--bg:#f4f7f8;--card:#fff;--ink:#12263a;--mut:#5b6b7a;--red:#d62828;--teal:#0e8a8f;--line:#dde5ea}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1a24;--card:#17252f;--ink:#eef3f6;--mut:#9fb0bd;--line:#26384a}}
+*{box-sizing:border-box}
+body{margin:0;font-family:"IBM Plex Sans Arabic",system-ui,Tahoma,sans-serif;background:var(--bg);color:var(--ink)}
+header{position:sticky;top:0;background:var(--teal);color:#fff;padding:12px 16px;z-index:5}
+header h1{margin:0 0 8px;font-size:18px}
+#q{width:100%;font:inherit;font-size:20px;padding:12px 14px;border:0;border-radius:12px;color:#12263a}
+.chips{display:flex;gap:8px;margin-top:8px;overflow-x:auto}
+.chips button{flex:none;font:inherit;border:0;border-radius:20px;padding:8px 16px;background:rgba(255,255,255,.2);color:#fff;min-height:44px}
+.chips button.on{background:#fff;color:var(--teal);font-weight:700}
+main{padding:12px 16px;max-width:760px;margin:auto}
+.info{color:var(--mut);font-size:14px;margin:4px 0 10px}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px}
+.nm{flex:1;min-width:0}
+.nm b{display:block;font-size:17px;direction:ltr;text-align:right;word-break:break-word}
+.nm small{color:var(--mut)}
+.pr{text-align:center;min-width:92px}
+.now{font-size:26px;font-weight:800;color:var(--red);line-height:1}
+.now small{font-size:13px;font-weight:600}
+.was{color:var(--mut);text-decoration:line-through;font-size:14px}
+.cp{font:inherit;border:1px solid var(--teal);background:none;color:var(--teal);border-radius:10px;padding:0 12px;min-height:44px}
+.cp.ok{background:var(--teal);color:#fff}
+.empty{text-align:center;color:var(--mut);padding:40px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>أسعار الخصم — للستاف بس</h1>
+  <input id="q" type="search" placeholder="اكتب الصنف أو الكود… مثال: pampers 4" autocomplete="off" autofocus>
+  <div class="chips" id="chips"></div>
+</header>
+<main>
+  <div class="info" id="info"></div>
+  <div id="list"></div>
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const clean = s => String(s).toLowerCase().replace(/[()+\-_,]/g, " ").replace(/\s+/g, " ").trim();
+const ar2en = {"بامبرز":"pampers","بامبيرز":"pampers","مولفيكس":"molfix","مولفكس":"molfix","بيبي جوي":"baby joy"};
+
+function parseCSV(t){
+  const rows = []; let r = [], f = "", q = false;
+  for(let i = 0; i < t.length; i++){
+    const c = t[i];
+    if(q){ if(c === '"'){ if(t[i+1] === '"'){ f += '"'; i++; } else q = false; } else f += c; }
+    else if(c === '"') q = true;
+    else if(c === ","){ r.push(f); f = ""; }
+    else if(c === "\n"){ r.push(f); rows.push(r); r = []; f = ""; }
+    else if(c !== "\r") f += c;
+  }
+  if(f || r.length){ r.push(f); rows.push(r); }
+  const head = rows.shift().map(h => h.replace(/^﻿/, "").trim());
+  return rows.filter(r => r.some(x => x.trim())).map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
+}
+
+let ALL = [], brand = "";
+const BRANDS = [["pampers","بامبرز"],["molfix","مولفيكس"],["baby joy","بيبي جوي"]];
+
+function render(){
+  const qs = clean($("#q").value).split(" ").filter(Boolean).map(w => ar2en[w] || w);
+  const list = ALL.filter(p => (!brand || clean(p.name).startsWith(brand)) && qs.every(w => /^\d{1,2}$/.test(w) ? p.hay.split(" ").includes(w) : p.hay.includes(w)));
+  $("#info").textContent = list.length + " صنف";
+  $("#list").innerHTML = list.length ? list.map(p => {
+    const pct = p.was > p.now ? Math.round((1 - p.now / p.was) * 100) : 0;
+    return `<div class="row"><div class="nm"><b>${esc(p.name)}</b><small>كود ${esc(p.code)}</small></div>
+      <div class="pr"><div class="now">${p.now}<small> ج</small></div>${pct ? `<div class="was">${p.was}</div>` : ""}</div>
+      <button class="cp" data-i="${p.i}">نسخ</button></div>`;
+  }).join("") : `<div class="empty">مفيش صنف بالاسم ده في العروض</div>`;
+}
+
+$("#list").onclick = e => {
+  const b = e.target.closest(".cp"); if(!b) return;
+  const p = ALL[b.dataset.i];
+  const txt = `${p.name}\nالسعر بعد الخصم: ${p.now} جنيه (بدل ${p.was})`;
+  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).catch(() => {}).finally(() => {
+    b.textContent = "تم ✓"; b.classList.add("ok");
+    setTimeout(() => { b.textContent = "نسخ"; b.classList.remove("ok"); }, 1200);
+  });
+};
+$("#q").addEventListener("input", render);
+$("#chips").onclick = e => {
+  const b = e.target.closest("button"); if(!b) return;
+  brand = b.dataset.b;
+  $("#chips").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+  render();
+};
+$("#chips").innerHTML = `<button class="on" data-b="">الكل</button>` + BRANDS.map(([k, a]) => `<button data-b="${k}">${a}</button>`).join("");
+
+fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
+  ALL = parseCSV(t).map((r, i) => ({
+    i, name: r["الاسم"], code: r["الكود"], was: Number(r["السعر قبل"]), now: Number(r["السعر بعد"]),
+    hay: clean(r["الاسم"] + " " + r["الكود"])
+  })).filter(p => p.name && !isNaN(p.now));
+  render();
+}).catch(() => { $("#list").innerHTML = '<div class="empty">تعذر تحميل القائمة</div>'; });
+</script>
+</body>
+</html>
