@@ -1102,7 +1102,9 @@ function offerCard(it, i){
 }
 function prodCard(it){
   return `<article class="card" data-ck="${esc(it.ck)}">
-    <div class="media">${imgHTML(it)}</div>
+    <div class="media">${imgHTML(it)}
+      ${it.pct?`<span class="tag">${L==="en"?`<b class="num">${it.pct}%</b> ${t("off")}`:`${t("off")} <b class="num">${it.pct}%</b>`}</span>`:""}
+    </div>
     <div class="cbody">
       ${it.cat?`<span class="cat">${esc(it.cat)}</span>`:""}
       <h3>${esc(it.name)}</h3>
@@ -1118,8 +1120,12 @@ let PRODS = [], pCat = "", pQ = "", pShown = PAGE;
 const fold = s => norm(s).toLowerCase();
 function renderProducts(reset){
   if(reset) pShown = PAGE;
-  const q = fold(pQ);
-  const list = PRODS.filter(p=>(!pCat || p.ck===pCat) && (!q || fold(p.name + " " + p.cat + " " + p.desc).includes(q)));
+  const qs = fold(pQ).replace(/[()+\-_,]/g," ").split(/\s+/).filter(Boolean);
+  const list = PRODS.filter(p=>{
+    if(pCat && p.ck!==pCat) return false;
+    const hay = fold(p.name + " " + p.cat + " " + p.desc).replace(/[()+\-_,]/g," ");
+    return qs.every(w=>hay.includes(w));
+  });
   const grid = $("#prodGrid");
   grid.innerHTML = list.length ? list.slice(0,pShown).map(prodCard).join("") :
     `<div class="empty">${t("noMatch")}<br><a class="btn btn-wa" style="margin-top:12px" data-wa="${esc(t("waLooking") + pQ)}">${icon("wa","wa")}${t("bandBtn")}</a></div>`;
