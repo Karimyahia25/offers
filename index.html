@@ -240,6 +240,41 @@ section{padding:44px 0;scroll-margin-top:110px}
 .sh h2 .ic svg{width:22px;height:22px}
 .sh h2 .ic.flame svg{animation:flick 1.6s ease-in-out infinite;transform-origin:50% 90%}
 @keyframes flick{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.12,1.05) rotate(-4deg)}60%{transform:scale(.96,1.08) rotate(3deg)}}
+/* بانر الحفاضات (الصفحة الرئيسية) — بيودّي لصفحة الحفاضات */
+.dban{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;position:relative;overflow:hidden;isolation:isolate;border-radius:28px;padding:24px 18px 26px;color:#fff;background:linear-gradient(125deg,#08347d 0%,#1462c4 48%,#29aaea 100%);box-shadow:0 24px 50px -22px rgba(20,98,196,.85);transition:transform .25s var(--eo),box-shadow .25s}
+@media(min-width:760px){.dban{padding:36px 40px;gap:24px}}
+@media(hover:hover){.dban[href]:hover{transform:translateY(-5px) scale(1.01);box-shadow:0 30px 60px -22px rgba(20,98,196,.95)}}
+.dban::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(105deg,transparent 38%,rgba(255,255,255,.22) 50%,transparent 62%);transform:translateX(-120%);animation:shine 4s 1s ease-in-out infinite}
+.dban .bub{position:absolute;bottom:-50px;z-index:-1;border-radius:50%;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);animation:bubUp 8s linear infinite}
+@keyframes bubUp{0%{transform:translateY(0) scale(.6);opacity:0}15%{opacity:1}100%{transform:translateY(-380px) scale(1.15);opacity:0}}
+.dban .stripe{position:absolute;z-index:-1;top:-30%;bottom:-30%;inset-inline-end:28%;width:90px;background:rgba(255,210,63,.16);transform:rotate(18deg)}
+.db-kick{display:inline-flex;align-items:center;gap:7px;background:var(--yel);color:var(--ink);font-family:var(--fh);font-weight:800;font-size:14px;padding:6px 13px;border-radius:999px;transform:rotate(-2deg);animation:wob 2.4s ease-in-out infinite;box-shadow:0 8px 18px -8px rgba(0,0,0,.45)}
+.db-kick svg.i{width:18px;height:18px}
+.dban h2{font-family:var(--fh);font-weight:900;font-size:clamp(28px,7.4vw,56px);line-height:1.12;margin:14px 0 8px;text-shadow:0 6px 22px rgba(0,0,0,.28)}
+.dban h2 b{color:var(--yel);white-space:nowrap}
+.dban p{font-weight:600;font-size:15px;opacity:.95}
+.db-sizes{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 18px}
+.db-sizes span{min-width:38px;height:38px;padding:0 9px;border-radius:999px;display:grid;place-items:center;background:rgba(255,255,255,.16);border:1.5px solid rgba(255,255,255,.45);font-family:var(--fh);font-weight:800;font-size:15px;animation:pop .5s var(--spring) backwards;animation-delay:calc(var(--k)*.07s + .2s)}
+.db-cta{height:54px;font-size:17px}
+.db-cta svg.i{transition:transform .25s var(--eo)}
+.dban:hover .db-cta svg.i{transform:translateX(-5px)}
+[dir=ltr] .db-cta svg.i{transform:scaleX(-1)}
+[dir=ltr] .dban:hover .db-cta svg.i{transform:scaleX(-1) translateX(-5px)}
+.db-art{position:relative;width:clamp(110px,30vw,250px);aspect-ratio:1}
+.db-art .circ{position:absolute;inset:0;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fff 0%,#dff1ff 70%);box-shadow:0 22px 44px -16px rgba(0,0,0,.5),0 0 0 10px rgba(255,255,255,.12);animation:vfloat 3.2s ease-in-out infinite}
+.db-art .circ .em{font-size:clamp(56px,16vw,140px);line-height:1;animation:wig 2.8s ease-in-out infinite;filter:drop-shadow(0 8px 10px rgba(0,0,0,.18))}
+.db-art .burst{top:-14%;inset-inline-end:auto;inset-inline-start:-18%;width:54%;height:54%;animation:spinIn .9s .4s var(--spring) both}
+.db-art .burst b{font-size:clamp(16px,4.6vw,30px)}
+.db-art .burst span{font-size:clamp(9px,2.4vw,13px)}
+@media(max-width:480px){.dban{grid-template-columns:1fr}.db-art{position:absolute;top:18px;inset-inline-end:14px;width:84px}.dban h2{font-size:32px;margin-inline-end:92px}.db-sizes span{min-width:34px;height:34px;font-size:14px}}
+/* صفحة الحفاضات (?p=diapers): البانر فوق، والعروض التانية مستخبية */
+#diaList{margin-top:22px}
+html:not(.pg-dia) #diaList{display:none}
+.pg-dia #hero,.pg-dia #hot,.pg-dia #featured,.pg-dia #offers,.pg-dia #products{display:none!important}
+.pg-dia #diapers{padding-top:18px!important}
+.pg-dia .db-cta{display:none}
+.pg-dia .db-sizes span{cursor:pointer;transition:background .2s,transform .2s}
+.pg-dia .db-sizes span:hover{background:var(--yel);color:var(--ink);transform:translateY(-2px)}
 #diapers .sh h2 .ic{background:#2f8fd6;box-shadow:0 8px 18px -8px rgba(47,143,214,.8)}
 #diapers .cat{display:none}
 #diapers .box-d{background:linear-gradient(180deg,#eaf5fd,#f5f9fc);border:1px solid #d3e8f7;border-radius:24px;padding:20px 16px 22px}
@@ -513,6 +548,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 .demo{background:var(--yel-lt);color:#6b5400;text-align:center;font-size:13px;padding:7px 16px;font-weight:600}
 
 @media(prefers-reduced-motion:reduce){
+  .dban .bub{display:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv,.grid.wait .card{opacity:1;transform:none}
   .whero h1 em svg{stroke-dashoffset:0}
@@ -542,6 +578,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
     <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
     <symbol id="i-baby" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M10.2 9h.01M13.8 9h.01M10.5 11.2c.9.6 2.1.6 3 0"/><path d="M12 4c0-1 .7-1.6 1.6-1.6"/><path d="M5 22c.6-3.6 3.6-6 7-6s6.4 2.4 7 6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
     <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
     <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></symbol>
@@ -561,12 +598,12 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 
 <header id="top">
   <div class="wrap">
-    <a class="logo" href="#">
+    <a class="logo" href="#" id="logoA">
       <span class="mk"><svg><use href="#i-mortar"/></svg></span>
       <span><b data-t="brand">د. أنس نحيلة</b><small data-t="brandSub">صيدلية</small></span>
     </a>
     <nav class="links">
-      <a href="#offers" data-t="navOffers">العروض</a>
+      <a href="#offers" data-t="navOffers" id="navOff">العروض</a>
       <a href="#diapers" data-t="navDia" id="navDia" hidden>حفاضات</a>
       <a href="#products" data-t="navProducts" id="navProd">متوفر عندنا</a>
       <a href="#visit" data-t="navVisit">العنوان</a>
@@ -639,7 +676,26 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 
 <section id="diapers" style="padding-top:0" hidden>
   <div class="wrap">
-    <div class="box-d">
+    <a class="dban" id="diaBan" href="?p=diapers">
+      <i class="bub" style="width:46px;height:46px;left:8%;animation-delay:0s"></i>
+      <i class="bub" style="width:22px;height:22px;left:30%;animation-delay:2.2s;animation-duration:6s"></i>
+      <i class="bub" style="width:70px;height:70px;left:52%;animation-delay:4s;animation-duration:10s"></i>
+      <i class="bub" style="width:30px;height:30px;left:74%;animation-delay:1.2s;animation-duration:7s"></i>
+      <i class="bub" style="width:18px;height:18px;left:90%;animation-delay:3.4s;animation-duration:5.5s"></i>
+      <i class="stripe"></i>
+      <div>
+        <span class="db-kick"><svg class="i"><use href="#i-baby"/></svg><span data-t="diaH">عروض الحفاضات</span></span>
+        <h2 id="dbH"></h2>
+        <p id="dbBrands"></p>
+        <div class="db-sizes" id="dbSizes"></div>
+        <span class="btn btn-yel db-cta"><span data-t="dbCta">شوف كل الحفاضات</span><svg class="i"><use href="#i-arrow"/></svg></span>
+      </div>
+      <div class="db-art">
+        <div class="circ"><span class="em" aria-hidden="true">👶</span></div>
+        <div class="burst" id="dbBurst" hidden><div><span data-t="burstMax">خصم لحد</span><b class="num" id="dbPct"></b></div></div>
+      </div>
+    </a>
+    <div class="box-d" id="diaList">
       <div class="sh">
         <div>
           <h2><span class="ic"><svg class="i"><use href="#i-baby"/></svg></span><span data-t="diaH">عروض الحفاضات</span></h2>
@@ -786,7 +842,7 @@ const I18N = {
     s3h:"عندك في 30 دقيقة", s3p:"والتوصيل ببلاش",
     tickNone:"عروض جديدة كل أسبوع",
     payLbl:"ادفع زي ما يريحك", cash:"كاش", vfcash:"كاش",
-    diaH:"عروض الحفاضات", diaP:"كل المقاسات، والتوصيل لحد باب البيت", size:"مقاس", wipes:"مناديل",
+    diaH:"عروض الحفاضات", diaP:"كل المقاسات، والتوصيل لحد باب البيت", size:"مقاس", wipes:"مناديل", dbCta:"شوف كل الحفاضات", dbH:"حفاضات بخصم <b>لحد {n}%</b>", dbH0:"كل الحفاضات <b>في مكان واحد</b>", diaTitle:"عروض الحفاضات | صيدلية د. أنس نحيلة، المعمورة الشاطئ", navAll:"كل العروض",
     offersH:"العروض الحالية", offersP:"لفترة محدودة ولحد نفاد الكمية", all:"الكل",
     prodH:"متوفر عندنا", prodP:"منتجات تجميل وعناية موجودة في الصيدلية، اسأل عليها",
     bandH:"مش لاقي المنتج اللي بتدور عليه؟", bandP:"ابعتلنا اسمه أو صورته على الواتساب ونوفرهولك.", bandBtn:"ابعت اسم المنتج",
@@ -832,7 +888,7 @@ const I18N = {
     s3h:"At your door in 30 min", s3p:"Delivery is free",
     tickNone:"New offers every week",
     payLbl:"Pay the way you like", cash:"Cash", vfcash:"Cash",
-    diaH:"Diaper deals", diaP:"All sizes, delivered to your door", size:"Size", wipes:"Wipes",
+    diaH:"Diaper deals", diaP:"All sizes, delivered to your door", size:"Size", wipes:"Wipes", dbCta:"See all diapers", dbH:"Diapers <b>up to {n}% off</b>", dbH0:"All diapers <b>in one place</b>", diaTitle:"Diaper deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", navAll:"All offers",
     offersH:"Current offers", offersP:"Limited time, while stocks last", all:"All",
     prodH:"In stock", prodP:"Beauty and care products available at the pharmacy. Ask about them",
     bandH:"Can't find what you're looking for?", bandP:"Send us its name or a photo on WhatsApp and we'll get it for you.", bandBtn:"Send the product name",
@@ -867,6 +923,19 @@ const t = k => (I18N[L][k] ?? I18N.ar[k] ?? "");
 const $ = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
 const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+/* صفحة الحفاضات لوحدها: ?p=diapers (واللينك القصير offers/diapers/) */
+const PG_DIA = new URLSearchParams(location.search).get("p") === "diapers";
+if(PG_DIA){
+  document.documentElement.classList.add("pg-dia");
+  document.getElementById("how").before(document.getElementById("diapers"));
+  const back = "./" + (new URLSearchParams(location.search).get("lang")==="en" ? "?lang=en" : "");
+  ["logoA","navOff"].forEach(id=>document.getElementById(id).href = back);
+  document.getElementById("diaBan").removeAttribute("href");
+}else{
+  /* البانر بيودّي لصفحة الحفاضات ومعاه ?src و ?lang لو موجودين */
+  const q = new URLSearchParams(location.search); q.set("p","diapers");
+  document.getElementById("diaBan").href = "?" + q.toString();
+}
 const SRC = new URLSearchParams(location.search).get("src") || "";
 const icon = (id,cls="i")=>`<svg class="${cls}"><use href="#i-${id}"/></svg>`;
 function waLink(msg){
@@ -1192,6 +1261,24 @@ function diaSize(it){
   return m ? m[1] : "";
 }
 const sizeLbl = k => k==="w" ? t("wipes") : `${t("size")} ${k}`;
+const BRANDS = [[/pampers/i,"بامبرز","Pampers"],[/molfix/i,"مولفيكس","Molfix"],[/baby ?joy/i,"بيبي جوي","Baby Joy"],[/huggies/i,"هاجيز","Huggies"],[/fine/i,"فاين","Fine"],[/bebem/i,"بيبيم","Bebem"]];
+function renderDiaBanner(dia){
+  const max = Math.max(0, ...dia.map(d=>d.pct||0));
+  $("#dbH").innerHTML = max>=5 ? t("dbH").replace("{n}",max) : t("dbH0");
+  $("#dbBurst").hidden = max<5;
+  $("#dbPct").textContent = max + "%";
+  const names = dia.map(d=>d.name).join(" ");
+  $("#dbBrands").textContent = BRANDS.filter(b=>b[0].test(names)).map(b=>L==="en"?b[2]:b[1]).join("  ·  ");
+  const sizes = [...new Set(dia.map(diaSize).filter(k=>k && k!=="w"))].sort((a,b)=>a-b);
+  $("#dbSizes").innerHTML = sizes.map((k,i)=>`<span data-c="${k}" style="--k:${i}">${k}</span>`).join("") +
+    (dia.some(d=>diaSize(d)==="w") ? `<span data-c="w" style="--k:${sizes.length}">${t("wipes")}</span>` : "");
+}
+/* في صفحة الحفاضات: دوسة على مقاس في البانر = فلتر بالمقاس ده */
+$("#dbSizes").onclick = e=>{
+  const sp = e.target.closest("span[data-c]"); if(!PG_DIA || !sp) return;
+  const b = $(`#dtabs button[data-c="${sp.dataset.c}"]`); if(!b) return;
+  b.click(); $("#diaList").scrollIntoView({behavior: RM ? "auto" : "smooth", block:"start"});
+};
 function renderDia(reset){
   if(reset) dShown = PAGE;
   const list = DIA.filter(d=>!dSize || diaSize(d)===dSize);
@@ -1417,6 +1504,8 @@ function render(rows){
   $("#diapers").hidden = $("#navDia").hidden = !dia.length;
   $("#diaCount").textContent = dia.length ? offersTxt(dia.length) : "";
   DIA = dia;
+  renderDiaBanner(dia);
+  if(PG_DIA) $("#navDia").hidden = true;
   if(dSize && !dia.some(d=>diaSize(d)===dSize)) dSize = "";
   renderDiaTabs(); renderDia(false);
   const dg = $("#diaGrid");
@@ -1448,7 +1537,8 @@ function payHTML(){
 function applyLang(){
   const h = document.documentElement;
   h.lang = L; h.dir = L==="en" ? "ltr" : "rtl";
-  document.title = t("title");
+  document.title = t(PG_DIA ? "diaTitle" : "title");
+  if(PG_DIA) $("#navOff").textContent = t("navAll");
   $$("[data-t]").forEach(e=>{ e.innerHTML = t(e.dataset.t); });
   $$("[data-ta]").forEach(e=>e.setAttribute("aria-label", t(e.dataset.ta)));
   $$("[data-talt]").forEach(e=>e.setAttribute("alt", t(e.dataset.talt)));
@@ -1556,6 +1646,7 @@ document.addEventListener("click", e=>{
   const so = e.target.closest(".so,.hsoc a");
   if(so){ track("social_click", {network: so.getAttribute("aria-label")}); return; }
   if(e.target.closest("#langBtn")) track("language_switch", {to: L==="ar" ? "en" : "ar"});
+  if(e.target.closest("#diaBan[href]")) track("diapers_banner_click");
 }, true);
 let searchT;
 $("#pq").addEventListener("input", e=>{ clearTimeout(searchT); const q = e.target.value.trim(); if(q.length>=2) searchT = setTimeout(()=>track("search", {search_term: q}), 1200); });
