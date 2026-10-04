@@ -240,6 +240,10 @@ section{padding:44px 0;scroll-margin-top:110px}
 .sh h2 .ic svg{width:22px;height:22px}
 .sh h2 .ic.flame svg{animation:flick 1.6s ease-in-out infinite;transform-origin:50% 90%}
 @keyframes flick{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.12,1.05) rotate(-4deg)}60%{transform:scale(.96,1.08) rotate(3deg)}}
+#diapers .sh h2 .ic{background:#2f8fd6;box-shadow:0 8px 18px -8px rgba(47,143,214,.8)}
+#diapers .cat{display:none}
+#diapers .box-d{background:linear-gradient(180deg,#eaf5fd,#f5f9fc);border:1px solid #d3e8f7;border-radius:24px;padding:20px 16px 22px}
+@media(min-width:760px){#diapers .box-d{padding:26px 24px 28px}}
 .sh p{color:var(--muted);font-size:14px;margin-top:4px}
 .sh .count{font-family:var(--fh);font-weight:700;font-size:13px;color:var(--ink-2);background:#fff;border:1px solid var(--line);padding:6px 12px;border-radius:999px;white-space:nowrap}
 
@@ -537,6 +541,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
     <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4.1 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></symbol>
     <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M5 3v4M3 5h4M19 17v4M17 19h4"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+    <symbol id="i-baby" viewBox="0 0 24 24"><circle cx="12" cy="9" r="5"/><path d="M10.2 9h.01M13.8 9h.01M10.5 11.2c.9.6 2.1.6 3 0"/><path d="M12 4c0-1 .7-1.6 1.6-1.6"/><path d="M5 22c.6-3.6 3.6-6 7-6s6.4 2.4 7 6"/></symbol>
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
     <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></symbol>
     <symbol id="i-cash" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 12h.01M18 12h.01"/></symbol>
@@ -562,7 +567,8 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
     </a>
     <nav class="links">
       <a href="#offers" data-t="navOffers">العروض</a>
-      <a href="#products" data-t="navProducts">متوفر عندنا</a>
+      <a href="#diapers" data-t="navDia" id="navDia" hidden>حفاضات</a>
+      <a href="#products" data-t="navProducts" id="navProd">متوفر عندنا</a>
       <a href="#visit" data-t="navVisit">العنوان</a>
     </nav>
     <button class="lang" id="langBtn" data-ta="langAria" aria-label="English">EN</button>
@@ -627,6 +633,23 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
     <div class="grid" id="offerGrid">
       <div class="sk"><i></i><i></i><i></i></div><div class="sk"><i></i><i></i><i></i></div>
       <div class="sk"><i></i><i></i><i></i></div><div class="sk"><i></i><i></i><i></i></div>
+    </div>
+  </div>
+</section>
+
+<section id="diapers" style="padding-top:0" hidden>
+  <div class="wrap">
+    <div class="box-d">
+      <div class="sh">
+        <div>
+          <h2><span class="ic"><svg class="i"><use href="#i-baby"/></svg></span><span data-t="diaH">عروض الحفاضات</span></h2>
+          <p data-t="diaP">كل المقاسات، والتوصيل لحد باب البيت</p>
+        </div>
+        <span class="count num" id="diaCount"></span>
+      </div>
+      <div class="tabs ptabs" id="dtabs"></div>
+      <div class="grid" id="diaGrid"></div>
+      <div class="pmore"><button class="btn btn-dark" id="dmore" hidden><span data-t="more">عرض المزيد</span></button></div>
     </div>
   </div>
 </section>
@@ -748,7 +771,7 @@ const I18N = {
     title:"صيدلية د. أنس نحيلة | صيدلية 24 ساعة في المعمورة الشاطئ، إسكندرية",
     demo:"بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية",
     brand:"د. أنس نحيلة", brandSub:"صيدلية",
-    navOffers:"العروض", navProducts:"متوفر عندنا", navVisit:"العنوان",
+    navOffers:"العروض", navDia:"حفاضات", navProducts:"متوفر عندنا", navVisit:"العنوان",
     langBtn:"EN", langAria:"English",
     heroAlt:"واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ",
     hello:"المعمورة الشاطئ، جنب البوابة الرئيسية", openNow:"فاتحين دلوقتي",
@@ -763,6 +786,7 @@ const I18N = {
     s3h:"عندك في 30 دقيقة", s3p:"والتوصيل ببلاش",
     tickNone:"عروض جديدة كل أسبوع",
     payLbl:"ادفع زي ما يريحك", cash:"كاش", vfcash:"كاش",
+    diaH:"عروض الحفاضات", diaP:"كل المقاسات، والتوصيل لحد باب البيت", size:"مقاس", wipes:"مناديل",
     offersH:"العروض الحالية", offersP:"لفترة محدودة ولحد نفاد الكمية", all:"الكل",
     prodH:"متوفر عندنا", prodP:"منتجات تجميل وعناية موجودة في الصيدلية، اسأل عليها",
     bandH:"مش لاقي المنتج اللي بتدور عليه؟", bandP:"ابعتلنا اسمه أو صورته على الواتساب ونوفرهولك.", bandBtn:"ابعت اسم المنتج",
@@ -793,7 +817,7 @@ const I18N = {
     title:"Dr. Anas Nehila Pharmacy | 24-hour pharmacy in El Maamoura Beach, Alexandria",
     demo:"Demo data. Connect the Google Sheet to show the real offers",
     brand:"Dr. Anas Nehila", brandSub:"Pharmacy",
-    navOffers:"Offers", navProducts:"In stock", navVisit:"Address",
+    navOffers:"Offers", navDia:"Diapers", navProducts:"In stock", navVisit:"Address",
     langBtn:"ع", langAria:"العربية",
     heroAlt:"Dr. Anas Mohamed Nehila pharmacy storefront in El Maamoura Beach",
     hello:"El Maamoura Beach, next to the main gate", openNow:"Open now",
@@ -808,6 +832,7 @@ const I18N = {
     s3h:"At your door in 30 min", s3p:"Delivery is free",
     tickNone:"New offers every week",
     payLbl:"Pay the way you like", cash:"Cash", vfcash:"Cash",
+    diaH:"Diaper deals", diaP:"All sizes, delivered to your door", size:"Size", wipes:"Wipes",
     offersH:"Current offers", offersP:"Limited time, while stocks last", all:"All",
     prodH:"In stock", prodP:"Beauty and care products available at the pharmacy. Ask about them",
     bandH:"Can't find what you're looking for?", bandP:"Send us its name or a photo on WhatsApp and we'll get it for you.", bandBtn:"Send the product name",
@@ -939,7 +964,8 @@ function toItem(r, i){
     img: imgUrl(r["الصورة"]), end: parseDate(r["ينتهي"]),
     code:(r["الكود"]||"").trim(), promo:col(r,"العرض"),
     offer: norm(r["النوع"]||"عرض") !== "منتج",
-    hot: /هوت|hot|ويك/i.test(norm(r["النوع"]))
+    hot: /هوت|hot|ويك/i.test(norm(r["النوع"])),
+    dia: /حفاض|حفاظ|بامبرز|diaper|pamper/i.test(norm(r["النوع"]) + " " + norm(r["الفئة"]))   /* قسم الحفاضات المنفصل */
   };
 }
 
@@ -1156,6 +1182,47 @@ $("#pmore").onclick = ()=>{
   if(!RM) $$("#prodGrid .card").slice(before).forEach((c,i)=>c.animate && c.animate([{opacity:0,transform:"translateY(20px)"},{opacity:1,transform:"none"}],{duration:450,delay:i*40,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"}));
 };
 
+/* ---------- قسم الحفاضات: فلتر بالمقاس + عرض المزيد ---------- */
+let DIA = [], dSize = "", dShown = PAGE;
+/* المقاس من الاسم: "(4)" أو رقم لوحده من 1 لـ 7 — والمناديل لوحدها */
+function diaSize(it){
+  const n = it.name || "";
+  if(/wip|مناديل/i.test(n)) return "w";
+  const m = n.match(/\(\s*([1-7])\s*\)/) || n.match(/(?:^|\D)([1-7])(?!\d)/);
+  return m ? m[1] : "";
+}
+const sizeLbl = k => k==="w" ? t("wipes") : `${t("size")} ${k}`;
+function renderDia(reset){
+  if(reset) dShown = PAGE;
+  const list = DIA.filter(d=>!dSize || diaSize(d)===dSize);
+  const g = $("#diaGrid");
+  g.innerHTML = list.slice(0,dShown).map((it,i)=> it.offer ? offerCard(it,i) : prodCard(it)).join("");
+  $("#dmore").hidden = list.length <= dShown;
+  bindWa(g);
+}
+function renderDiaTabs(){
+  const counts = {};
+  DIA.forEach(d=>{ const k = diaSize(d); if(k) counts[k]=(counts[k]||0)+1; });
+  const keys = Object.keys(counts).sort((a,b)=>(a==="w")-(b==="w") || a-b);
+  const tabs = $("#dtabs");
+  tabs.hidden = keys.length < 2;
+  tabs.innerHTML = `<button class="${dSize?"":"on"}" data-c="">${t("all")}<small>${DIA.length}</small></button>` +
+    keys.map(k=>`<button class="${dSize===k?"on":""}" data-c="${k}">${sizeLbl(k)}<small>${counts[k]}</small></button>`).join("");
+}
+$("#dtabs").onclick = e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  dSize = b.dataset.c;
+  $$("#dtabs button").forEach(x=>x.classList.toggle("on", x===b));
+  b.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
+  renderDia(true);
+  if(!RM) $$("#diaGrid .card").forEach((c,i)=>c.animate && c.animate([{opacity:0,transform:"translateY(20px) scale(.95)"},{opacity:1,transform:"none"}],{duration:450,delay:i*50,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"}));
+};
+$("#dmore").onclick = ()=>{
+  const before = $$("#diaGrid .card").length;
+  dShown += PAGE; renderDia(false);
+  if(!RM) $$("#diaGrid .card").slice(before).forEach((c,i)=>c.animate && c.animate([{opacity:0,transform:"translateY(20px)"},{opacity:1,transform:"none"}],{duration:450,delay:i*40,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"}));
+};
+
 /* ---------- هوت أوفر الويك إند (بتوقيت القاهرة): الخميس 6 مساءً لآخر السبت ---------- */
 function cairoWeekSec(){
   const p = Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:"Africa/Cairo",weekday:"short",hour:"numeric",minute:"numeric",second:"numeric",hourCycle:"h23"}).formatToParts(new Date()).map(x=>[x.type,x.value]));
@@ -1329,24 +1396,35 @@ function render(rows){
   vis.forEach(it=>ITEMS[it.id]=it);
   const hot = items.filter(i=>i.hot);
   const hotOn = hs.on ? hot : [];
-  const offers = vis.filter(i=>i.offer && !i.hot), prods = vis.filter(i=>!i.offer);
+  const dia = vis.filter(i=>i.dia && !i.hot);
+  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia), prods = vis.filter(i=>!i.offer && !i.dia);
 
   // امسح من السلة أي عرض خلص، وحدّث الأسماء باللغة الحالية
   Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; else cart[id] = cartEntry(ITEMS[id], cart[id].q); }); saveCart();
 
   renderHot(hot);
-  renderHero(offers.concat(hotOn), hotOn.length>0);
-  renderTicker(hotOn.concat(offers));
-  renderFeatured(offers);
+  const allDeals = offers.concat(dia.filter(i=>i.offer));
+  renderHero(allDeals.concat(hotOn), hotOn.length>0);
+  renderTicker(hotOn.concat(allDeals));
+  renderFeatured(allDeals);
   renderTabs(offers);
   const oc = $("#offerCount"); oc.hidden = !offers.length; oc.textContent = offers.length ? offersTxt(offers.length) : "";
   const grid = $("#offerGrid");
   grid.innerHTML = offers.length ? offers.map(offerCard).join("") : `<div class="empty">${t("noOffers")}</div>`;
   grid.classList.remove("anim");
   if(offers.length && !RM) grid.classList.add("wait");
+  /* الحفاضات: قسم لوحده تحت العروض على طول */
+  $("#diapers").hidden = $("#navDia").hidden = !dia.length;
+  $("#diaCount").textContent = dia.length ? offersTxt(dia.length) : "";
+  DIA = dia;
+  if(dSize && !dia.some(d=>diaSize(d)===dSize)) dSize = "";
+  renderDiaTabs(); renderDia(false);
+  const dg = $("#diaGrid");
+  dg.classList.remove("anim");
+  if(dia.length && !RM) dg.classList.add("wait");
   PRODS = prods;
   if(pCat && !prods.some(p=>p.ck===pCat)) pCat = "";
-  $("#products").hidden = !prods.length;
+  $("#products").hidden = $("#navProd").hidden = !prods.length;
   renderProdTabs(); renderProducts(false);
   bindWa(document);
   updateDock();
