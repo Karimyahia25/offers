@@ -277,6 +277,7 @@ html:not(.pg-dia) #diaList{display:none}
 .pg-dia .db-sizes span:hover{background:var(--yel);color:var(--ink);transform:translateY(-2px)}
 #diapers .sh h2 .ic{background:#2f8fd6;box-shadow:0 8px 18px -8px rgba(47,143,214,.8)}
 #diapers .cat{display:none}
+#diapers .desc{color:var(--ink);font-weight:700;font-size:14px;-webkit-line-clamp:2;margin-top:2px}
 #diapers .box-d{background:linear-gradient(180deg,#eaf5fd,#f5f9fc);border:1px solid #d3e8f7;border-radius:24px;padding:20px 16px 22px}
 @media(min-width:760px){#diapers .box-d{padding:26px 24px 28px}}
 .sh p{color:var(--muted);font-size:14px;margin-top:4px}
@@ -1203,6 +1204,7 @@ function prodCard(it){
     <div class="cbody">
       ${it.cat?`<span class="cat">${esc(it.cat)}</span>`:""}
       <h3>${esc(it.name)}</h3>
+      ${it.desc?`<div class="desc">${esc(it.desc)}</div>`:""}
       ${priceHTML(it)}
       <div class="act" data-id="${esc(it.id)}">${actHTML(it.id)}</div>
     </div>
