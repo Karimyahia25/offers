@@ -1246,8 +1246,8 @@ function renderProdTabs(){
   const keys = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
   const tabs = $("#ptabs");
   tabs.hidden = keys.length < 2;
-  tabs.innerHTML = `<button class="${pCat?"":"on"}" data-c="">${t("all")}<small>${PRODS.length}</small></button>` +
-    keys.map(k=>`<button class="${pCat===k?"on":""}" data-c="${esc(k)}">${esc(catLabel[k])}<small>${counts[k]}</small></button>`).join("");
+  tabs.innerHTML = `<button class="${pCat?"":"on"}" data-c="">${t("all")}</button>` +
+    keys.map(k=>`<button class="${pCat===k?"on":""}" data-c="${esc(k)}">${esc(catLabel[k])}</button>`).join("");
 }
 $("#ptabs").onclick = e=>{
   const b = e.target.closest("button"); if(!b) return;
@@ -1283,8 +1283,8 @@ function renderDiaBrands(){
   const list = BRANDS.filter(b=>counts[b[2]]);
   const box = $("#dbrands");
   box.hidden = list.length < 2;
-  box.innerHTML = `<button class="${dBrand?"":"on"}" data-b="">${t("all")}<small>${DIA.length}</small></button>` +
-    list.map(b=>`<button class="${dBrand===b[2]?"on":""}" data-b="${b[2]}" style="--bc:${b[3]}">${L==="en"?b[2]:b[1]}<small>${counts[b[2]]}</small></button>`).join("");
+  box.innerHTML = `<button class="${dBrand?"":"on"}" data-b="">${t("all")}</button>` +
+    list.map(b=>`<button class="${dBrand===b[2]?"on":""}" data-b="${b[2]}" style="--bc:${b[3]}">${L==="en"?b[2]:b[1]}</button>`).join("");
 }
 $("#dbrands").onclick = e=>{
   const b = e.target.closest("button"); if(!b) return;
@@ -1329,8 +1329,8 @@ function renderDiaTabs(){
   const keys = Object.keys(counts).sort((a,b)=>(a==="w")-(b==="w") || a-b);
   const tabs = $("#dtabs");
   tabs.hidden = keys.length < 2;
-  tabs.innerHTML = `<button class="${dSize?"":"on"}" data-c="">${t("allSizes")}<small>${pool.length}</small></button>` +
-    keys.map(k=>`<button class="${dSize===k?"on":""}" data-c="${k}">${sizeLbl(k)}<small>${counts[k]}</small></button>`).join("");
+  tabs.innerHTML = `<button class="${dSize?"":"on"}" data-c="">${t("allSizes")}</button>` +
+    keys.map(k=>`<button class="${dSize===k?"on":""}" data-c="${k}">${sizeLbl(k)}</button>`).join("");
 }
 $("#dtabs").onclick = e=>{
   const b = e.target.closest("button"); if(!b) return;
@@ -1402,8 +1402,8 @@ function renderTabs(offers){
   const tabs = $("#tabs");
   if(keys.length<2){ tabs.parentElement.hidden = true; return; }
   tabs.parentElement.hidden = false;
-  tabs.innerHTML = `<button class="on" data-c="">${t("all")}<small>${offers.length}</small></button>` +
-    keys.map(k=>`<button data-c="${esc(k)}">${esc(catLabel[k])}<small>${counts[k]}</small></button>`).join("");
+  tabs.innerHTML = `<button class="on" data-c="">${t("all")}</button>` +
+    keys.map(k=>`<button data-c="${esc(k)}">${esc(catLabel[k])}</button>`).join("");
   tabs.onclick = e=>{
     const b = e.target.closest("button"); if(!b) return;
     $$("button",tabs).forEach(x=>x.classList.toggle("on", x===b));
