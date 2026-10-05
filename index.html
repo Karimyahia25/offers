@@ -592,6 +592,11 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 .savec p{font-size:13px;color:var(--muted);margin:0}
 .savec .acts{grid-column:1/-1;display:flex;gap:8px}
 .savec .acts .btn{flex:1;height:48px;font-size:15px}
+.savec .st2{display:none}
+.savec.s2 .st1{display:none}
+.savec.s2 .st2{display:block}
+.savec.s2 .acts.st2{display:flex}
+.savec .acts svg.wa{width:20px;height:20px;fill:#fff}
 .savec .x{position:absolute;top:8px;inset-inline-end:8px;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:var(--muted);background:var(--bg)}
 .savec .x svg{width:18px;height:18px}
 .toast{position:fixed;z-index:70;left:50%;bottom:calc(86px + env(safe-area-inset-bottom));transform:translate(-50%,20px) scale(.9);opacity:0;background:var(--ink);color:#fff;font-weight:600;font-size:14px;padding:10px 16px;border-radius:12px;display:flex;align-items:center;gap:8px;transition:all .35s var(--spring);pointer-events:none;white-space:nowrap}
@@ -852,8 +857,10 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 <div class="savec" id="savec" role="dialog" aria-labelledby="savecH">
   <button class="x" id="savecX" data-ta="close" aria-label="إغلاق"><svg class="i"><use href="#i-x"/></svg></button>
   <span class="ic"><svg class="wa"><use href="#i-wa"/></svg></span>
-  <div><h4 id="savecH" data-t="saveH">عايز توصلك عروضنا أول بأول على واتساب؟</h4><p data-t="saveP">احفظ رقمنا عندك، وكل أسبوع يوصلك جديد العروض والخصومات.</p></div>
-  <div class="acts"><a class="btn btn-wa" id="savecBtn" href="anas-pharmacy.vcf" download="صيدلية د. أنس نحيلة.vcf"><svg class="i"><use href="#i-plus"/></svg><span data-t="saveBtn">احفظ الرقم</span></a></div>
+  <div class="st1"><h4 id="savecH" data-t="saveH">عايز توصلك عروضنا أول بأول على واتساب؟</h4><p data-t="saveP">احفظ رقمنا عندك، وكل أسبوع يوصلك جديد العروض والخصومات.</p></div>
+  <div class="acts st1"><a class="btn btn-wa" id="savecBtn" href="anas-pharmacy.vcf" download="صيدلية د. أنس نحيلة.vcf"><svg class="i"><use href="#i-plus"/></svg><span data-t="saveBtn">احفظ الرقم</span></a></div>
+  <div class="st2"><h4 data-t="subH">✅ اتحفظ! آخر خطوة</h4><p data-t="subP">ابعتلنا رسالة على واتساب علشان نضيفك لقايمة العروض.</p></div>
+  <div class="acts st2"><a class="btn btn-wa" id="subBtn" target="_blank" rel="noopener"><svg class="wa"><use href="#i-wa"/></svg><span data-t="subBtn">اشترك في العروض على واتساب</span></a></div>
 </div>
 <div class="toast" id="toast" role="status"><svg class="i"><use href="#i-check"/></svg><span></span></div>
 
@@ -904,7 +911,7 @@ const I18N = {
     s3h:"عندك في 30 دقيقة", s3p:"والتوصيل ببلاش",
     tickNone:"عروض جديدة كل أسبوع",
     payLbl:"ادفع زي ما يريحك", cash:"كاش", vfcash:"كاش",
-    diaH:"عروض الحفاضات", diaP:"كل المقاسات، والتوصيل لحد باب البيت", size:"مقاس", wipes:"مناديل", saveH:"عايز توصلك عروضنا أول بأول على واتساب؟", saveP:"احفظ رقمنا عندك، وكل أسبوع يوصلك جديد العروض والخصومات.", saveBtn:"احفظ الرقم", saveDone:"افتح الملف واضغط حفظ", close:"إغلاق", allSizes:"كل المقاسات", dbCta:"شوف كل الحفاضات", dbH:"حفاضات بخصم <b>لحد {n}%</b>", dbH0:"كل الحفاضات <b>في مكان واحد</b>", diaTitle:"عروض الحفاضات | صيدلية د. أنس نحيلة، المعمورة الشاطئ", navAll:"كل العروض",
+    diaH:"عروض الحفاضات", diaP:"كل المقاسات، والتوصيل لحد باب البيت", size:"مقاس", wipes:"مناديل", saveH:"عايز توصلك عروضنا أول بأول على واتساب؟", saveP:"احفظ رقمنا عندك، وكل أسبوع يوصلك جديد العروض والخصومات.", saveBtn:"احفظ الرقم", subH:"✅ اتحفظ! آخر خطوة", subP:"ابعتلنا رسالة على واتساب علشان نضيفك لقايمة العروض.", subBtn:"اشترك في العروض على واتساب", waSub:"السلام عليكم، عايز أشترك في عروض صيدلية د. أنس نحيلة 🎁", saveDone:"افتح الملف واضغط حفظ", close:"إغلاق", allSizes:"كل المقاسات", dbCta:"شوف كل الحفاضات", dbH:"حفاضات بخصم <b>لحد {n}%</b>", dbH0:"كل الحفاضات <b>في مكان واحد</b>", diaTitle:"عروض الحفاضات | صيدلية د. أنس نحيلة، المعمورة الشاطئ", navAll:"كل العروض",
     offersH:"العروض الحالية", offersP:"لفترة محدودة ولحد نفاد الكمية", all:"الكل",
     prodH:"متوفر عندنا", prodP:"منتجات تجميل وعناية موجودة في الصيدلية، اسأل عليها",
     bandH:"مش لاقي المنتج اللي بتدور عليه؟", bandP:"ابعتلنا اسمه أو صورته على الواتساب ونوفرهولك.", bandBtn:"ابعت اسم المنتج",
@@ -950,7 +957,7 @@ const I18N = {
     s3h:"At your door in 30 min", s3p:"Delivery is free",
     tickNone:"New offers every week",
     payLbl:"Pay the way you like", cash:"Cash", vfcash:"Cash",
-    diaH:"Diaper deals", diaP:"All sizes, delivered to your door", size:"Size", wipes:"Wipes", saveH:"Want our latest offers on WhatsApp?", saveP:"Save our number and get new deals every week.", saveBtn:"Save number", saveDone:"Open the file and tap Save", close:"Close", allSizes:"All sizes", dbCta:"See all diapers", dbH:"Diapers <b>up to {n}% off</b>", dbH0:"All diapers <b>in one place</b>", diaTitle:"Diaper deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", navAll:"All offers",
+    diaH:"Diaper deals", diaP:"All sizes, delivered to your door", size:"Size", wipes:"Wipes", saveH:"Want our latest offers on WhatsApp?", saveP:"Save our number and get new deals every week.", saveBtn:"Save number", subH:"✅ Saved! One last step", subP:"Send us a WhatsApp message so we add you to our offers list.", subBtn:"Subscribe to offers on WhatsApp", waSub:"Hello, I'd like to subscribe to Dr. Anas Nehila Pharmacy offers 🎁", saveDone:"Open the file and tap Save", close:"Close", allSizes:"All sizes", dbCta:"See all diapers", dbH:"Diapers <b>up to {n}% off</b>", dbH0:"All diapers <b>in one place</b>", diaTitle:"Diaper deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", navAll:"All offers",
     offersH:"Current offers", offersP:"Limited time, while stocks last", all:"All",
     prodH:"In stock", prodP:"Beauty and care products available at the pharmacy. Ask about them",
     bandH:"Can't find what you're looking for?", bandP:"Send us its name or a photo on WhatsApp and we'll get it for you.", bandBtn:"Send the product name",
@@ -1166,21 +1173,30 @@ function openSheet(o){
   document.body.style.overflow = o ? "hidden" : "";
 }
 /* ---------- "احفظ رقمنا": بيظهر مرة لكل زائر بعد 20 ثانية أو نص الصفحة، وتاني بعد ما يبعت طلب ---------- */
-const SAVE_KEY = "anas_save";   /* "seen" = اتعرض وقفله · "saved" = داس احفظ */
+const SAVE_KEY = "anas_save";   /* "seen" = اتعرض وقفله · "saved" = حفظ الرقم · "sub" = بعت رسالة الاشتراك */
 const saveGet = ()=>{ try{ return localStorage.getItem(SAVE_KEY) || ""; }catch(e){ return "seen"; } };
 const saveSet = v=>{ try{ localStorage.setItem(SAVE_KEY, v); }catch(e){} };
 let saveShown = false;
 function showSave(why){
   if(saveShown || $("#sheet").classList.contains("open")) return;
   const st = saveGet();
-  if(st === "saved" || (st && why !== "order")) return;
-  saveShown = true; saveSet("seen");
+  if(st === "sub") return;                            /* اشترك خلاص */
+  if(st && why !== "order") return;                   /* اتعرض قبل كده: مايظهرش تاني غير بعد طلب */
+  saveShown = true;
+  if(st !== "saved") saveSet("seen");
+  setSaveStep(st === "saved" ? 2 : 1);               /* حفظ الرقم قبل كده؟ يبقى ناقص الاشتراك بس */
   $("#savec").classList.add("on");
-  track("save_contact_shown", {trigger: why});
+  track("save_contact_shown", {trigger: why, step: st === "saved" ? 2 : 1});
+}
+/* الخطوة 2: رسالة واتساب جاهزة، فرقم العميل يوصلنا ونضيفه لقايمة البرودكاست */
+function setSaveStep(n){
+  $("#savec").classList.toggle("s2", n === 2);
+  $("#subBtn").href = waLink(t("waSub"));
 }
 const hideSave = ()=>$("#savec").classList.remove("on");
 $("#savecX").onclick = ()=>{ hideSave(); track("save_contact_dismiss"); };
-$("#savecBtn").addEventListener("click", ()=>{ saveSet("saved"); track("save_contact"); setTimeout(()=>{ hideSave(); toast(t("saveDone")); }, 600); });
+$("#savecBtn").addEventListener("click", ()=>{ saveSet("saved"); track("save_contact"); toast(t("saveDone")); setTimeout(()=>setSaveStep(2), 700); });
+$("#subBtn").addEventListener("click", ()=>{ $("#subBtn").href = waLink(t("waSub")); saveSet("sub"); track("subscribe_whatsapp"); setTimeout(hideSave, 800); });
 setTimeout(()=>showSave("time"), 20000);
 addEventListener("scroll", function onSaveScroll(){
   const max = document.documentElement.scrollHeight - innerHeight;
