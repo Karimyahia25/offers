@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>صانع البوستات | صيدلية د. أنس نحيلة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Oswald:wght@700&display=block">
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<style>
+/* ================= واجهة الصفحة ================= */
+:root{--navy:#073a4b;--tq:#0781a0;--tq-lt:#e5f6fa;--red:#d42f25;--yel:#ffd23f;--ink:#0f1b16;--ink2:#44524c;--line:#dfe5e3;--bg:#f5f6f1;--card:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:'IBM Plex Sans Arabic',system-ui,Tahoma,sans-serif;background:var(--bg);color:var(--ink)}
+.bar{display:flex;align-items:center;gap:12px;background:var(--navy);color:#fff;padding:10px 16px}
+.bar img{height:44px;background:#fff;border-radius:10px;padding:3px 6px}
+.bar h1{font-family:Alexandria;font-size:20px;margin:0}
+.bar p{margin:2px 0 0;font-size:13px;opacity:.85}
+.wrap{max-width:1180px;margin:auto;padding:16px;display:grid;gap:18px}
+@media(min-width:900px){.wrap{grid-template-columns:1fr 460px;align-items:start}.pv{position:sticky;top:12px;order:2}}
+.panel,.pv{background:var(--card);border-radius:18px;padding:16px;box-shadow:0 4px 18px rgba(7,58,75,.08)}
+.lbl{font-weight:700;font-size:16px;margin:14px 0 8px;color:var(--navy)}
+.lbl:first-child{margin-top:0}
+.seg{display:flex;gap:8px;flex-wrap:wrap}
+.seg button{flex:1;min-width:110px;min-height:48px;font:inherit;font-weight:600;font-size:15px;border:2px solid var(--line);background:#fff;border-radius:12px;cursor:pointer;color:var(--ink)}
+.seg button.on{border-color:var(--tq);background:var(--tq-lt);color:var(--navy)}
+select,input,textarea{width:100%;font:inherit;font-size:16px;padding:11px 12px;border:2px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);min-height:48px}
+select:focus,input:focus,textarea:focus,button:focus-visible{outline:3px solid rgba(7,129,160,.35);border-color:var(--tq)}
+textarea{min-height:120px;resize:vertical;line-height:1.6}
+.f{margin-top:12px}
+.f label{display:block;font-size:14px;font-weight:600;color:var(--ink2);margin-bottom:5px}
+.f small{display:block;color:var(--ink2);font-size:12.5px;margin-top:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.wrap>*,.two>*,input,select{min-width:0}
+input[type=range]{padding:0;border:0;min-height:40px;accent-color:var(--tq)}
+input[type=file]{padding:9px}
+.warn{color:var(--red);font-weight:700;font-size:14px;margin-top:6px}
+.rules{margin-top:16px;background:var(--yel-lt,#fff4c7);border-radius:12px;padding:10px 12px;font-size:13.5px;line-height:1.7}
+#frame{position:relative;overflow:hidden;border-radius:12px;background:#ddd;margin:0 auto}
+#scaler{transform-origin:top right;position:absolute;top:0;right:0}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.btn{min-height:52px;font:inherit;font-weight:700;font-size:16px;border:0;border-radius:14px;cursor:pointer;background:var(--red);color:#fff}
+.btn.tq{background:var(--tq)}
+.btn.ghost{background:var(--tq-lt);color:var(--navy)}
+.btn:disabled{opacity:.6;cursor:wait}
+#cap{margin-top:12px;min-height:150px;font-size:15px}
+.msg{font-size:14px;margin-top:8px;color:var(--tq);min-height:20px;font-weight:600}
+
+/* ================= البوست نفسه (نفس هوية posts/brand.css) ================= */
+#poster{--navy:#073a4b;--navy2:#0a5770;--tq2:#14b5d6;--red:#d42f25;--yel:#ffd23f;--yel-lt:#fff4c7;--ink:#0f1b16;--ink2:#44524c;
+  position:relative;overflow:hidden;direction:rtl;font-family:'IBM Plex Sans Arabic',sans-serif;color:var(--ink);
+  background:radial-gradient(circle at 88% 8%,rgba(20,181,214,.22) 0 260px,transparent 261px),radial-gradient(circle at 6% 62%,rgba(255,210,63,.28) 0 200px,transparent 201px),linear-gradient(170deg,#f2fbfd 0%,#fff 55%,#e5f6fa 100%)}
+#poster.dark{color:#fff;background:radial-gradient(circle at 90% 6%,rgba(20,181,214,.35) 0 280px,transparent 281px),radial-gradient(circle at 4% 70%,rgba(255,210,63,.18) 0 220px,transparent 221px),linear-gradient(160deg,var(--navy2) 0%,var(--navy) 70%)}
+#poster *{box-sizing:border-box;margin:0;padding:0}
+#poster .post{position:absolute;inset:0;display:flex;flex-direction:column;padding:48px 60px 0}
+#poster .en{font-family:Oswald,sans-serif;direction:ltr;letter-spacing:.5px}
+#poster .top{display:flex;align-items:center;justify-content:space-between;gap:24px}
+#poster .logo{background:#fff;border-radius:28px;padding:12px 20px;box-shadow:0 10px 30px rgba(7,58,75,.14)}
+#poster .logo img{height:118px;display:block}
+#poster .pill{font-family:Alexandria;font-weight:800;font-size:34px;padding:14px 30px;border-radius:999px;background:var(--red);color:#fff;box-shadow:0 8px 20px rgba(212,47,37,.3)}
+#poster .pill.yel{background:var(--yel);color:var(--ink)}
+#poster .hl{font-family:Alexandria;font-weight:900;font-size:86px;line-height:1.18;color:var(--navy);margin-top:34px}
+#poster.dark .hl{color:#fff}
+#poster .red{color:var(--red)}
+#poster .mark{background:linear-gradient(transparent 62%,var(--yel) 62% 92%,transparent 92%);padding:0 6px}
+#poster.dark .mark{background:none;color:var(--yel)}
+#poster .nw{white-space:nowrap}
+#poster .sub{font-size:36px;font-weight:400;color:var(--ink2);margin-top:14px;line-height:1.5}
+#poster .stage{flex:1;position:relative;display:flex;align-items:center;justify-content:center;min-height:0}
+#poster .prod{width:600px;height:600px;max-height:100%;background:#fff;border-radius:48px;display:flex;align-items:center;justify-content:center;box-shadow:0 30px 60px rgba(7,58,75,.18);transform:rotate(-2deg);overflow:hidden}
+#poster .prod img{width:92%;height:92%;object-fit:contain}
+#poster .prod .ph{font-size:40px;color:#9aa7a2;font-weight:600}
+#poster .burst{position:absolute;top:10px;left:40px;width:250px;height:250px;background:var(--yel);transform:rotate(-12deg);
+  clip-path:polygon(100.0% 50.0%,90.2% 58.0%,96.2% 69.1%,84.1% 72.8%,85.4% 85.4%,72.8% 84.1%,69.1% 96.2%,58.0% 90.2%,50.0% 100.0%,42.0% 90.2%,30.9% 96.2%,27.2% 84.1%,14.6% 85.4%,15.9% 72.8%,3.8% 69.1%,9.8% 58.0%,0.0% 50.0%,9.8% 42.0%,3.8% 30.9%,15.9% 27.2%,14.6% 14.6%,27.2% 15.9%,30.9% 3.8%,42.0% 9.8%,50.0% 0.0%,58.0% 9.8%,69.1% 3.8%,72.8% 15.9%,85.4% 14.6%,84.1% 27.2%,96.2% 30.9%,90.2% 42.0%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--red);font-family:Alexandria;font-weight:900;line-height:1.05}
+#poster .burst big{font-size:72px;direction:ltr}
+#poster .burst small{font-size:30px;color:var(--ink)}
+#poster .price{position:absolute;bottom:18px;right:40px;background:var(--red);color:#fff;border-radius:28px;padding:16px 34px;box-shadow:0 14px 30px rgba(212,47,37,.35);display:flex;align-items:baseline;gap:18px;transform:rotate(2deg)}
+#poster .price b{font-family:Alexandria;font-size:78px;font-weight:900;line-height:1}
+#poster .price span{font-size:32px;font-weight:600}
+#poster .price s{font-size:38px;opacity:.85}
+#poster .name{text-align:center;font-size:40px;color:var(--navy);margin:8px 0 20px}
+#poster .deal{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;position:relative}
+#poster .deal .brand{font-family:Oswald;font-weight:700;font-size:150px;line-height:1;color:var(--navy);direction:ltr;letter-spacing:2px}
+#poster .deal .what{font-size:46px;font-weight:600;color:var(--ink2)}
+#poster .deal .ticket{margin-top:26px;background:var(--red);color:#fff;font-family:Alexandria;font-weight:900;font-size:92px;line-height:1.15;padding:34px 64px;border-radius:44px;transform:rotate(-3deg);box-shadow:0 24px 50px rgba(212,47,37,.35);border:6px dashed rgba(255,255,255,.55);max-width:100%}
+#poster .deal .ticket small{display:block;font-size:46px;font-weight:700;color:var(--yel)}
+#poster .deal .burst{top:auto;bottom:40px;left:30px;width:210px;height:210px}
+#poster .deal .burst big{font-size:46px}
+#poster .deal .until{font-size:32px;font-weight:600;color:var(--navy);background:var(--yel-lt);padding:10px 28px;border-radius:999px}
+#poster .tips{flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px;margin:20px 0}
+#poster .tip{display:flex;gap:26px;align-items:center;background:#fff;border-radius:30px;padding:24px 30px;box-shadow:0 12px 30px rgba(7,58,75,.12);color:var(--ink)}
+#poster .tip .num{flex:none;width:84px;height:84px;border-radius:50%;background:var(--red);color:#fff;font-family:Alexandria;font-weight:900;font-size:46px;display:flex;align-items:center;justify-content:center}
+#poster .tip p{font-size:36px;font-weight:600;line-height:1.45}
+#poster .tip p small{display:block;font-size:28px;font-weight:400;color:var(--ink2)}
+#poster .note{text-align:center;font-size:26px;color:#bfe3ec;margin-bottom:18px}
+#poster .foot{margin:0 -60px;background:var(--navy);color:#fff;padding:24px 60px 26px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-top:8px solid var(--yel)}
+#poster.dark .foot{background:#04262f}
+#poster .wa{display:flex;align-items:center;gap:18px}
+#poster .wa i{width:78px;height:78px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center}
+#poster .wa i svg{width:50px;height:50px;fill:#fff}
+#poster .wa b{font-family:Oswald;font-size:62px;font-weight:700;direction:ltr;letter-spacing:1px;line-height:1;display:block}
+#poster .wa small{display:block;font-size:24px;opacity:.85;margin-top:4px}
+#poster .foot .perks{text-align:left;font-size:28px;font-weight:600;line-height:1.5}
+#poster .foot .perks span{color:var(--yel)}
+#poster.story .post{padding:90px 64px 0}
+#poster.story .hl{margin-top:60px}
+#poster.story .sub{font-size:42px}
+#poster.story .prod{width:820px;height:820px}
+#poster.story .burst{width:300px;height:300px;top:0}
+#poster.story .burst big{font-size:86px}
+#poster.story .deal .burst{width:240px;height:240px;top:auto}
+#poster.story .deal .burst big{font-size:52px}
+#poster.story .foot{padding:40px 64px 120px;margin:0 -64px;flex-direction:column;align-items:center;text-align:center}
+#poster.story .foot .perks{text-align:center}
+</style>
+</head>
+<body>
+<header class="bar">
+  <img src="img/logo-full.png" alt="">
+  <div><h1>صانع البوستات</h1><p>بوست أو ستوري بهوية الصيدلية في دقيقة</p></div>
+</header>
+
+<main class="wrap">
+  <section class="pv" aria-label="شكل البوست">
+    <div id="frame"><div id="scaler"><div id="poster"></div></div></div>
+    <div class="actions">
+      <button class="btn" id="dl">⬇️ نزّل الصورة</button>
+      <button class="btn tq" id="share">📤 شير</button>
+    </div>
+    <div class="msg" id="msg" role="status"></div>
+    <div class="f"><label for="cap">الكابشن (اكتبه مع البوست)</label><textarea id="cap"></textarea></div>
+    <button class="btn ghost" id="copy" style="width:100%;margin-top:8px">📋 انسخ الكابشن</button>
+  </section>
+
+  <section class="panel">
+    <div class="lbl">1. نوع البوست</div>
+    <div class="seg" id="tpl">
+      <button data-v="offer">🛍️ عرض بصورة</button>
+      <button data-v="text">🏷️ عرض من غير صورة</button>
+      <button data-v="tip">💡 نصيحة</button>
+    </div>
+    <div class="lbl">2. المقاس</div>
+    <div class="seg" id="size">
+      <button data-v="post">بوست (فيسبوك/إنستجرام)</button>
+      <button data-v="story">ستوري / ريلز</button>
+    </div>
+    <div class="lbl" id="pickLbl">3. هات البيانات من الشيت (اختياري)</div>
+    <select id="pick"><option value="">— اختار عرض أو منتج —</option></select>
+    <div id="fields"></div>
+    <div class="rules">⚠️ <b>ممنوع أدوية أو جرعات</b> في البوستات — تجميل وعناية وأطفال بس.<br>الأسعار لازم تكون نفس اللي في الشيت · الرقم والعنوان ثابتين تحت لوحدهم.</div>
+  </section>
+</main>
+
+<script>
+const SHEET = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSxI8MUQVM9-85bTWllKzGnVlUDOyxHSDRDVnSQW2URfemG9bJSxvvEbKAUn-kSVlD-0i3cYnzxxliQ/pub?gid=1160729995&single=true&output=csv";
+const WA = '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.6 2.1 1.1 1 2.1 1.3 2.4 1.4.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z"/></svg>';
+const MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const num = s => { const n = parseFloat(String(s ?? "").replace(/[^\d.]/g, "")); return isFinite(n) ? n : 0; };
+
+// الخانات لكل نوع: [المفتاح، العنوان، نوع الخانة، ملاحظة]
+const FIELDS = {
+  offer: [
+    ["badge","الشريط الأحمر اللي فوق"],
+    ["title","العنوان (اسم المنتج)"],
+    ["mark","السطر المميز بالأصفر"],
+    ["sub","سطر صغير تحت العنوان"],
+    ["photo","صورة المنتج","file","صوّر المنتج على ورقة بيضا في النور، والمنتج مالي الكادر"],
+    ["zoom","تكبير الصورة","range"],
+    ["before","السعر قبل","num"], ["after","السعر بعد","num"],
+    ["burstBig","النجمة الصفرا — كبير"], ["burstSmall","النجمة الصفرا — صغير"],
+    ["en","اسم المنتج بالإنجليزي (تحت الصورة)"],
+  ],
+  text: [
+    ["badge","الشريط الأحمر اللي فوق"],
+    ["brand","اسم الماركة (إنجليزي)"],
+    ["what","وصف قصير"],
+    ["t1","العرض — السطر الكبير"], ["t2","العرض — السطر الأصفر"],
+    ["until","لحد إمتى"],
+    ["burstBig","النجمة الصفرا — كبير"], ["burstSmall","النجمة الصفرا — صغير"],
+  ],
+  tip: [
+    ["badge","الشريط الأصفر اللي فوق"],
+    ["title","العنوان"], ["mark","آخر العنوان بالأصفر"],
+    ["tips","النقط (كل سطر نقطة، والشرح بعد علامة | )","area","مثال: غيّري الحفاضة أول ما تتبل | الرطوبة أكبر سبب للتسلخات — من 3 لـ 5 نقط"],
+    ["note","سطر تحت النقط"],
+  ],
+};
+const DEF = {
+  offer: {badge:"عرض جديد", title:"اسم المنتج", mark:"بخصم 20%", sub:"", zoom:100, before:"", after:"", burstBig:"", burstSmall:"", en:""},
+  text:  {badge:"عرض جديد", brand:"BRAND", what:"وصف قصير للمنتج", t1:"اشتري قطعة", t2:"والتانية هدية 🎁", until:"لفترة محدودة", burstBig:"1+1", burstSmall:"ببلاش"},
+  tip:   {badge:"نصيحة الصيدلي", title:"4 حاجات تحمي بشرة بيبي", mark:"من التسلخات",
+          tips:"غيّري الحفاضة أول ما تتبل | الرطوبة هي أكبر سبب للتسلخات\nسيبي البشرة تنشف دقيقتين | قبل ما تلبّسيه الحفاضة الجديدة\nالمقاس الصح مش الضيق | الضغط والاحتكاك بيهيّجوا الجلد\nمناديل من غير كحول ولا برفان | أرحم على بشرة البيبي الحساسة",
+          note:"لو الأعراض مكملة، كلّمنا أو اسأل الدكتور"},
+};
+let tpl = "offer", size = "post";
+let S = {offer:{...DEF.offer}, text:{...DEF.text}, tip:{...DEF.tip}};
+let meta = {slug:"", diapers:false};
+let capEdited = false;
+
+/* ---------- الخانات ---------- */
+function buildFields(){
+  const s = S[tpl];
+  $("#pickLbl").hidden = $("#pick").hidden = tpl === "tip";
+  $("#fields").innerHTML = FIELDS[tpl].map(([k, label, type, hint]) => {
+    const id = "f_" + k;
+    let inp;
+    if(type === "file") inp = `<input type="file" id="${id}" accept="image/*">`;
+    else if(type === "range") inp = `<input type="range" id="${id}" min="50" max="180" value="${s[k]}">`;
+    else if(type === "area") inp = `<textarea id="${id}">${esc(s[k])}</textarea>`;
+    else if(type === "num") inp = `<input id="${id}" inputmode="numeric" value="${esc(s[k])}">`;
+    else inp = `<input id="${id}" value="${esc(s[k])}">`;
+    return `<div class="f" data-k="${k}"><label for="${id}">${label}</label>${inp}${hint ? `<small>${hint}</small>` : ""}${k === "after" ? '<div class="warn" id="pwarn"></div>' : ""}</div>`;
+  }).join("");
+  // السعرين جنب بعض، والنجمة جنب بعض
+  [["before","after"],["burstBig","burstSmall"],["t1","t2"]].forEach(([a,b]) => {
+    const A = $(`.f[data-k=${a}]`), B = $(`.f[data-k=${b}]`);
+    if(A && B){ const w = document.createElement("div"); w.className = "two"; A.before(w); w.append(A, B); }
+  });
+  $("#fields").querySelectorAll("input:not([type=file]),textarea").forEach(el => el.addEventListener("input", () => {
+    const k = el.id.slice(2); s[k] = el.value;
+    if((k === "before" || k === "after") && tpl === "offer") autoDiscount();
+    render();
+  }));
+  const f = $("#f_photo");
+  if(f) f.addEventListener("change", () => f.files[0] && loadPhoto(f.files[0]));
+}
+function setField(k, v){ S[tpl][k] = v; const el = $("#f_" + k); if(el && el.type !== "file") el.value = v; }
+function autoDiscount(){
+  const s = S.offer, b = num(s.before), a = num(s.after);
+  if(b && a && a < b){
+    const p = Math.round((1 - a / b) * 100);
+    setField("burstBig", `-${p}%`); setField("burstSmall", "خصم");
+    if(!s.mark || /خصم\s*\d+\s*%/.test(s.mark)) setField("mark", `بخصم ${p}%`);
+  }
+}
+function loadPhoto(file){
+  const img = new Image();
+  img.onload = () => {
+    const m = 1400, r = Math.min(1, m / Math.max(img.width, img.height));
+    const c = document.createElement("canvas"); c.width = img.width * r; c.height = img.height * r;
+    const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+    S.offer.photo = c.toDataURL("image/jpeg", .9); URL.revokeObjectURL(img.src); render();
+  };
+  img.src = URL.createObjectURL(file);
+}
+
+/* ---------- البوست ---------- */
+const W = 1080, H = () => size === "story" ? 1920 : 1350;
+const hlSize = t => { const n = t.length; const big = size === "story" ? 100 : 86; return n > 34 ? big * .66 : n > 24 ? big * .8 : big; };
+const redPct = t => esc(t).replace(/(\d+\s*%|%\s*\d+)/g, '<span class="red">$1</span>');
+function topBar(yel){ return `<div class="top"><div class="logo"><img src="img/logo-full.png" alt=""></div>${S[tpl].badge ? `<div class="pill${yel ? " yel" : ""}">${esc(S[tpl].badge)}</div>` : "<span></span>"}</div>`; }
+function foot(){ return `<div class="foot"><div class="wa"><i>${WA}</i><div><b>01288827555</b><small>ابعت طلبك واتساب</small></div></div><div class="perks"><span>توصيل مجاني</span> · فاتحين 24 ساعة<br>المعمورة الشاطئ – جنب البوابة الرئيسية</div></div>`; }
+function burst(s){ return s.burstBig ? `<div class="burst"><big>${esc(s.burstBig)}</big>${s.burstSmall ? `<small>${esc(s.burstSmall)}</small>` : ""}</div>` : ""; }
+function render(){
+  const P = $("#poster"), s = S[tpl];
+  P.className = (tpl === "tip" ? "dark " : "") + (size === "story" ? "story" : "");
+  P.style.width = W + "px"; P.style.height = H() + "px";
+  let mid = "";
+  if(tpl === "offer"){
+    const b = num(s.before), a = num(s.after);
+    const t = s.title + " " + (s.mark || "");
+    $("#pwarn") && ($("#pwarn").textContent = b && a && a >= b ? "السعر بعد لازم يكون أقل من السعر قبل" : "");
+    mid = `<div class="hl" style="font-size:${hlSize(t)}px">${esc(s.title)}${s.mark ? `<br><span class="mark nw">${redPct(s.mark)}</span>` : ""}</div>
+      ${s.sub ? `<div class="sub">${esc(s.sub)}</div>` : ""}
+      <div class="stage"><div class="prod">${s.photo ? `<img src="${s.photo}" alt="" style="transform:scale(${(s.zoom || 100) / 100})">` : '<div class="ph">📷 ارفع صورة المنتج</div>'}</div>
+        ${burst(s)}
+        ${a ? `<div class="price"><b>${a}</b><span>جنيه</span>${b > a ? `<s>${b}</s>` : ""}</div>` : ""}</div>
+      ${s.en ? `<div class="name en">${esc(s.en)}</div>` : '<div style="height:20px"></div>'}`;
+  } else if(tpl === "text"){
+    const bl = (s.brand || "").length, bs = bl > 14 ? 90 : bl > 9 ? 120 : 150;
+    mid = `<div class="deal"><div class="brand" style="font-size:${bs}px">${esc(s.brand)}</div>
+      ${s.what ? `<div class="what">${esc(s.what)}</div>` : ""}
+      <div class="ticket" style="font-size:${(s.t1 || "").length > 14 ? 70 : 92}px">${esc(s.t1)}${s.t2 ? `<small>${esc(s.t2)}</small>` : ""}</div>
+      ${s.until ? `<div class="until">${esc(s.until)}</div>` : ""}${burst(s)}</div>`;
+  } else {
+    const items = (s.tips || "").split("\n").map(l => l.trim()).filter(Boolean).slice(0, 5);
+    const t = s.title + " " + (s.mark || "");
+    mid = `<div class="hl" style="font-size:${hlSize(t)}px">${esc(s.title)} ${s.mark ? `<span class="mark">${esc(s.mark)}</span>` : ""}</div>
+      <div class="tips">${items.map((l, i) => { const [a, b] = l.split("|").map(x => x.trim());
+        return `<div class="tip"><div class="num">${i + 1}</div><p>${esc(a)}${b ? `<small>${esc(b)}</small>` : ""}</p></div>`; }).join("")}</div>
+      ${s.note ? `<div class="note">${esc(s.note)}</div>` : ""}`;
+  }
+  P.innerHTML = `<div class="post">${topBar(tpl === "tip")}${mid}${foot()}</div>`;
+  fit();
+  if(!capEdited) $("#cap").value = caption();
+}
+function fit(){
+  const fr = $("#frame"), w = fr.parentElement.clientWidth, sc = Math.min(w, 440) / W;
+  fr.style.width = W * sc + "px"; fr.style.height = H() * sc + "px";
+  $("#scaler").style.transform = `scale(${sc})`;
+}
+
+/* ---------- الكابشن ---------- */
+function slug(){
+  const s = S[tpl], base = meta.slug || s.en || s.brand || s.title || "";
+  return (base.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 24)) || tpl;
+}
+function caption(){
+  const s = S[tpl];
+  const link = `karimyahia25.github.io/offers/${meta.diapers ? "diapers/" : ""}?src=fb_${slug()}`;
+  const tail = `\n\nابعت طلبك واتساب على 01288827555 🛵\nتوصيل مجاني وفاتحين 24 ساعة.\nكل العروض: ${link}\n#صيدلية_د_أنس_نحيلة #المعمورة #اسكندرية`;
+  if(tpl === "offer"){
+    const a = num(s.after), b = num(s.before);
+    return `${s.title} ${s.mark || ""} 🎉` + (s.sub ? `\n${s.sub}` : "") + (a ? `\nبـ ${a} جنيه${b > a ? ` بدل ${b}` : ""}` : "") + tail;
+  }
+  if(tpl === "text") return `${s.brand} — ${s.what}\n${s.t1} ${s.t2 || ""}` + (s.until ? `\n${s.until}` : "") + tail;
+  return `${s.title} ${s.mark || ""} 💙\nاحفظ البوست ده، ولو عندك أي سؤال الصيدلي معاك 24 ساعة.\n\nكلمنا واتساب على 01288827555\n#نصيحة_الصيدلي #صيدلية_د_أنس_نحيلة`;
+}
+
+/* ---------- البيانات من الشيت والكتالوج ---------- */
+function parseCSV(text){
+  const rows = []; let row = [], f = "", q = false;
+  for(let i = 0; i < text.length; i++){
+    const c = text[i];
+    if(q){ if(c == '"'){ if(text[i + 1] == '"'){ f += '"'; i++; } else q = false; } else f += c; }
+    else if(c == '"') q = true;
+    else if(c == ','){ row.push(f); f = ""; }
+    else if(c == '\n'){ row.push(f); rows.push(row); row = []; f = ""; }
+    else if(c != '\r') f += c;
+  }
+  if(f || row.length){ row.push(f); rows.push(row); }
+  const head = (rows.shift() || []).map(h => h.replace(/^﻿/, "").trim());
+  return rows.filter(r => r.some(x => x.trim())).map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
+}
+let PICK = [];
+async function loadData(){
+  const [sh, cat] = await Promise.allSettled([fetch(SHEET + "&t=" + Date.now()).then(r => r.text()), fetch("products.csv").then(r => r.text())]);
+  const now = new Date(), ok = r => r["الاسم"] && !/^(لا|no|0|مخفي)$/i.test((r["ظاهر"] || "نعم").trim()) && !(r["ينتهي"] && new Date(r["ينتهي"] + "T23:59:59") < now);
+  const offers = sh.status === "fulfilled" ? parseCSV(sh.value).filter(ok) : [];
+  const prods = cat.status === "fulfilled" ? parseCSV(cat.value).filter(ok) : [];
+  PICK = [...offers.map(r => ({...r, _src: "sheet"})), ...prods.map(r => ({...r, _src: "cat"}))];
+  const opt = (r, i) => `<option value="${i}">${esc(r["الاسم"])}${r["السعر بعد"] ? " — " + esc(r["السعر بعد"]) + " ج" : r["العرض"] ? " — " + esc(r["العرض"]) : ""}</option>`;
+  $("#pick").insertAdjacentHTML("beforeend",
+    (offers.length ? `<optgroup label="العروض الحالية (الشيت)">${offers.map((r, i) => opt(r, i)).join("")}</optgroup>` : "") +
+    (prods.length ? `<optgroup label="الكتالوج (فيه صور)">${prods.map((r, i) => opt(r, i + offers.length)).join("")}</optgroup>` : ""));
+}
+function untilText(d){
+  if(!d) return "لفترة محدودة";
+  const x = new Date(d + "T12:00:00"); return isNaN(x) ? "لفترة محدودة" : `العرض لحد ${x.getDate()} ${MONTHS[x.getMonth()]}`;
+}
+$("#pick").addEventListener("change", e => {
+  const r = PICK[e.target.value]; if(!r) return;
+  const name = r["الاسم"], desc = r["الوصف"], b = num(r["السعر قبل"]), a = num(r["السعر بعد"]), deal = r["العرض"];
+  const p = b && a && a < b ? Math.round((1 - a / b) * 100) : 0;
+  const img = r["الصورة"] && !/^https?:/i.test(r["الصورة"]) ? "img/" + r["الصورة"].replace(/^\/+/, "") : "";
+  meta = {slug: name, diapers: /حفاض|بامبرز|diaper/i.test(r["النوع"] + r["الفئة"] + name)};
+  S.offer = {...S.offer, title: desc ? desc.split("·")[0].trim() : name, mark: deal || (p ? `بخصم ${p}%` : ""), sub: desc && desc.includes("·") ? desc.split("·").slice(1).join("·").trim() : "",
+             before: b || "", after: a || "", burstBig: p ? `-${p}%` : deal ? "عرض" : "", burstSmall: p ? "خصم" : deal ? "خاص" : "", en: (r["الوصف EN"] || name).toUpperCase(), photo: img || S.offer.photo, zoom: 100};
+  S.text = {...S.text, brand: name.toUpperCase(), what: desc, t1: a ? `بـ ${a} جنيه بس` : deal || "عرض خاص", t2: a && b > a ? `بدل ${b} جنيه` : "",
+            until: untilText(r["ينتهي"]), burstBig: p ? `-${p}%` : "عرض", burstSmall: p ? "خصم" : "خاص"};
+  capEdited = false;
+  setTpl(img ? "offer" : "text");
+  $("#msg").textContent = img ? "" : "العرض ده ملوش صورة جاهزة — لو صوّرته، اختار «عرض بصورة» وارفعها.";
+});
+
+/* ---------- الأزرار ---------- */
+function setTpl(v){ tpl = v; document.querySelectorAll("#tpl button").forEach(b => b.classList.toggle("on", b.dataset.v === v)); buildFields(); render(); }
+function setSize(v){ size = v; document.querySelectorAll("#size button").forEach(b => b.classList.toggle("on", b.dataset.v === v)); render(); }
+$("#tpl").addEventListener("click", e => { const b = e.target.closest("button"); if(b){ capEdited = false; setTpl(b.dataset.v); } });
+$("#size").addEventListener("click", e => { const b = e.target.closest("button"); if(b) setSize(b.dataset.v); });
+$("#cap").addEventListener("input", () => capEdited = true);
+addEventListener("resize", fit);
+
+const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+async function makeBlob(){
+  await document.fonts.ready;
+  const o = {width: W, height: H(), pixelRatio: 1, backgroundColor: "#ffffff"};
+  if(isIOS) await htmlToImage.toBlob($("#poster"), o);   // سفاري بيحتاج مرتين علشان الصور
+  return htmlToImage.toBlob($("#poster"), o);
+}
+const fname = () => `anas-${slug()}-${size}.png`;
+async function busy(btn, fn){
+  document.querySelectorAll(".btn").forEach(b => b.disabled = true); $("#msg").textContent = "⏳ بنجهّز الصورة...";
+  try { await fn(); } catch(err){ console.error(err); $("#msg").textContent = "حصلت مشكلة — جرّب تاني."; }
+  finally { document.querySelectorAll(".btn").forEach(b => b.disabled = false); }
+}
+function download(blob){
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = fname(); document.body.append(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  $("#msg").textContent = "✅ الصورة نزلت — انسخ الكابشن وانشر.";
+}
+$("#dl").addEventListener("click", () => busy(null, async () => download(await makeBlob())));
+$("#share").addEventListener("click", () => busy(null, async () => {
+  const blob = await makeBlob(), file = new File([blob], fname(), {type: "image/png"});
+  try { await navigator.clipboard.writeText($("#cap").value); } catch(_){}
+  if(navigator.canShare && navigator.canShare({files: [file]})){
+    await navigator.share({files: [file], text: $("#cap").value}).catch(() => {});
+    $("#msg").textContent = "✅ الكابشن اتنسخ كمان — الصقه في البوست.";
+  } else download(blob);
+}));
+$("#copy").addEventListener("click", async () => {
+  try { await navigator.clipboard.writeText($("#cap").value); $("#msg").textContent = "✅ الكابشن اتنسخ"; }
+  catch(_){ $("#cap").select(); document.execCommand("copy"); $("#msg").textContent = "✅ الكابشن اتنسخ"; }
+});
+
+setSize("post"); setTpl("offer"); loadData();
+</script>
+</body>
+</html>
