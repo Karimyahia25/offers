@@ -236,6 +236,10 @@ async def search_site(ctx, site, q):
     url = site["url"].replace("{q}", quote_plus(q))
     try:
         await page.goto(url, wait_until="domcontentloaded", timeout=45000)
+        for _ in range(20):                          # صفحة "Just a moment" بتاعة Cloudflare
+            if not any(w in (await page.title()).lower() for w in ("just a moment", "attention required", "لحظة")):
+                break
+            await page.wait_for_timeout(1500)
         try:
             await page.wait_for_load_state("networkidle", timeout=12000)
         except Exception:
@@ -305,7 +309,12 @@ async def run_query(ctx, sites, name, q):
 
     async def one(site):
         try:
-            rows = await search_site(ctx, site, q)
+            try:
+                rows = await search_site(ctx, site, q)
+            except Exception as first:
+                print(f"   {site['name']}: محاولة تانية ({str(first).splitlines()[0][:80]})", flush=True)
+                await asyncio.sleep(10)
+                rows = await search_site(ctx, site, q)
             got = finish(site["name"], rows, q)
             print(f"   {site['name']}: {len(rows)} منتج في الصفحة، {len(got)} مطابق", flush=True)
             results.extend(got)
@@ -414,7 +423,11 @@ async def main():
     stamp = datetime.now(CAIRO).strftime("%Y-%m-%d %H:%M")
 
     async with async_playwright() as pw:
-        browser = await pw.chromium.launch(args=["--disable-blink-features=AutomationControlled"])
+        # على GitHub بنشغّل Google Chrome الحقيقي بشاشة وهمية (xvfb) — المواقع بتحجب الـ headless أكتر.
+        browser = await pw.chromium.launch(
+            channel=os.environ.get("BROWSER_CHANNEL") or None,
+            headless=os.environ.get("HEADED") != "1",
+            args=["--disable-blink-features=AutomationControlled"])
         ctx = await browser.new_context(user_agent=UA, locale="en-US", viewport={"width": 1366, "height": 900},
                                         extra_http_headers={"Accept-Language": "en-US,en;q=0.9,ar;q=0.8"})
         await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
