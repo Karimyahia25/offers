@@ -71,13 +71,24 @@ def tokens(s: str):
     return [t for t in norm(s).split() if t not in STOP]
 
 
+GENERIC = {"shampoo", "conditioner", "oil", "cream", "hair", "mask", "baby", "size", "diapers", "soap",
+           "wash", "lotion", "serum", "wipes", "powder", "sunscreen", "toothpaste", "deodorant", "moisturizer",
+           "spray", "gel", "face", "body", "kids", "pants"}
+
+
 def relevance(query: str, title: str) -> float:
+    """نسبة كلمات البحث الموجودة في اسم المنتج. الماركة والأرقام (زي المقاس) لازم يكونوا موجودين."""
     q = tokens(query)
     if not q:
         return 1.0
     t = " " + norm(title) + " "
-    hit = sum(1 for w in q if (" " + w + " ") in t or (len(w) > 3 and w in t))
-    return hit / len(q)
+    found = lambda w: (" " + w + " ") in t or (len(w) > 3 and w in t)
+    brand = next((w for w in q if w not in GENERIC and not w.isdigit()), None)
+    if brand and not found(brand):
+        return 0.0
+    if any(w.isdigit() and not found(w) for w in q):
+        return 0.0
+    return sum(1 for w in q if found(w)) / len(q)
 
 
 # ---------------------------------------------------------------- الأسعار والأحجام
@@ -172,7 +183,7 @@ GENERIC_JS = r"""(linkPart) => {
     const h = clean(a.href);
     if (!groups.has(h)) groups.set(h, a);
   }
-  const priceRe = /(?:EGP|E£|LE|L\.E\.?|ج\.?\s?م\.?|جنيه)\s*([\d٠-٩][\d٠-٩,٬.٫]*)|([\d٠-٩][\d٠-٩,٬.٫]*)\s*(?:EGP|E£|LE|L\.E\.?|ج\.?\s?م\.?|جنيه)/gi;
+  const priceRe = /(?:EGP|E£|LE|L\.E\.?|ج\.?\s?م\.?|جنيه)\s*([\d٠-٩][\d٠-٩,٬.٫]*)|([\d٠-٩][\d٠-٩,٬.٫]*)[  ]?(?:EGP|E£|LE|L\.E\.?|ج\.?\s?م\.?|جنيه)/gi;
   const hasPrice = s => new RegExp(priceRe.source, 'i').test(s);
   const out = [];
   for (const [href, a] of groups) {
@@ -189,7 +200,7 @@ GENERIC_JS = r"""(linkPart) => {
     const img = card.querySelector('img');
     const lines = text.split('\n').map(s => s.trim()).filter(s => s.length >= 8 && s.length <= 220 && /[A-Za-z؀-ۿ]{3}/.test(s) && !hasPrice(s));
     const title = (a.getAttribute('title') || (img && img.alt) || lines.sort((x, y) => y.length - x.length)[0] || '').trim();
-    out.push({ title, url: href, prices, img: img ? (img.currentSrc || img.src || img.dataset.src || '') : '' });
+    out.push({ title, url: href, prices, text: text.slice(0, 300), img: img ? (img.currentSrc || img.src || img.dataset.src || '') : '' });
   }
   return out;
 }"""
@@ -209,7 +220,8 @@ def from_generic(rows):
         price, old = min(first), max(first)
         if old > price * 5:
             old = price
-        out.append({"title": r["title"], "url": r["url"], "price": price,
+        title = re.sub(r"\s*-\s*Image\s*\d+\s*$", "", r["title"]).strip()
+        out.append({"title": title, "url": r["url"], "price": price,
                     "old": old if old > price else None, "img": r.get("img", "")})
     return out
 
@@ -256,7 +268,11 @@ async def search_site(ctx, site, q):
             rows = from_specific(await page.evaluate(JUMIA_JS))
         if not rows:
             link = site.get("link") or {"amazon": "/dp/", "jumia": ".html"}.get(site["type"], "/p/")
-            rows = from_generic(await page.evaluate(GENERIC_JS, link))
+            raw = await page.evaluate(GENERIC_JS, link)
+            if os.environ.get("SHOW_CARDS"):
+                for r in raw[:2]:
+                    print(f"   [{site['key']}] {r['text']!r} -> {r['prices']}", flush=True)
+            rows = from_generic(raw)
         if not rows:
             DEBUG.mkdir(exist_ok=True)
             await page.screenshot(path=str(DEBUG / f"{site['key']}.png"), full_page=False)
