@@ -358,7 +358,7 @@ def finish(site_name, rows, q):
     out = []
     for r in rows:
         score = relevance(q, r["title"])
-        if score < 0.6:
+        if score < 0.75:
             continue
         qty, unit = size_of(r["title"])
         up, up_label = unit_price(r["price"], qty, unit)
