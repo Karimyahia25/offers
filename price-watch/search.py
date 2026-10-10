@@ -88,6 +88,9 @@ def relevance(query: str, title: str) -> float:
         return 0.0
     if any(w.isdigit() and not found(w) for w in q):
         return 0.0
+    m = re.search(r"\bsize (\d+)\b", " ".join(q))
+    if m and not re.search(r"(size|مقاس|sz)\s*\(?" + m.group(1) + r"\b", t):
+        return 0.0
     return sum(1 for w in q if found(w)) / len(q)
 
 
@@ -200,29 +203,51 @@ GENERIC_JS = r"""(linkPart) => {
     const img = card.querySelector('img');
     const lines = text.split('\n').map(s => s.trim()).filter(s => s.length >= 8 && s.length <= 220 && /[A-Za-z؀-ۿ]{3}/.test(s) && !hasPrice(s));
     const title = (a.getAttribute('title') || (img && img.alt) || lines.sort((x, y) => y.length - x.length)[0] || '').trim();
-    out.push({ title, url: href, prices, text: text.slice(0, 300), img: img ? (img.currentSrc || img.src || img.dataset.src || '') : '' });
+    out.push({ title, url: href, prices, text: text.slice(0, 800), img: img ? (img.currentSrc || img.src || img.dataset.src || '') : '' });
   }
   return out;
 }"""
 
 
+CUR = r"(?:EGP|E£|LE|L\.E\.?|ج\.?\s?م\.?|جنيه)(?![A-Za-z])"
+NUM = r"\d[\d,٬]*(?:[.٫]\d+)?"
+UNIT_PRICE_RE = re.compile(CUR + r"\s*" + NUM + r"\s*/\s*\S+|" + NUM + r"\s*" + CUR + r"\s*/\s*\S+|max\s*" + NUM + r"\s*" + CUR, re.I)
+CUR_FIRST_RE = re.compile(CUR + r"\s*(" + NUM + r")", re.I)
+CUR_LAST_RE = re.compile(r"(" + NUM + r")[  ]?" + CUR, re.I)
+PLAIN_NUM_LINE = re.compile(r"^\s*(" + NUM + r")\s*$")
+
+
+def card_prices(text):
+    """من نص الكارت: السعر = أول رقم جنب العملة، والسعر قبل = الرقم اللي بعده في السطر اللي تحته (شكل Noon وكارفور)."""
+    text = UNIT_PRICE_RE.sub(" ", (text or "").translate(str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")))
+    a, b = CUR_FIRST_RE.search(text), CUR_LAST_RE.search(text)
+    m = min((x for x in (a, b) if x), key=lambda x: x.start(), default=None)
+    if not m:
+        return None, None
+    price = to_number(m.group(1))
+    after = text[m.end():].split("\n")
+    old = None
+    for line in after[1:3] if after and not after[0].strip() else after[:2]:
+        line = line.strip()
+        n = PLAIN_NUM_LINE.match(line) or CUR_FIRST_RE.match(line) or CUR_LAST_RE.match(line)
+        if n:
+            v = to_number(n.group(1))
+            if price and v and price < v < price * 4:
+                old = v
+            break
+        if line:
+            break
+    return price, old
+
+
 def from_generic(rows):
     out = []
     for r in rows:
-        nums = []
-        for p in r.get("prices", []):
-            v = to_number(p)
-            if v and v not in nums:
-                nums.append(v)
-        if not nums:
+        price, old = card_prices(r.get("text", ""))
+        if not price or price < 5:                    # أرقام أقل من 5 جنيه غالباً مش سعر (تقييم / كمية)
             continue
-        first = nums[:2]
-        price, old = min(first), max(first)
-        if old > price * 5:
-            old = price
         title = re.sub(r"\s*-\s*Image\s*\d+\s*$", "", r["title"]).strip()
-        out.append({"title": title, "url": r["url"], "price": price,
-                    "old": old if old > price else None, "img": r.get("img", "")})
+        out.append({"title": title, "url": r["url"], "price": price, "old": old, "img": r.get("img", "")})
     return out
 
 
@@ -243,11 +268,32 @@ async def scroll(page):
         await page.wait_for_timeout(600)
 
 
-async def search_site(ctx, site, q):
+def unblocker_html(url):
+    """المواقع اللي بتحجب GitHub (Jumia / العزبي): بنجيب الصفحة عن طريق خدمة scraping مدفوعة لو فيه مفتاح."""
+    key = os.environ.get("SCRAPERAPI_KEY")
+    if not key:
+        raise RuntimeError("الموقع بيحجب البحث الأوتوماتيك — محتاج خدمة scraping (SCRAPERAPI_KEY)")
+    r = requests.get("https://api.scraperapi.com/", timeout=90, params={
+        "api_key": key, "url": url, "country_code": "eg", "render": "true"})
+    r.raise_for_status()
+    return r.text
+
+
+async def search_site(ctx, site, q, warmup=False):
     page = await ctx.new_page()
     url = site["url"].replace("{q}", quote_plus(q))
     try:
-        await page.goto(url, wait_until="domcontentloaded", timeout=45000)
+        if site.get("needs_unblocker"):
+            html = await asyncio.to_thread(unblocker_html, url)
+            base = re.match(r"https?://[^/]+", url).group(0)
+            await page.route("**/*", lambda route: route.abort())   # النص بس، من غير سكريبتات أو صور
+            html = re.sub(r"<script\b.*?</script>", "", html, flags=re.S | re.I)
+            await page.set_content(html.replace("<head>", f'<head><base href="{base}/">', 1))
+        else:
+            if warmup:                                  # نفتح الصفحة الرئيسية الأول زي أي زبون
+                await page.goto(re.match(r"https?://[^/]+", url).group(0), wait_until="domcontentloaded", timeout=45000)
+                await page.wait_for_timeout(3000)
+            await page.goto(url, wait_until="domcontentloaded", timeout=45000)
         for _ in range(20):                          # صفحة "Just a moment" بتاعة Cloudflare
             title = (await page.title()).lower()
             if not any(w in title for w in ("just a moment", "attention required", "لحظة")):
@@ -329,9 +375,11 @@ async def run_query(ctx, sites, name, q):
             try:
                 rows = await search_site(ctx, site, q)
             except Exception as first:
+                if "SCRAPERAPI_KEY" in str(first):
+                    raise
                 print(f"   {site['name']}: محاولة تانية ({str(first).splitlines()[0][:80]})", flush=True)
-                await asyncio.sleep(10)
-                rows = await search_site(ctx, site, q)
+                await asyncio.sleep(8)
+                rows = await search_site(ctx, site, q, warmup=True)
             got = finish(site["name"], rows, q)
             print(f"   {site['name']}: {len(rows)} منتج في الصفحة، {len(got)} مطابق", flush=True)
             results.extend(got)
