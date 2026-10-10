@@ -1,0 +1,45 @@
+{
+  "_help": "كل موقع: name = الاسم في التقرير، url = لينك البحث و{q} مكان كلمة البحث، link = جزء ثابت في لينكات المنتجات عند الموقع. enabled=false يوقف الموقع. type: amazon / jumia لهم قواعد خاصة، generic = أي موقع تاني. needs_unblocker=true = الموقع بيحجب GitHub، وبيشتغل بس لو حطيت SCRAPERAPI_KEY في Secrets.",
+  "sites": [
+    {
+      "key": "amazon",
+      "name": "Amazon",
+      "type": "amazon",
+      "enabled": true,
+      "url": "https://www.amazon.eg/s?k={q}&language=en_AE"
+    },
+    {
+      "key": "noon",
+      "name": "Noon",
+      "type": "generic",
+      "enabled": true,
+      "url": "https://www.noon.com/egypt-en/search/?q={q}",
+      "link": "/p/"
+    },
+    {
+      "key": "jumia",
+      "name": "Jumia",
+      "type": "jumia",
+      "enabled": true,
+      "url": "https://www.jumia.com.eg/catalog/?q={q}",
+      "needs_unblocker": true
+    },
+    {
+      "key": "carrefour",
+      "name": "Carrefour",
+      "type": "generic",
+      "enabled": true,
+      "url": "https://www.carrefouregypt.com/mafegy/en/search?keyword={q}",
+      "link": "/p/"
+    },
+    {
+      "key": "elezaby",
+      "name": "العزبي",
+      "type": "generic",
+      "enabled": true,
+      "url": "https://www.elezabypharmacy.com/?s={q}&post_type=product",
+      "link": "/product/",
+      "needs_unblocker": true
+    }
+  ]
+}
