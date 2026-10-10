@@ -5,244 +5,67 @@
    "query": "johnson baby shampoo",
    "results": [],
    "errors": {
-    "Carrefour": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.carrefouregypt.com/mafegy/en/search?keyword=johnson+baby+shampoo",
-    "Noon": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.noon.com/egypt-en/search/?q=johnson+baby+shampoo",
-    "Amazon": "مفيش نتايج اتقرت (عنوان الصفحة: 'عذرًا!')",
-    "العزبي": "مفيش نتايج اتقرت (عنوان الصفحة: 'Page not found – Elezaby')",
-    "Jumia": "مفيش نتايج اتقرت (عنوان الصفحة: 'Just a moment...')"
+    "Jumia": "'async_generator' object is not iterable",
+    "Amazon": "'async_generator' object is not iterable",
+    "Noon": "'async_generator' object is not iterable",
+    "العزبي": "'async_generator' object is not iterable",
+    "Carrefour": "'async_generator' object is not iterable"
    },
    "best": null,
    "top_discount": null,
    "best_unit": null,
-   "checked": "2026-10-10 12:39"
+   "checked": "2026-10-10 12:43"
   },
   {
    "name": "زيت ارجان لوريال",
    "query": "loreal elvive argan oil",
    "results": [],
    "errors": {
-    "Noon": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.noon.com/egypt-en/search/?q=loreal+elvive+argan+oil",
-    "Carrefour": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.carrefouregypt.com/mafegy/en/search?keyword=loreal+elvive+argan+oil",
-    "Amazon": "مفيش نتايج اتقرت (عنوان الصفحة: 'عذرًا!')",
-    "العزبي": "مفيش نتايج اتقرت (عنوان الصفحة: 'Page not found – Elezaby')",
-    "Jumia": "مفيش نتايج اتقرت (عنوان الصفحة: 'Just a moment...')"
+    "Jumia": "'async_generator' object is not iterable",
+    "العزبي": "'async_generator' object is not iterable",
+    "Amazon": "'async_generator' object is not iterable",
+    "Noon": "'async_generator' object is not iterable",
+    "Carrefour": "'async_generator' object is not iterable"
    },
    "best": null,
    "top_discount": null,
    "best_unit": null,
-   "checked": "2026-10-10 12:39"
+   "checked": "2026-10-10 12:43"
   },
   {
    "name": "هير ماسك ايفا",
    "query": "eva hair mask",
    "results": [],
    "errors": {
-    "Noon": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.noon.com/egypt-en/search/?q=eva+hair+mask",
-    "Carrefour": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.carrefouregypt.com/mafegy/en/search?keyword=eva+hair+mask",
-    "Amazon": "مفيش نتايج اتقرت (عنوان الصفحة: 'عذرًا!')",
-    "العزبي": "مفيش نتايج اتقرت (عنوان الصفحة: 'Page not found – Elezaby')",
-    "Jumia": "مفيش نتايج اتقرت (عنوان الصفحة: 'Just a moment...')"
+    "Jumia": "'async_generator' object is not iterable",
+    "العزبي": "'async_generator' object is not iterable",
+    "Amazon": "'async_generator' object is not iterable",
+    "Noon": "'async_generator' object is not iterable",
+    "Carrefour": "'async_generator' object is not iterable"
    },
    "best": null,
    "top_discount": null,
    "best_unit": null,
-   "checked": "2026-10-10 12:39"
+   "checked": "2026-10-10 12:43"
   },
   {
    "name": "بامبرز مقاس 4",
    "query": "pampers size 4",
-   "results": [
-    {
-     "title": "Pampers Baby-Dry Taped Diapers, Cotton, Size 4, 9-18 kg, 58 count",
-     "url": "https://www.amazon.eg/-/en/Pampers-Baby-Dry-Taped-Diapers-Cotton/dp/B07C9FG66W/ref=sr_1_7?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-7",
-     "price": 385.54,
-     "old": 457.0,
-     "img": "https://m.media-amazon.com/images/I/61WrCcepEKL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 16,
-     "unit_price": 2.14,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Premium Extra Care Pants, Size 4, 9-14kg, with lotion with aloe vera, 44 diapers. (Pack may vary)",
-     "url": "https://www.amazon.eg/-/en/Pampers-Premium-9-14kg-lotion-diapers/dp/B07FPQ9F4H/ref=sr_1_3?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-3",
-     "price": 439.99,
-     "old": 461.0,
-     "img": "https://m.media-amazon.com/images/I/71J6098MG9L._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 5,
-     "unit_price": 3.14,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Pants Diapers, Size 4, 9-14 kg, with Lotion with Olive Oil, 58 Baby Diapers",
-     "url": "https://www.amazon.eg/-/en/Pampers-Pants-Diapers-Lotion-Olive/dp/B0976ZBC3F/ref=sr_1_10?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-10",
-     "price": 449.98,
-     "old": null,
-     "img": "https://m.media-amazon.com/images/I/71JR2GFRMtL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 0,
-     "unit_price": 3.21,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Pants Diapers, Size 4, Maxi, 9-14 kg, Jumbo Pack, 52 Count",
-     "url": "https://www.amazon.eg/-/en/Pampers-Pants-Diapers-Jumbo-Count/dp/B07665CPRB/ref=sr_1_12?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-12",
-     "price": 474.0,
-     "old": null,
-     "img": "https://m.media-amazon.com/images/I/61OcNCWyolL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 0,
-     "unit_price": 3.39,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Premium EXTRA CARE Taped Diapers, Size 4, 9-18 kg, with Lotion with Aloe Vera, Saving Pack, 80 Baby Diapers",
-     "url": "https://www.amazon.eg/-/en/Pampers-Premium-Diapers-Lotion-Saving/dp/B0BF5BLPG2/ref=sr_1_1?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-1",
-     "price": 485.0,
-     "old": 611.0,
-     "img": "https://m.media-amazon.com/images/I/81QufBRaYPL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 21,
-     "unit_price": 2.69,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Pants, Size 4, with Lotion with Olive Oil, 80 Baby Diapers",
-     "url": "https://www.amazon.eg/-/en/Pampers-Pants-Lotion-Olive-Diapers/dp/B097713S53/ref=sr_1_2?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-2",
-     "price": 500.0,
-     "old": 540.0,
-     "img": "https://m.media-amazon.com/images/I/71XkeHepC1L._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 7,
-     "unit_price": null,
-     "unit_label": null,
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Premium Extra Care Pants, Size 4, 9-14kg, with lotion with aloe vera, 44 diapers. (Pack may vary) +Wipes",
-     "url": "https://www.amazon.eg/-/en/Pampers-Premium-9-14kg-lotion-diapers/dp/B0GFF9TND6/ref=sr_1_32?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-32",
-     "price": 788.99,
-     "old": 817.0,
-     "img": "https://m.media-amazon.com/images/I/41PhvVbWsLL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 3,
-     "unit_price": 5.64,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Baby-Dry Diapers, Size 4, 10-15kg, Jumbo Pack, 40 Count",
-     "url": "https://www.amazon.eg/-/en/Pampers-Baby-Dry-Diapers-10-15kg-Jumbo/dp/B07FPXSMCZ/ref=sr_1_15?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-15",
-     "price": 789.0,
-     "old": null,
-     "img": "https://m.media-amazon.com/images/I/71F2KxiLIiL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 0,
-     "unit_price": 5.26,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Premium EXTRA CARE Taped Diapers, Size 4, 9-18 kg, with Lotion with Aloe Vera, 58 Baby Diapers +Wipes",
-     "url": "https://www.amazon.eg/-/en/Pampers-Premium-EXTRA-Diapers-Lotion/dp/B0GFFSSFCQ/ref=sr_1_28?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-28",
-     "price": 809.0,
-     "old": 840.0,
-     "img": "https://m.media-amazon.com/images/I/41eIsQtQS7L._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 4,
-     "unit_price": 4.49,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Premium EXTRA CARE Taped Diapers, Size 4, 9-18 kg, with Lotion with Aloe Vera, Saving Pack, 80 Baby Diapers +Wipes",
-     "url": "https://www.amazon.eg/-/en/Pampers-Premium-Diapers-Lotion-Saving/dp/B0GFFJ6ZWV/ref=sr_1_33?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-33",
-     "price": 834.0,
-     "old": 967.0,
-     "img": "https://m.media-amazon.com/images/I/41FXzG+liDL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 14,
-     "unit_price": 4.63,
-     "unit_label": "لكل 100 جم",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Premium Extra Care Pants, Size 4, 44 Diapers + Size 5, 40 Diapers",
-     "url": "https://www.amazon.eg/-/en/Pampers-Premium-Extra-Pants-Diapers/dp/B0DJT8WFK7/ref=sr_1_17?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-17",
-     "price": 879.98,
-     "old": 922.0,
-     "img": "https://m.media-amazon.com/images/I/71OWQttAhVL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 5,
-     "unit_price": 20.0,
-     "unit_label": "للقطعة",
-     "score": 1.0
-    },
-    {
-     "title": "Pampers Premium Extra Care Pants, Size 3, 56 Diapers + Size 4, 44 Diapers",
-     "url": "https://www.amazon.eg/-/en/Pampers-Premium-Extra-Pants-Diapers/dp/B0DJTDP6LX/ref=sr_1_43?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-43",
-     "price": 889.99,
-     "old": 922.0,
-     "img": "https://m.media-amazon.com/images/I/71IoDkkCPrL._AC_UL320_.jpg",
-     "site": "Amazon",
-     "discount": 3,
-     "unit_price": 15.89,
-     "unit_label": "للقطعة",
-     "score": 1.0
-    }
-   ],
+   "results": [],
    "errors": {
-    "Noon": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.noon.com/egypt-en/search/?q=pampers+size+4",
-    "Carrefour": "Page.goto: net::ERR_HTTP2_PROTOCOL_ERROR at https://www.carrefouregypt.com/mafegy/en/search?keyword=pampers+size+4",
-    "العزبي": "مفيش نتايج اتقرت (عنوان الصفحة: 'Page not found – Elezaby')",
-    "Jumia": "مفيش نتايج اتقرت (عنوان الصفحة: 'Just a moment...')"
+    "Jumia": "'async_generator' object is not iterable",
+    "العزبي": "'async_generator' object is not iterable",
+    "Amazon": "'async_generator' object is not iterable",
+    "Noon": "'async_generator' object is not iterable",
+    "Carrefour": "'async_generator' object is not iterable"
    },
-   "best": {
-    "title": "Pampers Baby-Dry Taped Diapers, Cotton, Size 4, 9-18 kg, 58 count",
-    "url": "https://www.amazon.eg/-/en/Pampers-Baby-Dry-Taped-Diapers-Cotton/dp/B07C9FG66W/ref=sr_1_7?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-7",
-    "price": 385.54,
-    "old": 457.0,
-    "img": "https://m.media-amazon.com/images/I/61WrCcepEKL._AC_UL320_.jpg",
-    "site": "Amazon",
-    "discount": 16,
-    "unit_price": 2.14,
-    "unit_label": "لكل 100 جم",
-    "score": 1.0
-   },
-   "top_discount": {
-    "title": "Pampers Premium EXTRA CARE Taped Diapers, Size 4, 9-18 kg, with Lotion with Aloe Vera, Saving Pack, 80 Baby Diapers",
-    "url": "https://www.amazon.eg/-/en/Pampers-Premium-Diapers-Lotion-Saving/dp/B0BF5BLPG2/ref=sr_1_1?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-1",
-    "price": 485.0,
-    "old": 611.0,
-    "img": "https://m.media-amazon.com/images/I/81QufBRaYPL._AC_UL320_.jpg",
-    "site": "Amazon",
-    "discount": 21,
-    "unit_price": 2.69,
-    "unit_label": "لكل 100 جم",
-    "score": 1.0
-   },
-   "best_unit": {
-    "title": "Pampers Baby-Dry Taped Diapers, Cotton, Size 4, 9-18 kg, 58 count",
-    "url": "https://www.amazon.eg/-/en/Pampers-Baby-Dry-Taped-Diapers-Cotton/dp/B07C9FG66W/ref=sr_1_7?dib=eyJ2IjoiMSJ9.a0sdXYmEXYzRq9A3imZdDh4pdEVxiPlNrJoc8cerOClj34YYjKkWZMEWy4wYvHeEbXqS8oIYxQThsaZeYGP1kUpox-w1tYh4TMs9oLTXv_c9p5i4fAML4BYK8BnDW_fSjEhVz1eAz0JbtA0W7xcExOf1Pgemk7reATLhTOpLBQEZ32UzqA7glZRksGM6QgxEozuT5jSraafaNT_AHxE68PZSg_8ooy--oRoREkCeZUM8o0HQJIT0TpcUASpiKWVgxqILC0RbRKNjgAzYo2e9jUTxpGH8pVbMw_Zcj5mOOno.y_ttEPiK8ucf6hwofrdbST9l0dQ7dUYXq9xO3mbfqDo&dib_tag=se&keywords=pampers+size+4&qid=1791625190&sr=8-7",
-    "price": 385.54,
-    "old": 457.0,
-    "img": "https://m.media-amazon.com/images/I/61WrCcepEKL._AC_UL320_.jpg",
-    "site": "Amazon",
-    "discount": 16,
-    "unit_price": 2.14,
-    "unit_label": "لكل 100 جم",
-    "score": 1.0
-   },
-   "checked": "2026-10-10 12:39"
+   "best": null,
+   "top_discount": null,
+   "best_unit": null,
+   "checked": "2026-10-10 12:43"
   }
  ],
- "updated": "2026-10-10 12:39",
+ "updated": "2026-10-10 12:43",
  "quick": [],
  "sites": [
   "Amazon",
