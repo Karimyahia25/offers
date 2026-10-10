@@ -237,7 +237,8 @@ async def search_site(ctx, site, q):
     try:
         await page.goto(url, wait_until="domcontentloaded", timeout=45000)
         for _ in range(20):                          # صفحة "Just a moment" بتاعة Cloudflare
-            if not any(w in (await page.title()).lower() for w in ("just a moment", "attention required", "لحظة")):
+            title = (await page.title()).lower()
+            if not any(w in title for w in ("just a moment", "attention required", "لحظة")):
                 break
             await page.wait_for_timeout(1500)
         try:
@@ -431,10 +432,14 @@ async def main():
         ctx = await browser.new_context(user_agent=UA, locale="en-US", viewport={"width": 1366, "height": 900},
                                         extra_http_headers={"Accept-Language": "en-US,en;q=0.9,ar;q=0.8"})
         await ctx.add_init_script("Object.defineProperty(navigator,'webdriver',{get:()=>undefined})")
+        prev = {p["name"]: p for p in old.get("watch", []) + old.get("quick", [])}
         products = []
         for name, q in items:
             p = await run_query(ctx, sites, name, q)
             p["checked"] = stamp
+            if not p["results"] and prev.get(name, {}).get("results"):
+                # كل المواقع فشلت المرة دي: نسيب آخر أسعار اتجابت ونوضح إنها قديمة
+                p = {**prev[name], "errors": p["errors"], "stale": True}
             products.append(p)
         await browser.close()
 

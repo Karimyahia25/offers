@@ -82,7 +82,7 @@ function product(p, i){
   const errs = Object.entries(p.errors || {});
   const shown = rs.slice(0, 8), rest = rs.slice(8);
   return `<section class="prod">
-    <h3>${esc(p.name)}</h3><div class="q">${esc(p.query)} · ${esc(p.checked || "")}</div>
+    <h3>${esc(p.name)}</h3><div class="q">${esc(p.query)} · ${esc(p.checked || "")}${p.stale ? " · ⚠️ أسعار قديمة (آخر تحديث فشل)" : ""}</div>
     ${rs.length ? `<div class="tiles">${tile("🥇 أرخص سعر", p.best)}${tile("🔥 أكبر خصم", p.top_discount)}${tile("⚖️ أرخص بالحجم", p.best_unit, true)}</div>` : `<div class="empty">مفيش نتايج مطابقة</div>`}
     ${shown.map(r => row(r, best)).join("")}
     ${rest.length ? `<div id="more${i}" hidden>${rest.map(r => row(r, best)).join("")}</div><button class="more" data-i="${i}">عرض ${rest.length} كمان</button>` : ""}
