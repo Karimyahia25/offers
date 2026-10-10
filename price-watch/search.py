@@ -202,8 +202,9 @@ GENERIC_JS = r"""(linkPart) => {
     for (const m of text.matchAll(priceRe)) prices.push(m[1] || m[2]);
     const img = card.querySelector('img');
     const lines = text.split('\n').map(s => s.trim()).filter(s => s.length >= 8 && s.length <= 220 && /[A-Za-z؀-ۿ]{3}/.test(s) && !hasPrice(s));
-    const title = (a.getAttribute('title') || (img && img.alt) || lines.sort((x, y) => y.length - x.length)[0] || '').trim();
-    out.push({ title, url: href, prices, text: text.slice(0, 800), img: img ? (img.currentSrc || img.src || img.dataset.src || '') : '' });
+    const cands = [a.getAttribute('title'), img && img.alt, ...lines].filter(Boolean).map(x => x.trim());
+    const title = cands[0] || '';
+    out.push({ title, cands: cands.slice(0, 15), url: href, prices, text: text.slice(0, 800), img: img ? (img.currentSrc || img.src || img.dataset.src || '') : '' });
   }
   return out;
 }"""
@@ -240,13 +241,15 @@ def card_prices(text):
     return price, old
 
 
-def from_generic(rows):
+def from_generic(rows, q=""):
     out = []
     for r in rows:
         price, old = card_prices(r.get("text", ""))
         if not price or price < 5:                    # أرقام أقل من 5 جنيه غالباً مش سعر (تقييم / كمية)
             continue
-        title = re.sub(r"\s*-\s*Image\s*\d+\s*$", "", r["title"]).strip()
+        # اسم المنتج = السطر الأقرب لكلمات البحث في الكارت (ولو اتعادلوا، الأطول)
+        cands = [re.sub(r"\s*-\s*Image\s*\d+\s*$", "", c).strip() for c in r.get("cands") or [r["title"]]]
+        title = max(cands, key=lambda c: (relevance(q, c), len(c))) if cands else ""
         out.append({"title": title, "url": r["url"], "price": price, "old": old, "img": r.get("img", "")})
     return out
 
@@ -318,7 +321,7 @@ async def search_site(ctx, site, q, warmup=False):
             if os.environ.get("SHOW_CARDS"):
                 for r in raw[:2]:
                     print(f"   [{site['key']}] {r['text']!r} -> {r['prices']}", flush=True)
-            rows = from_generic(raw)
+            rows = from_generic(raw, q)
         if not rows:
             DEBUG.mkdir(exist_ok=True)
             await page.screenshot(path=str(DEBUG / f"{site['key']}.png"), full_page=False)
