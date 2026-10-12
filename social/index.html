@@ -94,8 +94,8 @@ LINKS.forEach(function(L){
     // بنستنى Analytics يبعت الدوسة قبل ما نفتح التطبيق، وإلا الحدث بيضيع
     e.preventDefault();
     var gone = false, go = function(){ if(!gone){ gone = true; location.href = L.url; } };
-    gtag('event', 'social_click', {where: L.id, from: 'social_page', ad_src: src || '(none)', transport_type: 'beacon', event_callback: function(){ setTimeout(go, 400); }});
-    setTimeout(go, 1200);
+    gtag('event', 'social_click', {where: L.id, from: 'social_page', ad_src: src || '(none)', transport_type: 'beacon', event_callback: function(){ setTimeout(go, 800); }});
+    setTimeout(go, 1800);
   });
   nav.appendChild(a);
 });
