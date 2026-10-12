@@ -63,8 +63,8 @@ document.querySelectorAll(".links a").forEach(function(a){
     // بنستنى Analytics يستلم الدوسة (لحد ثانية) قبل ما نفتح التطبيق، وإلا الحدث بيضيع
     e.preventDefault();
     var gone = false, go = function(){ if(!gone){ gone = true; location.href = a.href; } };
-    gtag('event', 'social_click', {where: a.dataset.w, from: 'social_page', ad_src: src || '(none)', transport_type: 'beacon', event_callback: go});
-    setTimeout(go, 1000);
+    gtag('event', 'social_click', {where: a.dataset.w, from: 'social_page', ad_src: src || '(none)', transport_type: 'beacon', event_callback: function(){ setTimeout(go, 400); }});
+    setTimeout(go, 1200);
   });
 });
 </script>

@@ -18,7 +18,7 @@ gtag('set', 'user_properties', {ad_src: src});
 gtag('config', 'G-SK4WXJPFK9', {ad_src: src});
 var gone = false;
 function go(){ if(!gone){ gone = true; location.replace(REVIEW); } }
-gtag('event', 'review_qr_scan', {where: src, ad_src: src, transport_type: 'beacon', event_callback: go});
+gtag('event', 'review_qr_scan', {where: src, ad_src: src, transport_type: 'beacon', event_callback: function(){ setTimeout(go, 700); }});
 setTimeout(go, 2500);
 </script>
 </head>
