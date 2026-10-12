@@ -18,7 +18,7 @@ gtag('config', 'G-SK4WXJPFK9');
 var gone = false;
 function go(){ if(!gone){ gone = true; location.replace(REVIEW); } }
 gtag('event', 'review_qr_scan', {where: src, transport_type: 'beacon', event_callback: go});
-setTimeout(go, 900);
+setTimeout(go, 2500);
 </script>
 </head>
 <body style="font-family:system-ui,Tahoma,sans-serif;text-align:center;padding:48px 16px;background:#f5f6f1;color:#073a4b">
