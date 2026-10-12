@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>تابعنا | صيدلية د. أنس نحيلة</title>
-<meta name="description" content="تابع صيدلية د. أنس نحيلة على فيسبوك وإنستجرام وتيك توك — عروض ونصايح كل أسبوع.">
+<title>تابعنا وقيّمنا | صيدلية د. أنس نحيلة</title>
+<meta name="description" content="لينكات صيدلية د. أنس نحيلة: فيسبوك، إنستجرام، تيك توك، وتقييمنا على جوجل.">
 <meta name="robots" content="noindex,follow">
 <meta name="theme-color" content="#073a4b">
-<!-- لينك الـ QR بتاع السوشيال: صفحة واحدة فيها فيسبوك + إنستجرام + تيك توك.
-     الزيارة بتتسجل page_view ومعاها ?src (مثلاً qr_cashier)، وكل دوسة بتتسجل social_click (where = facebook/instagram/tiktok, from = social_page). -->
+<!-- صفحة اللينكات اللي عليها الـ QR الموحد (qr/qr-anas-pharmacy.png → social/?src=qr).
+     الـ QR ثابت — لإضافة/شيل لينك عدّل قايمة LINKS تحت بس.
+     GA: page_view بـ ad_src، وكل دوسة social_click (where = id اللينك، from = social_page). -->
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@800;900&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SK4WXJPFK9"></script>
@@ -25,23 +26,23 @@ gtag('config', 'G-SK4WXJPFK9', {ad_src: src || '(none)'});
 *{box-sizing:border-box;margin:0;padding:0}
 body{min-height:100vh;font-family:'IBM Plex Sans Arabic',system-ui,Tahoma,sans-serif;color:var(--ink);
   background:radial-gradient(circle at 92% 4%,rgba(20,181,214,.25) 0 160px,transparent 161px),radial-gradient(circle at 4% 78%,rgba(255,210,63,.3) 0 130px,transparent 131px),linear-gradient(170deg,#f2fbfd,#fff 55%,#e5f6fa);
-  display:flex;flex-direction:column;align-items:center;padding:40px 16px 28px;text-align:center}
+  display:flex;flex-direction:column;align-items:center;padding:36px 16px 28px;text-align:center}
 .logo{background:#fff;border-radius:22px;padding:10px 16px;box-shadow:0 10px 26px rgba(7,58,75,.14)}
-.logo img{height:96px;display:block}
-h1{font-family:Alexandria;font-weight:900;font-size:clamp(22px,7vw,32px);line-height:1.3;color:var(--navy);margin-top:26px}
+.logo img{height:92px;display:block}
+h1{font-family:Alexandria;font-weight:900;font-size:clamp(22px,7vw,32px);line-height:1.3;color:var(--navy);margin-top:24px}
 h1 span{background:linear-gradient(transparent 60%,var(--yel) 60% 92%,transparent 92%);padding:0 4px;white-space:nowrap}
 .lead{font-size:17px;color:var(--ink2);margin-top:10px;max-width:340px;line-height:1.6}
-.links{width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px;margin-top:30px}
+.links{width:100%;max-width:400px;display:flex;flex-direction:column;gap:14px;margin-top:28px}
 .links a{display:flex;align-items:center;gap:14px;min-height:68px;padding:12px 18px;border-radius:20px;color:#fff;text-decoration:none;
   font-weight:700;font-size:19px;box-shadow:0 12px 26px rgba(7,58,75,.18);transition:transform .15s}
 .links a:active{transform:scale(.98)}
 .links a i{flex:none;width:44px;height:44px;border-radius:12px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center}
-.links a svg{width:26px;height:26px;fill:#fff}
+.links a svg{width:26px;height:26px;fill:currentColor}
 .links a b{flex:1;text-align:right}
-.links a small{font-weight:400;font-size:14px;opacity:.9;direction:ltr}
-.fb{background:#1877f2}
-.ig{background:linear-gradient(45deg,#f9a825,#e1306c 45%,#833ab4)}
-.tt{background:#111}
+.links a small{font-weight:400;font-size:14px;opacity:.9;direction:ltr;white-space:nowrap}
+.links a.light{border:2px solid #e7e9e4}
+.links a.light i{background:#fff4c7;color:#e0a800}
+.links a.light small{color:#e0a800;opacity:1;letter-spacing:1px}
 footer{margin-top:auto;padding-top:34px;font-size:14px;color:var(--ink2);line-height:1.7}
 footer a{color:var(--tq);font-weight:700;text-decoration:none}
 @media (prefers-reduced-motion:reduce){.links a{transition:none}}
@@ -49,23 +50,54 @@ footer a{color:var(--tq);font-weight:700;text-decoration:none}
 </head>
 <body>
 <div class="logo"><img src="../img/logo-full.png" alt="صيدلية د. أنس نحيلة"></div>
-<h1>تابعنا<br><span>واعرف العروض أول بأول</span></h1>
+<h1>تابعنا وقيّمنا<br><span>واعرف العروض أول بأول</span></h1>
 <p class="lead">عروض ونصايح كل أسبوع من صيدلية د. أنس نحيلة — المعمورة الشاطئ</p>
-<nav class="links">
-  <a class="fb" data-w="facebook" href="https://www.facebook.com/profile.php?id=61563038765949" rel="noopener"><i><svg viewBox="0 0 24 24"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z"/></svg></i><b>صفحتنا على فيسبوك</b><small>Facebook</small></a>
-  <a class="ig" data-w="instagram" href="https://www.instagram.com/anasnehila/" rel="noopener"><i><svg viewBox="0 0 24 24"><path d="M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077"/></svg></i><b>تابعنا على إنستجرام</b><small>@anasnehila</small></a>
-  <a class="tt" data-w="tiktok" href="https://www.tiktok.com/@anas.nehila" rel="noopener"><i><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></i><b>شوفنا على تيك توك</b><small>@anas.nehila</small></a>
-</nav>
+<nav class="links" id="links"></nav>
 <footer>فاتحين 24 ساعة والتوصيل مجاني<br><a href="../">شوف عروضنا ←</a></footer>
 <script>
-document.querySelectorAll(".links a").forEach(function(a){
+/* ================= اللينكات =================
+   لإضافة لينك جديد: انسخ سطر وغيّر فيه —
+     id    = اسم إنجليزي قصير من غير مسافات (بيظهر في Analytics)
+     label = الكلام اللي على الزرار
+     sub   = كلام صغير على الشمال (اختياري)
+     url   = اللينك
+     bg    = لون الزرار · color = لون الكلام (اختياري، الافتراضي أبيض)
+     icon  = facebook / instagram / tiktok / star / whatsapp / web / link
+   ترتيب السطور = ترتيب الزراير. */
+var LINKS = [
+  {id:"facebook",      label:"صفحتنا على فيسبوك",   sub:"Facebook",     url:"https://www.facebook.com/profile.php?id=61563038765949", bg:"#1877f2", icon:"facebook"},
+  {id:"instagram",     label:"تابعنا على إنستجرام", sub:"@anasnehila",  url:"https://www.instagram.com/anasnehila/", bg:"linear-gradient(45deg,#f9a825,#e1306c 45%,#833ab4)", icon:"instagram"},
+  {id:"tiktok",        label:"شوفنا على تيك توك",   sub:"@anas.nehila", url:"https://www.tiktok.com/@anas.nehila", bg:"#111", icon:"tiktok"},
+  {id:"google_review", label:"قيّمنا على جوجل",     sub:"★★★★★",        url:"https://search.google.com/local/writereview?placeid=ChIJ01_zT5fR9RQR_ol-ls7Zif8", bg:"#fff", color:"#073a4b", icon:"star"},
+];
+
+var ICONS = {
+  facebook:"M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 2.103-.287 1.564h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.628 3.874 10.35 9.101 11.647Z",
+  instagram:"M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3368-1.3802 2.127-.2954.7638-.4956 1.6365-.552 2.914-.0564 1.2775-.0689 1.6882-.0626 4.947.0062 3.2586.0206 3.6671.0825 4.9473.061 1.2765.264 2.1482.5635 2.9107.308.7889.72 1.4573 1.388 2.1228.6679.6655 1.3365 1.0743 2.1285 1.38.7632.295 1.6361.4961 2.9134.552 1.2773.056 1.6884.069 4.9462.0627 3.2578-.0062 3.668-.0207 4.9478-.0814 1.28-.0607 2.147-.2652 2.9098-.5633.7889-.3086 1.4578-.72 2.1228-1.3881.665-.6682 1.0745-1.3378 1.3795-2.1284.2957-.7632.4966-1.636.552-2.9124.056-1.2809.0692-1.6898.063-4.948-.0063-3.2583-.021-3.6668-.0817-4.9465-.0607-1.2797-.264-2.1487-.5633-2.9117-.3084-.7889-.72-1.4568-1.3876-2.1228C21.2982 1.33 20.628.9208 19.8378.6165 19.074.321 18.2017.1197 16.9244.0645 15.6471.0093 15.236-.005 11.977.0014 8.718.0076 8.31.0215 7.0301.0839m.1402 21.6932c-1.17-.0509-1.8053-.2453-2.2287-.408-.5606-.216-.96-.4771-1.3819-.895-.422-.4178-.6811-.8186-.9-1.378-.1644-.4234-.3624-1.058-.4171-2.228-.0595-1.2645-.072-1.6442-.079-4.848-.007-3.2037.0053-3.583.0607-4.848.05-1.169.2456-1.805.408-2.2282.216-.5613.4762-.96.895-1.3816.4188-.4217.8184-.6814 1.3783-.9003.423-.1651 1.0575-.3614 2.227-.4171 1.2655-.06 1.6447-.072 4.848-.079 3.2033-.007 3.5835.005 4.8495.0608 1.169.0508 1.8053.2445 2.228.408.5608.216.96.4754 1.3816.895.4217.4194.6816.8176.9005 1.3787.1653.4217.3617 1.056.4169 2.2263.0602 1.2655.0739 1.645.0796 4.848.0058 3.203-.0055 3.5834-.061 4.848-.051 1.17-.245 1.8055-.408 2.2294-.216.5604-.4763.96-.8954 1.3814-.419.4215-.8181.6811-1.3783.9-.4224.1649-1.0577.3617-2.2262.4174-1.2656.0595-1.6448.072-4.8493.079-3.2045.007-3.5825-.006-4.848-.0608M16.953 5.5864A1.44 1.44 0 1 0 18.39 4.144a1.44 1.44 0 0 0-1.437 1.4424M5.8385 12.012c.0067 3.4032 2.7706 6.1557 6.173 6.1493 3.4026-.0065 6.157-2.7701 6.1506-6.1733-.0065-3.4032-2.771-6.1565-6.174-6.1498-3.403.0067-6.156 2.771-6.1496 6.1738M8 12.0077a4 4 0 1 1 4.008 3.9921A3.9996 3.9996 0 0 1 8 12.0077",
+  tiktok:"M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z",
+  whatsapp:"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.8 14.2c-.2.7-1.4 1.3-2 1.4-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-4.9-4.3-5.1-4.5-.1-.2-1.2-1.6-1.2-3.1s.8-2.2 1-2.5c.3-.3.6-.4.8-.4h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.3 0 .5l-.3.5-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.6 2.1 1.1 1 2.1 1.3 2.4 1.4.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.7-.1l2 1c.3.1.5.2.5.3.1.1.1.7-.1 1.4Z",
+  star:"M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z",
+  web:"M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.9 6h-2.9a15.7 15.7 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8ZM12 4c.8 1.2 1.5 2.5 1.9 4h-3.8c.4-1.5 1.1-2.8 1.9-4ZM4.3 14a8.2 8.2 0 0 1 0-4h3.4a16.5 16.5 0 0 0 0 4H4.3Zm.8 2h2.9c.3 1.3.8 2.5 1.4 3.6A8 8 0 0 1 5.1 16ZM8 8H5.1a8 8 0 0 1 4.3-3.6C8.8 5.5 8.3 6.7 8 8Zm4 12c-.8-1.2-1.5-2.5-1.9-4h3.8c-.4 1.5-1.1 2.8-1.9 4Zm2.3-6H9.7a14.7 14.7 0 0 1 0-4h4.6a14.7 14.7 0 0 1 0 4Zm.3 5.6c.6-1.1 1.1-2.3 1.4-3.6h2.9a8 8 0 0 1-4.3 3.6Zm1.7-5.6a16.5 16.5 0 0 0 0-4h3.4a8.2 8.2 0 0 1 0 4h-3.4Z",
+  link:"M10.6 13.4a1 1 0 0 1 0-1.4l3.5-3.5a1 1 0 1 1 1.4 1.4L12 13.4a1 1 0 0 1-1.4 0Zm-3.5 6.4a4.5 4.5 0 0 1-3.2-7.7l2.5-2.5a1 1 0 1 1 1.4 1.4l-2.5 2.5a2.5 2.5 0 0 0 3.5 3.5l2.5-2.5a1 1 0 1 1 1.4 1.4l-2.5 2.5a4.5 4.5 0 0 1-3.1 1.4Zm9.9-6.5a1 1 0 0 1-.7-1.7l2.5-2.5a2.5 2.5 0 0 0-3.5-3.5l-2.5 2.5a1 1 0 1 1-1.4-1.4l2.5-2.5a4.5 4.5 0 0 1 6.3 6.3l-2.5 2.5a1 1 0 0 1-.7.3Z"
+};
+
+var nav = document.getElementById("links");
+LINKS.forEach(function(L){
+  var a = document.createElement("a");
+  a.href = L.url; a.rel = "noopener";
+  a.style.background = L.bg || "#0781a0";
+  if(L.color){ a.style.color = L.color; a.className = "light"; }
+  a.innerHTML = '<i><svg viewBox="0 0 24 24"><path d="' + (ICONS[L.icon] || ICONS.link) + '"/></svg></i><b></b>' + (L.sub ? '<small></small>' : '');
+  a.querySelector("b").textContent = L.label;
+  if(L.sub) a.querySelector("small").textContent = L.sub;
   a.addEventListener("click", function(e){
-    // بنستنى Analytics يستلم الدوسة (لحد ثانية) قبل ما نفتح التطبيق، وإلا الحدث بيضيع
+    // بنستنى Analytics يبعت الدوسة قبل ما نفتح التطبيق، وإلا الحدث بيضيع
     e.preventDefault();
-    var gone = false, go = function(){ if(!gone){ gone = true; location.href = a.href; } };
-    gtag('event', 'social_click', {where: a.dataset.w, from: 'social_page', ad_src: src || '(none)', transport_type: 'beacon', event_callback: function(){ setTimeout(go, 400); }});
+    var gone = false, go = function(){ if(!gone){ gone = true; location.href = L.url; } };
+    gtag('event', 'social_click', {where: L.id, from: 'social_page', ad_src: src || '(none)', transport_type: 'beacon', event_callback: function(){ setTimeout(go, 400); }});
     setTimeout(go, 1200);
   });
+  nav.appendChild(a);
 });
 </script>
 </body>
