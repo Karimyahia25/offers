@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>قيّمنا على جوجل | صيدلية د. أنس نحيلة</title>
+<meta name="robots" content="noindex,nofollow">
+<!-- لينك الـ QR اللي عند الكاشير: بيسجّل review_qr_scan في Analytics وبيحوّل على صفحة كتابة التقييم في جوجل.
+     لو لينك جوجل اتغير، عدّل REVIEW بس — الكروت المطبوعة تفضل شغالة. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SK4WXJPFK9"></script>
+<script>
+var REVIEW = "https://search.google.com/local/writereview?placeid=ChIJ01_zT5fR9RQR_ol-ls7Zif8";
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+var src = new URLSearchParams(location.search).get("src") || "qr";
+gtag('config', 'G-SK4WXJPFK9');
+var gone = false;
+function go(){ if(!gone){ gone = true; location.replace(REVIEW); } }
+gtag('event', 'review_qr_scan', {where: src, transport_type: 'beacon', event_callback: go});
+setTimeout(go, 900);
+</script>
+</head>
+<body style="font-family:system-ui,Tahoma,sans-serif;text-align:center;padding:48px 16px;background:#f5f6f1;color:#073a4b">
+<p style="font-size:20px">⭐ شكراً إنك هتقيّمنا</p>
+<p><a href="https://search.google.com/local/writereview?placeid=ChIJ01_zT5fR9RQR_ol-ls7Zif8" style="color:#0781a0;font-size:18px">لو الصفحة متفتحتش، دوس هنا</a></p>
+</body>
+</html>
