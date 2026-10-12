@@ -59,8 +59,12 @@ footer a{color:var(--tq);font-weight:700;text-decoration:none}
 <footer>فاتحين 24 ساعة والتوصيل مجاني<br><a href="../">شوف عروضنا ←</a></footer>
 <script>
 document.querySelectorAll(".links a").forEach(function(a){
-  a.addEventListener("click", function(){
-    gtag('event', 'social_click', {where: a.dataset.w, from: 'social_page', transport_type: 'beacon'});
+  a.addEventListener("click", function(e){
+    // بنستنى Analytics يستلم الدوسة (لحد ثانية) قبل ما نفتح التطبيق، وإلا الحدث بيضيع
+    e.preventDefault();
+    var gone = false, go = function(){ if(!gone){ gone = true; location.href = a.href; } };
+    gtag('event', 'social_click', {where: a.dataset.w, from: 'social_page', transport_type: 'beacon', event_callback: go});
+    setTimeout(go, 1000);
   });
 });
 </script>
