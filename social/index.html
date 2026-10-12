@@ -18,7 +18,7 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 var src = new URLSearchParams(location.search).get("src");
 if(src) gtag('set', 'user_properties', {ad_src: src});
-gtag('config', 'G-SK4WXJPFK9');
+gtag('config', 'G-SK4WXJPFK9', {ad_src: src || '(none)'});
 </script>
 <style>
 :root{--navy:#073a4b;--tq:#0781a0;--yel:#ffd23f;--ink:#0f1b16;--ink2:#44524c}
@@ -63,7 +63,7 @@ document.querySelectorAll(".links a").forEach(function(a){
     // بنستنى Analytics يستلم الدوسة (لحد ثانية) قبل ما نفتح التطبيق، وإلا الحدث بيضيع
     e.preventDefault();
     var gone = false, go = function(){ if(!gone){ gone = true; location.href = a.href; } };
-    gtag('event', 'social_click', {where: a.dataset.w, from: 'social_page', transport_type: 'beacon', event_callback: go});
+    gtag('event', 'social_click', {where: a.dataset.w, from: 'social_page', ad_src: src || '(none)', transport_type: 'beacon', event_callback: go});
     setTimeout(go, 1000);
   });
 });
