@@ -1407,7 +1407,9 @@ $("#dbrands").onclick = e=>{
 };
 const inBrand = d => !dBrand || diaBrand(d)===dBrand;
 function renderDiaBanner(dia){
-  const max = Math.max(0, ...dia.map(d=>d.pct||0));
+  /* نسبة البانر ثابتة بطلب صاحب الشغل (14/10) — غيّرها هنا بس. لو 0 بترجع تتحسب من أعلى خصم */
+  const DIA_BANNER_PCT = 20;
+  const max = DIA_BANNER_PCT || Math.max(0, ...dia.map(d=>d.pct||0));
   $("#dbH").innerHTML = max>=5 ? t("dbH").replace("{n}",max) : t("dbH0");
   $("#dbBurst").hidden = max<5;
   $("#dbPct").textContent = max + "%";
