@@ -71,7 +71,7 @@ function render(){
   $("#info").textContent = list.length + " صنف";
   $("#list").innerHTML = list.length ? list.map(p => {
     const pct = p.was > p.now ? Math.round((1 - p.now / p.was) * 100) : 0;
-    return `<div class="row"><div class="nm"><b>${esc(p.name)}</b><small>كود ${esc(p.code)}</small></div>
+    return `<div class="row"><div class="nm"><b>${esc(p.name)}</b>${p.code ? `<small>كود ${esc(p.code)}</small>` : ""}</div>
       <div class="pr"><div class="now">${p.now}<small> ج</small></div>${pct ? `<div class="was">${p.was}</div>` : ""}</div>
       <button class="cp" data-i="${p.i}">نسخ</button></div>`;
   }).join("") : `<div class="empty">مفيش صنف بالاسم ده في العروض</div>`;
