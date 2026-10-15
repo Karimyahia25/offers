@@ -332,6 +332,10 @@ html:not(.pg-dia) #diaList{display:none}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media(min-width:640px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}}
 @media(min-width:1000px){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}}
+/* ?item= : المنتج اللي جاي عشانه من الإعلان أو رد الصفحة */
+#pick{padding-top:22px;padding-bottom:0;scroll-margin-top:70px}
+.grid.pickg{grid-template-columns:minmax(0,320px);justify-content:center}
+#pick .card{outline:3px solid var(--yel);outline-offset:3px}
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh-1);overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .35s var(--eo),box-shadow .35s var(--eo)}
 @media(hover:hover){.card:hover{transform:translateY(-6px);box-shadow:var(--sh-2)}.card:hover .media img{transform:scale(1.18)}}
 .card.hide{display:none}
@@ -716,6 +720,13 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
   </div></div>
 </div>
 
+<section id="pick" hidden>
+  <div class="wrap">
+    <div class="sh"><div><h2><span class="ic flame"><svg class="i"><use href="#i-flame"/></svg></span><span data-t="pickH">العرض اللي اخترته</span></h2><p data-t="pickP"></p></div></div>
+    <div class="grid pickg" id="pickGrid"></div>
+  </div>
+</section>
+
 <section id="how" style="padding-bottom:0">
   <div class="wrap">
     <div class="stepsbox rv">
@@ -952,6 +963,8 @@ const I18N = {
     inc:"زوّد", dec:"قلّل",
     until:"لحد {d}", endsOn:"عرض بيخلص قريب", left:"باقي", day:"يوم", andT:"و",
     noOffers:"العروض الجديدة جاية قريب، تابعنا",
+    pickH:"العرض اللي اخترته", pickP:"دوس أضف للطلب، وكمّل شوف باقي العروض تحت",
+    pickGone:"العرض ده خلص، بس شوف العروض الشغالة تحت 👇",
     loadErr:"مش قادرين نحمّل العروض دلوقتي. كلمنا على الواتساب ونقولك كل العروض",
     waHello:"السلام عليكم", waOrderStart:"السلام عليكم، عايز أطلب", waAskOffers:"السلام عليكم، عايز أستفسر عن العروض",
     waLooking:"السلام عليكم، بدور على منتج: ", waAsk:"السلام عليكم، عايز أسأل على: ",
@@ -998,6 +1011,8 @@ const I18N = {
     inc:"Increase", dec:"Decrease",
     until:"Until {d}", endsOn:"Ending soon", left:"Ends in", day:"d", andT:"",
     noOffers:"New offers coming soon",
+    pickH:"Your pick", pickP:"Tap Add to order, then check the other offers below",
+    pickGone:"This offer has ended, but check the live offers below 👇",
     loadErr:"We couldn't load the offers right now. Message us on WhatsApp and we'll tell you all of them",
     waHello:"Hello", waOrderStart:"Hello, I'd like to order", waAskOffers:"Hello, I'd like to ask about the offers",
     waLooking:"Hello, I'm looking for a product: ", waAsk:"Hello, I'd like to ask about: ",
@@ -1665,9 +1680,44 @@ function render(rows){
   if(pCat && !prods.some(p=>p.ck===pCat)) pCat = "";
   $("#products").hidden = $("#navProd").hidden = !prods.length;
   renderProdTabs(); renderProducts(false);
+  renderPick();
   bindWa(document);
   updateDock();
   observe();
+}
+
+/* ---------- ?item=<الكود أو الاسم> : لينك بيفتح على منتج واحد (للإعلانات وردود الصفحة) ---------- */
+const PICK = (new URLSearchParams(location.search).get("item") || "").trim();
+let pickDone = false;
+function findPick(){
+  const key = PICK.toLowerCase();
+  const byId = Object.values(ITEMS).find(it=>String(it.id).toLowerCase()===key);
+  if(byId) return byId;
+  const ws = fold(PICK).replace(/[()+\-_,.]/g," ").split(/\s+/).filter(Boolean);
+  if(!ws.length) return null;
+  const hits = Object.values(ITEMS).filter(it=>{
+    const hay = fold(it.name).replace(/[()+\-_,.]/g," ");
+    const toks = hay.split(/\s+/);
+    return ws.every(w=>toks.some(tk=>tk.startsWith(w)) || (w.length>3 && hay.includes(w)));
+  });
+  if(hits.length > 1) return "many";         /* لو أكتر من منتج بنفس الكلام: متخمنش */
+  return hits[0] || null;
+}
+function renderPick(){
+  const sec = $("#pick");
+  if(!PICK){ sec.hidden = true; return; }
+  const it = findPick();
+  if(!it || it==="many"){
+    sec.hidden = true;
+    if(!pickDone){ pickDone = true; if(!it) toast(t("pickGone")); track("item_link_open", {item_id: PICK, found: false}); }
+    return;
+  }
+  sec.hidden = false;
+  $("#pickGrid").innerHTML = it.offer ? offerCard(it, 0) : prodCard(it);
+  if(pickDone) return;
+  pickDone = true;
+  track("item_link_open", {item_id: it.id, item_name: it.name, found: true});
+  setTimeout(()=>sec.scrollIntoView({behavior: RM ? "auto" : "smooth", block:"start"}), 350);
 }
 
 /* ---------- طرق الدفع (لوجوهات رسمية من Wikimedia Commons) ---------- */
