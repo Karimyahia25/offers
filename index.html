@@ -1631,7 +1631,8 @@ function render(rows){
   const hot = items.filter(i=>i.hot);
   const hotOn = hs.on ? hot : [];
   const dia = vis.filter(i=>i.dia && !i.hot);
-  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia), prods = vis.filter(i=>!i.offer && !i.dia);
+  /* الأحدث الأول: آخر سطر في الشيت بيظهر أول كارت (طلبه 15/10) */
+  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia).reverse(), prods = vis.filter(i=>!i.offer && !i.dia);
 
   // امسح من السلة أي عرض خلص، وحدّث الأسماء باللغة الحالية
   Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; else cart[id] = cartEntry(ITEMS[id], cart[id].q); }); saveCart();
