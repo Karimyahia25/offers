@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ردود الكومنتات — للفريق</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--g9:#073a4b;--g6:#0781a0;--g0:#e5f6fa;--red:#d42f25;--yl:#fff4c7;--ink:#0f1b16;--mut:#5e6a65;--line:#e2e5df;--bg:#f5f6f1;--card:#fff;--ok:#14803f}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 'IBM Plex Sans Arabic',system-ui,sans-serif}
+.wrap{max-width:640px;margin:0 auto;padding:0 16px 60px;overflow-wrap:anywhere}
+header{background:linear-gradient(135deg,var(--g9),var(--g6));color:#fff;padding:22px 0 18px;margin-bottom:14px}
+header h1{font:800 22px/1.35 Alexandria,sans-serif;margin:0 0 4px}
+header p{margin:0;opacity:.92;font-size:15px}
+.how{background:var(--yl);border-radius:14px;padding:10px 14px;margin:12px 0;font-size:15px}
+.how ol{margin:4px 0;padding-inline-start:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
+.card h2{font:800 17px/1.4 Alexandria,sans-serif;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px;align-items:center}
+.price{background:var(--red);color:#fff;border-radius:999px;padding:0 10px;font-size:13px;white-space:nowrap}
+.txt{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;white-space:pre-wrap;font-size:15px}
+.cp{display:block;width:100%;margin-top:10px;font:600 16px 'IBM Plex Sans Arabic';border:0;border-radius:12px;min-height:48px;background:var(--g6);color:#fff;cursor:pointer}
+.cp.done{background:var(--ok)}
+.pub{border:2px solid var(--g6)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>ردود الكومنتات</h1>
+  <p>انسخ والصق — السعر واللينك جاهزين ومتراجعين</p>
+</div></header>
+<div class="wrap">
+
+<div class="how">
+<b>لما حد يعلّق على إعلان:</b>
+<ol>
+  <li>دوس <b>Reply</b> تحت الكومنت ← انسخ <b>الرد العلني</b> والصقه وابعت.</li>
+  <li>دوس <b>Send message</b> تحت الكومنت ← انسخ رسالة <b>المنتج</b> والصقها ← Send message.</li>
+</ol>
+فيسبوك بيسمح برسالة خاص واحدة على الكومنت، فابعت رسالة المنتج كاملة مرة واحدة.
+</div>
+
+<div id="list"></div>
+
+</div>
+<script>
+const SITE = "https://karimyahia25.github.io/offers/";
+const L = (item) => SITE + "?item=" + item + "&src=fb_comment";
+const REPLIES = [
+  { pub: true, name: "الرد العلني (تحت الكومنت)", text: "بعتنالك التفاصيل والسعر في الخاص 🌿" },
+  { name: "جهاز البادكير + شاور جيل Rose", price: "300", text:
+`أهلاً بحضرتك 🌿
+عرض جهاز البادكير الإلكتروني Pretty Girl + شاور جيل Rose بعطر الورد
+بـ 300 جنيه بس بدل 450، والتوصيل مجاني.
+اطلبيه من هنا: ${L("OF18")}
+أو ردي هنا ونجهزهولك.` },
+  { name: "شاور جيل Roses + 2 إيفرزين", price: "220", text:
+`أهلاً بحضرتك 🌿
+عرض شاور جيل Roses بعطر الفانيليا + 2 لوسيون إيفرزين
+بـ 220 جنيه بس، والتوصيل مجاني.
+اطلبيه من هنا: ${L("OF19")}
+أو ردي هنا ونجهزهولك.` },
+  { name: "Black Seed كبسولات", price: "260", text:
+`أهلاً بحضرتك 🌿
+كبسولات Original Black Seed بـ 260 جنيه بس بدل 360، والتوصيل مجاني.
+اطلبها من هنا: ${L("BLACK%20SEED")}
+أو رد هنا ونجهزهالك.` },
+  { name: "La Roche Cicaplast B5", price: "750", text:
+`أهلاً بحضرتك 🌿
+لاروش Cicaplast B5 بـ 750 جنيه بس بدل 900، والتوصيل مجاني.
+اطلبيه من هنا: ${L("OF17")}
+أو ردي هنا ونجهزهولك.` },
+  { name: "Limitless (Man / Woman / Omega-3)", price: "215", text:
+`أهلاً بحضرتك 🌿
+عرض Limitless:
+Man Max بـ 215 بدل 265
+Woman Max بـ 215 بدل 265
+Omega-3 بـ 215 بدل 250
+والتوصيل مجاني. شوف التلاتة من هنا: ${L("OF5")}
+أو رد هنا وقولنا تحب أنهي.` },
+  { name: "CeraVe غسولات", price: "550 / 600", text:
+`أهلاً بحضرتك 🌿
+غسولات CeraVe:
+Foaming بـ 550 بدل 650
+Blemish Control و SA Smoothing بـ 600 بدل 700
+والتوصيل مجاني. اطلب من هنا: ${L("OF14")}
+ولو مش عارف أنهي يناسب بشرتك، رد هنا والصيدلي يساعدك.` },
+  { name: "مولفيكس عادي و Pants", price: "من 350", text:
+`أهلاً بحضرتك 🌿
+عروض مولفيكس العادي والـ Pants لكل المقاسات، تبدأ من 350 جنيه، والتوصيل مجاني.
+اختار المقاس من هنا: ${SITE}diapers/?src=fb_comment
+أو رد هنا ونجهزهولك.` },
+  { name: "الوظايف", text: "أهلاً بيك 🌿 ابعت الـ CV بتاعك واتساب على 01004021342، وهنتواصل معاك في أقرب وقت." }
+];
+const esc = s => s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+document.getElementById("list").innerHTML = REPLIES.map((r, i) => `
+  <div class="card${r.pub ? " pub" : ""}">
+    <h2><span>${esc(r.name)}</span>${r.price ? `<span class="price">${esc(r.price)} ج</span>` : ""}</h2>
+    <div class="txt">${esc(r.text)}</div>
+    <button class="cp" data-i="${i}">نسخ</button>
+  </div>`).join("");
+document.addEventListener("click", async e => {
+  const b = e.target.closest(".cp"); if (!b) return;
+  const text = REPLIES[b.dataset.i].text;
+  try { await navigator.clipboard.writeText(text); }
+  catch (err) { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+  b.textContent = "✓ اتنسخ — الصقه في الرسالة"; b.classList.add("done");
+  setTimeout(() => { b.textContent = "نسخ"; b.classList.remove("done"); }, 2500);
+});
+</script>
+</body>
+</html>
