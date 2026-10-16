@@ -1530,18 +1530,36 @@ function renderTabs(offers){
   tabs.parentElement.hidden = false;
   tabs.innerHTML = `<button class="on" data-c="">${t("all")}</button>` +
     keys.map(k=>`<button data-c="${esc(k)}">${esc(catLabel[k])}</button>`).join("");
-  tabs.onclick = e=>{
-    const b = e.target.closest("button"); if(!b) return;
+  /* الفئة بتتكتب في اللينك (?cat=vitamines) علشان ينفع تتبعت أو تتحط في إعلان */
+  const pick = (b, anim)=>{
     $$("button",tabs).forEach(x=>x.classList.toggle("on", x===b));
-    b.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
     let n = 0;
     $$("#offerGrid .card").forEach(c=>{
       const show = !b.dataset.c || c.dataset.ck===b.dataset.c;
       c.classList.toggle("hide", !show);
-      if(show && !RM && c.animate) c.animate([{opacity:0,transform:"translateY(20px) scale(.95)"},{opacity:1,transform:"none"}],{duration:480,delay:n++*60,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"});
+      if(anim && show && !RM && c.animate) c.animate([{opacity:0,transform:"translateY(20px) scale(.95)"},{opacity:1,transform:"none"}],{duration:480,delay:n++*60,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"});
     });
   };
+  tabs.onclick = e=>{
+    const b = e.target.closest("button"); if(!b) return;
+    pick(b, true);
+    b.scrollIntoView({behavior:"smooth",inline:"center",block:"nearest"});
+    try{
+      const q = new URLSearchParams(location.search);
+      if(b.dataset.c) q.set("cat", catSlug(b.dataset.c)); else q.delete("cat");
+      history.replaceState(null, "", location.pathname + (q.toString() ? "?" + q : "") + location.hash);
+    }catch(e){}
+    track("offer_category", {cat: b.dataset.c ? catSlug(b.dataset.c) : "all"});
+  };
+  const want = new URLSearchParams(location.search).get("cat");
+  const hit = want && $$("button",tabs).find(x=>x.dataset.c && catSlug(x.dataset.c)===want.toLowerCase());
+  if(hit){
+    setTimeout(()=>pick(hit, false), 0);   /* بعد ما الكروت تترسم */
+    if(!catJumped){ catJumped = true; setTimeout(()=>{ $("#offers").scrollIntoView({behavior: RM ? "auto" : "smooth"}); hit.scrollIntoView({inline:"center",block:"nearest"}); }, 600); }
+  }
 }
+const catSlug = k => String(k).trim().toLowerCase().replace(/\s+/g,"-");
+let catJumped = false;
 
 /* الستيكر الأصفر + النجمة الحمرا */
 let rotT, rotI = 0;
