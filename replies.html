@@ -8,71 +8,97 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--g9:#073a4b;--g6:#0781a0;--g0:#e5f6fa;--red:#d42f25;--yl:#fff4c7;--ink:#0f1b16;--mut:#5e6a65;--line:#e2e5df;--bg:#f5f6f1;--card:#fff;--ok:#14803f}
+:root{--g9:#073a4b;--g6:#0781a0;--g0:#e5f6fa;--red:#d42f25;--yel:#ffd23f;--ink:#0f1b16;--mut:#5e6a65;--line:#e2e5df;--bg:#f5f6f1;--card:#fff;--ok:#14803f}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 'IBM Plex Sans Arabic',system-ui,sans-serif}
-.wrap{max-width:640px;margin:0 auto;padding:0 16px 60px;overflow-wrap:anywhere}
-header{background:linear-gradient(135deg,var(--g9),var(--g6));color:#fff;padding:22px 0 18px;margin-bottom:14px}
-header h1{font:800 22px/1.35 Alexandria,sans-serif;margin:0 0 4px}
-header p{margin:0;opacity:.92;font-size:15px}
-.how{background:var(--yl);border-radius:14px;padding:10px 14px;margin:12px 0;font-size:15px}
-.how ol{margin:4px 0;padding-inline-start:20px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
-.card h2{font:800 17px/1.4 Alexandria,sans-serif;margin:0 0 8px;display:flex;justify-content:space-between;gap:8px;align-items:center}
-.price{background:var(--red);color:#fff;border-radius:999px;padding:0 10px;font-size:13px;white-space:nowrap}
-.txt{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;white-space:pre-wrap;font-size:15px}
-.cp{display:block;width:100%;margin-top:10px;font:600 16px 'IBM Plex Sans Arabic';border:0;border-radius:12px;min-height:48px;background:var(--g6);color:#fff;cursor:pointer}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 'IBM Plex Sans Arabic',system-ui,sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:0 12px 12px}
+header{background:linear-gradient(135deg,var(--g9),var(--g6));color:#fff;padding:10px 0;margin-bottom:10px}
+header .wrap{padding-bottom:0;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header h1{font:800 19px/1.3 Alexandria,sans-serif;margin:0}
+header p{margin:0;font-size:13.5px;opacity:.95}
+header b{color:var(--yel)}
+.grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+@media(max-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile.pub{border:2px solid var(--g6);background:var(--g0)}
+.tile.old{border-style:dashed}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:6px}
+.tile h2{font:800 14.5px/1.35 Alexandria,sans-serif;margin:0}
+.price{background:var(--red);color:#fff;border-radius:999px;padding:0 7px;font-size:12px;white-space:nowrap;flex:none}
+.prev{color:var(--mut);font-size:13px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin:0}
+.more{align-self:flex-start;background:none;border:0;padding:2px 0;color:var(--g6);font:600 13px 'IBM Plex Sans Arabic';cursor:pointer;min-height:28px}
+.cp{margin-top:auto;font:600 15px 'IBM Plex Sans Arabic';border:0;border-radius:10px;min-height:44px;background:var(--g6);color:#fff;cursor:pointer;width:100%}
 .cp.done{background:var(--ok)}
-.pub{border:2px solid var(--g6)}
+/* نافذة النص الكامل */
+.ov{position:fixed;inset:0;background:rgba(7,20,18,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+.ov.on{display:flex}
+.box{background:var(--card);border-radius:16px;max-width:520px;width:100%;max-height:90vh;overflow:auto;padding:16px}
+.box h3{font:800 17px Alexandria,sans-serif;margin:0 0 8px}
+.box .full{white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 12px;overflow-wrap:anywhere}
+.row{display:flex;gap:8px;margin-top:10px}
+.row .cp{margin:0}
+.x{flex:0 0 auto;width:auto;padding:0 18px;background:var(--g0);color:var(--ink)}
+/* الموبايل: 3 جنب بعض وكله في شاشة واحدة */
+@media(max-width:720px){
+  .wrap{padding:0 8px 8px}
+  header{padding:8px 0;margin-bottom:8px}
+  header h1{font-size:16px} header p{font-size:12px;line-height:1.5}
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .tile{padding:7px;border-radius:12px;gap:2px}
+  .tile h2{font-size:12.5px}
+  .price{font-size:11px;padding:0 5px}
+  .prev{font-size:11.5px;-webkit-line-clamp:2;line-height:1.45}
+  .more{font-size:11.5px;min-height:24px}
+  .cp{font-size:14px;min-height:40px;border-radius:9px}
+  .top{flex-direction:column;gap:2px}
+}
 </style>
 </head>
 <body>
 <header><div class="wrap">
   <h1>ردود الكومنتات</h1>
-  <p>انسخ والصق — السعر واللينك جاهزين ومتراجعين</p>
+  <p>تحت الكومنت: <b>Reply</b> ← الرد العلني · في الخاص: <b>Send message</b> ← رسالة المنتج (رسالة واحدة بس)</p>
 </div></header>
-<div class="wrap">
+<div class="wrap"><div class="grid" id="grid"></div></div>
 
-<div class="how">
-<b>لما حد يعلّق على إعلان:</b>
-<ol>
-  <li>دوس <b>Reply</b> تحت الكومنت ← انسخ <b>الرد العلني</b> والصقه وابعت.</li>
-  <li>دوس <b>Send message</b> تحت الكومنت ← انسخ رسالة <b>المنتج</b> والصقها ← Send message.</li>
-</ol>
-فيسبوك بيسمح برسالة خاص واحدة على الكومنت، فابعت رسالة المنتج كاملة مرة واحدة.
+<div class="ov" id="ov" role="dialog" aria-modal="true">
+  <div class="box">
+    <h3 id="ovT"></h3>
+    <div class="full" id="ovX"></div>
+    <div class="row"><button class="cp" id="ovC">نسخ</button><button class="cp x" id="ovClose">إغلاق</button></div>
+  </div>
 </div>
 
-<div id="list"></div>
-
-</div>
 <script>
 const SITE = "https://karimyahia25.github.io/offers/";
-const L = (item) => SITE + "?item=" + item + "&src=fb_comment";
+const L = item => SITE + "?item=" + item + "&src=fb_comment";
+/* cls: pub = الرد العلني · old = ردود محفوظة قديمة */
 const REPLIES = [
-  { pub: true, name: "الرد العلني (تحت الكومنت)", text: "بعتنالك التفاصيل والسعر في الخاص 🌿" },
-  { name: "جهاز البادكير + شاور جيل Rose", price: "300", text:
+  { cls: "pub", name: "رد علني", text: "بعتنالك التفاصيل والسعر في الخاص 🌿" },
+  { name: "بادكير + Rose", price: "300", text:
 `أهلاً بحضرتك 🌿
 عرض جهاز البادكير الإلكتروني Pretty Girl + شاور جيل Rose بعطر الورد
 بـ 300 جنيه بس بدل 450، والتوصيل مجاني.
 اطلبيه من هنا: ${L("OF18")}
 أو ردي هنا ونجهزهولك.` },
-  { name: "شاور جيل Roses + 2 إيفرزين", price: "220", text:
+  { name: "Roses + إيفرزين", price: "220", text:
 `أهلاً بحضرتك 🌿
 عرض شاور جيل Roses بعطر الفانيليا + 2 لوسيون إيفرزين
 بـ 220 جنيه بس، والتوصيل مجاني.
 اطلبيه من هنا: ${L("OF19")}
 أو ردي هنا ونجهزهولك.` },
-  { name: "Black Seed كبسولات", price: "260", text:
+  { name: "Black Seed", price: "260", text:
 `أهلاً بحضرتك 🌿
 كبسولات Original Black Seed بـ 260 جنيه بس بدل 360، والتوصيل مجاني.
 اطلبها من هنا: ${L("BLACK%20SEED")}
 أو رد هنا ونجهزهالك.` },
-  { name: "La Roche Cicaplast B5", price: "750", text:
+  { name: "Cicaplast B5", price: "750", text:
 `أهلاً بحضرتك 🌿
 لاروش Cicaplast B5 بـ 750 جنيه بس بدل 900، والتوصيل مجاني.
 اطلبيه من هنا: ${L("OF17")}
 أو ردي هنا ونجهزهولك.` },
-  { name: "Limitless (Man / Woman / Omega-3)", price: "215", text:
+  { name: "Limitless", price: "215", text:
 `أهلاً بحضرتك 🌿
 عرض Limitless:
 Man Max بـ 215 بدل 265
@@ -80,35 +106,63 @@ Woman Max بـ 215 بدل 265
 Omega-3 بـ 215 بدل 250
 والتوصيل مجاني. شوف التلاتة من هنا: ${L("OF5")}
 أو رد هنا وقولنا تحب أنهي.` },
-  { name: "CeraVe غسولات", price: "550 / 600", text:
+  { name: "CeraVe", price: "550/600", text:
 `أهلاً بحضرتك 🌿
 غسولات CeraVe:
 Foaming بـ 550 بدل 650
 Blemish Control و SA Smoothing بـ 600 بدل 700
 والتوصيل مجاني. اطلب من هنا: ${L("OF14")}
 ولو مش عارف أنهي يناسب بشرتك، رد هنا والصيدلي يساعدك.` },
-  { name: "مولفيكس عادي و Pants", price: "من 350", text:
+  { name: "مولفيكس", price: "من 350", text:
 `أهلاً بحضرتك 🌿
 عروض مولفيكس العادي والـ Pants لكل المقاسات، تبدأ من 350 جنيه، والتوصيل مجاني.
 اختار المقاس من هنا: ${SITE}diapers/?src=fb_comment
 أو رد هنا ونجهزهولك.` },
-  { name: "الوظايف", text: "أهلاً بيك 🌿 ابعت الـ CV بتاعك واتساب على 01004021342، وهنتواصل معاك في أقرب وقت." }
+  { name: "وظايف", text: "أهلاً بيك 🌿 ابعت الـ CV بتاعك واتساب على 01004021342، وهنتواصل معاك في أقرب وقت." },
+  { cls: "old", name: "لينك الموقع", text:
+`الموقع فيه العروض بالتفصيل 🥰
+https://karimyahia25.github.io/offers
+واى استفسار احنا هنا تحت امركم 🥰` },
+  { cls: "old", name: "التواصل", text:
+`يمكنكم التواصل عن طريق الواتساب او الاتصال او تشرفونا بالزيارة
+العنوان: المعمورة الشاطئ بجوار مدخل البوابة الرئيسي عمارة لافي
+للتواصل: 📞 5650501-5650502
+📞 01025988951 - 01288827555
+متاح دفع كاش او فيزا 💳
+توصيل الطلبات للمنازل طوال 24 ساعه 🛵` },
+  { cls: "old", name: "العنوان", text:
+`المعمورة الشاطيء جنب البوابه الرئيسيه
+https://share.google/FAEGZKMcaYVS8h6DT` }
 ];
-const esc = s => s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
-document.getElementById("list").innerHTML = REPLIES.map((r, i) => `
-  <div class="card${r.pub ? " pub" : ""}">
-    <h2><span>${esc(r.name)}</span>${r.price ? `<span class="price">${esc(r.price)} ج</span>` : ""}</h2>
-    <div class="txt">${esc(r.text)}</div>
-    <button class="cp" data-i="${i}">نسخ</button>
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+/* المعاينة: من غير التحية ومن غير اللينكات علشان يبان المهم */
+const preview = t => t.replace(/^أهلاً بحضرتك 🌿\n/, "").replace(/https?:\/\/\S+/g, "").replace(/\s+/g, " ").trim();
+$("#grid").innerHTML = REPLIES.map((r, i) => `
+  <div class="tile ${r.cls || ""}">
+    <div class="top"><h2>${esc(r.name)}</h2>${r.price ? `<span class="price">${esc(r.price)}</span>` : ""}</div>
+    <p class="prev">${esc(preview(r.text))}</p>
+    <button class="more" data-more="${i}">See more</button>
+    <button class="cp" data-cp="${i}">نسخ</button>
   </div>`).join("");
-document.addEventListener("click", async e => {
-  const b = e.target.closest(".cp"); if (!b) return;
-  const text = REPLIES[b.dataset.i].text;
+
+async function copy(i, btn){
+  const text = REPLIES[i].text;
   try { await navigator.clipboard.writeText(text); }
-  catch (err) { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
-  b.textContent = "✓ اتنسخ — الصقه في الرسالة"; b.classList.add("done");
-  setTimeout(() => { b.textContent = "نسخ"; b.classList.remove("done"); }, 2500);
+  catch (e) { const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+  const old = btn.textContent;
+  btn.textContent = "✓ اتنسخ"; btn.classList.add("done");
+  setTimeout(() => { btn.textContent = old; btn.classList.remove("done"); }, 2000);
+}
+let cur = 0;
+document.addEventListener("click", e => {
+  const c = e.target.closest("[data-cp]"); if (c) return copy(+c.dataset.cp, c);
+  const m = e.target.closest("[data-more]");
+  if (m) { cur = +m.dataset.more; $("#ovT").textContent = REPLIES[cur].name; $("#ovX").textContent = REPLIES[cur].text; $("#ov").classList.add("on"); return; }
+  if (e.target.id === "ov" || e.target.id === "ovClose") $("#ov").classList.remove("on");
 });
+$("#ovC").onclick = e => copy(cur, e.currentTarget);
+document.addEventListener("keydown", e => { if (e.key === "Escape") $("#ov").classList.remove("on"); });
 </script>
 </body>
 </html>
