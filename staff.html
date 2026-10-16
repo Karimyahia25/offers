@@ -97,9 +97,9 @@ $("#chips").innerHTML = `<button class="on" data-b="">الكل</button>` + BRAND
 
 fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
   ALL = parseCSV(t).map((r, i) => ({
-    i, name: r["الاسم"], code: r["الكود"], was: Number(r["السعر قبل"]), now: Number(r["السعر بعد"]),
+    i, name: r["الاسم"], code: r["الكود"], hidden: /^(لا|no|0|مخفي)$/i.test((r["ظاهر"]||"").trim()), was: Number(r["السعر قبل"]), now: Number(r["السعر بعد"]),
     hay: clean(r["الاسم"] + " " + r["الكود"])
-  })).filter(p => p.name && !isNaN(p.now));
+  })).filter(p => p.name && !isNaN(p.now) && !p.hidden);   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
   render();
 }).catch(() => { $("#list").innerHTML = '<div class="empty">تعذر تحميل القائمة</div>'; });
 </script>

@@ -335,6 +335,7 @@ html:not(.pg-dia) #diaList{display:none}
 /* ?item= : المنتج اللي جاي عشانه من الإعلان أو رد الصفحة */
 #pick{padding-top:22px;padding-bottom:0;scroll-margin-top:70px}
 .grid.pickg{grid-template-columns:minmax(0,320px);justify-content:center}
+.grid.pickg.multi{grid-template-columns:repeat(auto-fit,minmax(160px,300px))}
 #pick .card{outline:3px solid var(--yel);outline-offset:3px}
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh-1);overflow:hidden;display:flex;flex-direction:column;position:relative;transition:transform .35s var(--eo),box-shadow .35s var(--eo)}
 @media(hover:hover){.card:hover{transform:translateY(-6px);box-shadow:var(--sh-2)}.card:hover .media img{transform:scale(1.18)}}
@@ -1707,11 +1708,11 @@ function render(rows){
 /* ---------- ?item=<الكود أو الاسم> : لينك بيفتح على منتج واحد (للإعلانات وردود الصفحة) ---------- */
 const PICK = (new URLSearchParams(location.search).get("item") || "").trim();
 let pickDone = false;
-function findPick(){
-  const key = PICK.toLowerCase();
+function findOne(q){
+  const key = q.toLowerCase();
   const byId = Object.values(ITEMS).find(it=>String(it.id).toLowerCase()===key);
   if(byId) return byId;
-  const ws = fold(PICK).replace(/[()+\-_,.]/g," ").split(/\s+/).filter(Boolean);
+  const ws = fold(q).replace(/[()+\-_,.]/g," ").split(/\s+/).filter(Boolean);
   if(!ws.length) return null;
   const hits = Object.values(ITEMS).filter(it=>{
     const hay = fold(it.name).replace(/[()+\-_,.]/g," ");
@@ -1721,20 +1722,30 @@ function findPick(){
   if(hits.length > 1) return "many";         /* لو أكتر من منتج بنفس الكلام: متخمنش */
   return hits[0] || null;
 }
+/* أكتر من منتج في نفس اللينك بفاصلة: ?item=OF5,OF6,OF7 (16/10) */
+function findPick(){
+  const out = [];
+  PICK.split(",").map(x=>x.trim()).filter(Boolean).forEach(q=>{
+    const it = findOne(q);
+    if(it && it!=="many" && !out.includes(it)) out.push(it);
+  });
+  return out;
+}
 function renderPick(){
   const sec = $("#pick");
   if(!PICK){ sec.hidden = true; return; }
-  const it = findPick();
-  if(!it || it==="many"){
+  const its = findPick();
+  if(!its.length){
     sec.hidden = true;
-    if(!pickDone){ pickDone = true; if(!it) toast(t("pickGone")); track("item_link_open", {item_id: PICK, found: false}); }
+    if(!pickDone){ pickDone = true; toast(t("pickGone")); track("item_link_open", {item_id: PICK, found: false}); }
     return;
   }
   sec.hidden = false;
-  $("#pickGrid").innerHTML = it.offer ? offerCard(it, 0) : prodCard(it);
+  $("#pickGrid").classList.toggle("multi", its.length>1);
+  $("#pickGrid").innerHTML = its.map((it,i)=> it.offer ? offerCard(it, i) : prodCard(it)).join("");
   if(pickDone) return;
   pickDone = true;
-  track("item_link_open", {item_id: it.id, item_name: it.name, found: true});
+  track("item_link_open", {item_id: its.map(x=>x.id).join(","), item_name: its.map(x=>x.name).join(" | "), found: true});
   setTimeout(()=>sec.scrollIntoView({behavior: RM ? "auto" : "smooth", block:"start"}), 350);
 }
 
