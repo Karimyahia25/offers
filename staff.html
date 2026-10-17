@@ -12,10 +12,19 @@
 body{margin:0;font-family:"IBM Plex Sans Arabic",system-ui,Tahoma,sans-serif;background:var(--bg);color:var(--ink)}
 header{position:sticky;top:0;background:var(--teal);color:#fff;padding:12px 16px;z-index:5}
 header h1{margin:0 0 8px;font-size:18px}
-#q{width:100%;font:inherit;font-size:20px;padding:12px 14px;border:0;border-radius:12px;color:#12263a}
 .chips{display:flex;gap:8px;margin-top:8px;overflow-x:auto}
 .chips button{flex:none;font:inherit;border:0;border-radius:20px;padding:8px 16px;background:rgba(255,255,255,.2);color:#fff;min-height:44px}
 .chips button.on{background:#fff;color:var(--teal);font-weight:700}
+.chips:empty{display:none}
+.lbl{font-size:13px;opacity:.85;margin-top:8px}
+.chips{margin-top:4px}
+.chips button{font-size:16px}
+.desc{display:block;font-size:14px;color:var(--mut);margin-top:2px}
+.cpbox{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+.cpbox.on{display:flex}
+.cpbox div{background:var(--card);border-radius:14px;padding:16px;width:100%;max-width:420px}
+.cpbox textarea{width:100%;font:inherit;font-size:16px;height:90px;border:1px solid var(--line);border-radius:10px;padding:8px}
+.cpbox button{font:inherit;margin-top:10px;width:100%;min-height:44px;border:0;border-radius:10px;background:var(--teal);color:#fff}
 main{padding:12px 16px;max-width:760px;margin:auto}
 .info{color:var(--mut);font-size:14px;margin:4px 0 10px}
 .row{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:8px}
@@ -34,9 +43,11 @@ main{padding:12px 16px;max-width:760px;margin:auto}
 <body>
 <header>
   <h1>أسعار الخصم — للستاف بس</h1>
-  <input id="q" type="search" placeholder="اكتب الصنف أو الكود… مثال: pampers 4" autocomplete="off" autofocus>
   <div class="chips" id="chips"></div>
+  <div class="lbl">النوع</div><div class="chips" id="types"></div>
+  <div class="lbl">المقاس</div><div class="chips" id="sizes"></div>
 </header>
+<div class="cpbox" id="cpbox"><div><b>النسخ التلقائي مش شغال هنا — النص متحدد، اضغط عليه مطولاً واختار نسخ:</b><textarea id="cptxt" readonly></textarea><button id="cpclose">تمام</button></div></div>
 <main>
   <div class="info" id="info"></div>
   <div id="list"></div>
@@ -62,44 +73,84 @@ function parseCSV(t){
   return rows.filter(r => r.some(x => x.trim())).map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
 }
 
-let ALL = [], brand = "";
+let ALL = [], brand = "", typ = "", size = "";
 const BRANDS = [["pampers","بامبرز"],["molfix","مولفيكس"],["baby joy","بيبي جوي"]];
+const TYPES = ["عادي","شورت","بريميوم","بريميوم شورت","نيوبورن","مناديل"];
+/* المقاس من الاسم زي الموقع: "(4)" أو رقم لوحده 1–7 */
+function sizeOf(n){
+  if(/wip|مناديل/i.test(n)) return "";
+  const m = n.match(/\(\s*([1-7])\s*\)/) || n.match(/(?:^|\D)([1-7])(?!\d)/);
+  return m ? m[1] : "";
+}
+/* النوع من الوصف: "مولفيكس شورت · مقاس 4 · 58 قطعة" */
+function typeOf(p){
+  const d = (p.desc.split("·")[0] || "");
+  if(/مناديل/.test(d)) return "مناديل";
+  if(/نيوبورن/.test(d)) return "نيوبورن";
+  if(/بريميوم/.test(d) && /شورت/.test(d)) return "بريميوم شورت";
+  if(/بريميوم/.test(d)) return "بريميوم";
+  if(/شورت/.test(d)) return "شورت";
+  return "عادي";
+}
+const brandOf = p => (BRANDS.find(([k]) => clean(p.name).startsWith(k)) || [""])[0];
+const chips = (el, items, cur) => { el.innerHTML = items.length > 1 ? items.map(([v, l]) => `<button class="${v===cur?"on":""}" data-v="${esc(v)}">${esc(l)}</button>`).join("") : ""; };
 
 function render(){
-  const qs = clean($("#q").value).split(" ").filter(Boolean).map(w => ar2en[w] || w);
-  const list = ALL.filter(p => (!brand || clean(p.name).startsWith(brand)) && qs.every(w => /^\d{1,2}$/.test(w) ? p.hay.split(" ").includes(w) : p.hay.includes(w)));
+  const bs = BRANDS.filter(([k]) => ALL.some(p => p.brand===k));
+  if(bs.length < 2) brand = "";
+  chips($("#chips"), bs.length > 1 ? [["","الكل"], ...bs.map(([k,a]) => [k,a])] : [], brand);
+  const pool1 = ALL.filter(p => !brand || p.brand===brand);
+  const ts = TYPES.filter(t => pool1.some(p => p.type===t));
+  if(typ && !ts.includes(typ)) typ = "";
+  chips($("#types"), [["","كل الأنواع"], ...ts.map(t => [t,t])], typ);
+  const pool2 = pool1.filter(p => !typ || p.type===typ);
+  const ss = [...new Set(pool2.map(p => p.size).filter(Boolean))].sort();
+  if(size && !ss.includes(size)) size = "";
+  chips($("#sizes"), [["","كل المقاسات"], ...ss.map(x => [x,"مقاس "+x])], size);
+  const list = pool2.filter(p => !size || p.size===size);
   $("#info").textContent = list.length + " صنف";
   $("#list").innerHTML = list.length ? list.map(p => {
     const pct = p.was > p.now ? Math.round((1 - p.now / p.was) * 100) : 0;
-    return `<div class="row"><div class="nm"><b>${esc(p.name)}</b>${p.code ? `<small>كود ${esc(p.code)}</small>` : ""}</div>
+    return `<div class="row"><div class="nm"><b>${esc(p.name)}</b>${p.desc ? `<span class="desc">${esc(p.desc)}</span>` : ""}${p.code ? `<small>كود ${esc(p.code)}</small>` : ""}</div>
       <div class="pr"><div class="now">${p.now}<small> ج</small></div>${pct ? `<div class="was">${p.was}</div>` : ""}</div>
       <button class="cp" data-i="${p.i}">نسخ</button></div>`;
-  }).join("") : `<div class="empty">مفيش صنف بالاسم ده في العروض</div>`;
+  }).join("") : `<div class="empty">مفيش أصناف بالاختيار ده</div>`;
 }
+const pick = (id, set) => $(id).onclick = e => { const b = e.target.closest("button"); if(!b) return; set(b.dataset.v); render(); };
+pick("#chips", v => { brand = v; });
+pick("#types", v => { typ = v; });
+pick("#sizes", v => { size = v; });
 
+/* النسخ: clipboard API، ولو اتقفل (متصفح الواتساب/الفيسبوك) execCommand، ولو فشل نافذة فيها النص متحدد */
+function copyText(txt){
+  const fallback = () => {
+    const ta = document.createElement("textarea");
+    ta.value = txt; ta.setAttribute("readonly",""); ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, txt.length);
+    let ok = false; try{ ok = document.execCommand("copy"); }catch(e){}
+    ta.remove(); return ok;
+  };
+  if(navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(txt).then(() => true, () => fallback());
+  return Promise.resolve(fallback());
+}
 $("#list").onclick = e => {
   const b = e.target.closest(".cp"); if(!b) return;
-  const p = ALL[b.dataset.i];
-  const txt = `${p.name}\nالسعر بعد الخصم: ${p.now} جنيه (بدل ${p.was})`;
-  (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).catch(() => {}).finally(() => {
+  const p = ALL.find(x => String(x.i) === b.dataset.i); if(!p) return;
+  const txt = `${p.desc || p.name}\nالسعر بعد الخصم: ${p.now} جنيه${p.was > p.now ? ` بدل ${p.was}` : ""}`;
+  copyText(txt).then(ok => {
+    if(!ok){ $("#cptxt").value = txt; $("#cpbox").classList.add("on"); $("#cptxt").focus(); $("#cptxt").select(); return; }
     b.textContent = "تم ✓"; b.classList.add("ok");
     setTimeout(() => { b.textContent = "نسخ"; b.classList.remove("ok"); }, 1200);
   });
 };
-$("#q").addEventListener("input", render);
-$("#chips").onclick = e => {
-  const b = e.target.closest("button"); if(!b) return;
-  brand = b.dataset.b;
-  $("#chips").querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
-  render();
-};
-$("#chips").innerHTML = `<button class="on" data-b="">الكل</button>` + BRANDS.map(([k, a]) => `<button data-b="${k}">${a}</button>`).join("");
+$("#cpclose").onclick = () => $("#cpbox").classList.remove("on");
 
 fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
   ALL = parseCSV(t).map((r, i) => ({
-    i, name: r["الاسم"], code: r["الكود"], hidden: /^(لا|no|0|مخفي)$/i.test((r["ظاهر"]||"").trim()), was: Number(r["السعر قبل"]), now: Number(r["السعر بعد"]),
+    i, name: r["الاسم"], code: r["الكود"], desc: r["الوصف"] || "", hidden: /^(لا|no|0|مخفي)$/i.test((r["ظاهر"]||"").trim()), was: Number(r["السعر قبل"]), now: Number(r["السعر بعد"]),
     hay: clean(r["الاسم"] + " " + r["الكود"])
-  })).filter(p => p.name && !isNaN(p.now) && !p.hidden);   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
+  })).filter(p => p.name && !isNaN(p.now) && !p.hidden);
+  ALL.forEach(p => { p.brand = brandOf(p); p.type = typeOf(p); p.size = sizeOf(p.name); });   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
   render();
 }).catch(() => { $("#list").innerHTML = '<div class="empty">تعذر تحميل القائمة</div>'; });
 </script>
