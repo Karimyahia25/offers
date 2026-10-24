@@ -302,6 +302,20 @@ section{padding:44px 0;scroll-margin-top:110px}
 .dbrands button.on{background:var(--bc,var(--ink));border-color:var(--bc,var(--ink));color:#fff;box-shadow:0 10px 22px -10px var(--bc,rgba(0,0,0,.5));transform:scale(1.04)}
 .dbrands button.on small{background:rgba(255,255,255,.22);color:#fff}
 html:not(.pg-dia) #diaList{display:none}
+/* ألبان الأطفال (24/10): نفس نظام الحفاضات — بانر دهبي فوق + صفحة ?p=milk فيها النوع والمرحلة */
+.dban.mban{background:linear-gradient(125deg,#4a2c00 0%,#a8740a 48%,#e6b54a 100%);box-shadow:0 24px 50px -22px rgba(168,116,10,.85)}
+@media(hover:hover){.dban.mban[href]:hover{box-shadow:0 30px 60px -22px rgba(168,116,10,.95)}}
+.mban .db-art .circ svg,.mban .db-art .circ .em{filter:none}
+#milk .sh h2 .ic{background:#b8860b;box-shadow:0 8px 18px -8px rgba(184,134,11,.8)}
+#milk .cat{display:none}
+#milk .desc{color:var(--ink);font-weight:700;font-size:14px;-webkit-line-clamp:2;margin-top:2px}
+#milk .box-d{background:linear-gradient(180deg,#fdf6e6,#fbf8f1);border-color:#f0e0b8}
+html:not(.pg-milk) #milkList{display:none}
+.pg-milk #hero,.pg-milk #hot,.pg-milk #featured,.pg-milk #offers,.pg-milk #products,.pg-milk #diapers,.pg-dia #milk{display:none!important}
+.pg-milk #milk{padding-top:18px!important}
+.pg-milk .mban .db-cta{display:none}
+.pg-milk .mban .db-sizes span{cursor:pointer;transition:background .2s,transform .2s}
+.pg-milk .mban .db-sizes span:hover{background:var(--yel);color:var(--ink);transform:translateY(-2px)}
 .pg-dia #hero,.pg-dia #hot,.pg-dia #featured,.pg-dia #offers,.pg-dia #products{display:none!important}
 .pg-dia #diapers{padding-top:18px!important}
 .pg-dia .db-cta{display:none}
@@ -689,6 +703,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
     <nav class="links">
       <a href="#" class="nl-home" id="navHome" data-t="navHome">الرئيسية</a>
       <a href="#offers" data-t="navOffers" id="navOff">العروض</a>
+      <a href="#milk" data-t="navMilk" id="navMilk" hidden>ألبان</a>
       <a href="#diapers" data-t="navDia" id="navDia" hidden>حفاضات</a>
       <a href="#products" data-t="navProducts" id="navProd">متوفر عندنا</a>
       <a href="#visit" data-t="navVisit">العنوان</a>
@@ -726,6 +741,42 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
   <div class="wrap">
     <div class="sh"><div><h2><span class="ic flame"><svg class="i"><use href="#i-flame"/></svg></span><span data-t="pickH">العرض اللي اخترته</span></h2><p data-t="pickP"></p></div></div>
     <div class="grid pickg" id="pickGrid"></div>
+  </div>
+</section>
+
+<section id="milk" style="padding-top:22px;padding-bottom:0" hidden>
+  <div class="wrap">
+    <a class="dban mban" id="milkBan" href="?p=milk">
+      <i class="bub" style="width:46px;height:46px;left:8%;animation-delay:0s"></i>
+      <i class="bub" style="width:22px;height:22px;left:30%;animation-delay:2.2s;animation-duration:6s"></i>
+      <i class="bub" style="width:70px;height:70px;left:52%;animation-delay:4s;animation-duration:10s"></i>
+      <i class="bub" style="width:30px;height:30px;left:74%;animation-delay:1.2s;animation-duration:7s"></i>
+      <i class="stripe"></i>
+      <div>
+        <span class="db-kick"><svg class="i"><use href="#i-baby"/></svg><span data-t="milkH">عروض ألبان الأطفال</span></span>
+        <h2 id="mbH"></h2>
+        <p id="mbBrands"></p>
+        <div class="db-sizes" id="mbSizes"></div>
+        <span class="btn btn-yel db-cta"><span data-t="mbCta">شوف كل الألبان</span><svg class="i"><use href="#i-arrow"/></svg></span>
+      </div>
+      <div class="db-art">
+        <div class="circ"><span class="em" aria-hidden="true">🍼</span></div>
+        <div class="burst" id="mbBurst" hidden><div><span data-t="burstMax">خصم لحد</span><b class="num" id="mbPct"></b></div></div>
+      </div>
+    </a>
+    <div class="box-d" id="milkList">
+      <div class="sh">
+        <div>
+          <h2><span class="ic"><svg class="i"><use href="#i-baby"/></svg></span><span data-t="milkH">عروض ألبان الأطفال</span></h2>
+          <p data-t="milkP">اختار النوع والمرحلة، والتوصيل لحد باب البيت</p>
+        </div>
+        <span class="count num" id="milkCount"></span>
+      </div>
+      <div class="dbrands" id="mbrands"></div>
+      <div class="tabs ptabs" id="mtabs"></div>
+      <div class="grid" id="milkGrid"></div>
+      <div class="pmore"><button class="btn btn-dark" id="mmore" hidden><span data-t="more">عرض المزيد</span></button></div>
+    </div>
   </div>
 </section>
 
@@ -928,7 +979,7 @@ const I18N = {
     title:"صيدلية د. أنس نحيلة | صيدلية 24 ساعة في المعمورة الشاطئ، إسكندرية",
     demo:"بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية",
     brand:"د. أنس نحيلة", brandSub:"صيدلية",
-    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navProducts:"متوفر عندنا", navVisit:"العنوان",
+    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
     langBtn:"EN", langAria:"English",
     heroAlt:"واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ",
     hello:"المعمورة الشاطئ، جنب البوابة الرئيسية", openNow:"فاتحين دلوقتي",
@@ -976,7 +1027,7 @@ const I18N = {
     title:"Dr. Anas Nehila Pharmacy | 24-hour pharmacy in El Maamoura Beach, Alexandria",
     demo:"Demo data. Connect the Google Sheet to show the real offers",
     brand:"Dr. Anas Nehila", brandSub:"Pharmacy",
-    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navProducts:"In stock", navVisit:"Address",
+    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
     langBtn:"ع", langAria:"العربية",
     heroAlt:"Dr. Anas Mohamed Nehila pharmacy storefront in El Maamoura Beach",
     hello:"El Maamoura Beach, next to the main gate", openNow:"Open now",
@@ -1040,6 +1091,17 @@ if(PG_DIA){
   /* البانر بيودّي لصفحة الحفاضات ومعاه ?src و ?lang لو موجودين */
   const q = new URLSearchParams(location.search); q.set("p","diapers");
   document.getElementById("diaBan").href = "?" + q.toString();
+}
+/* صفحة الألبان لوحدها: ?p=milk (واللينك القصير /milk/) */
+const PG_MILK = new URLSearchParams(location.search).get("p") === "milk";
+if(PG_MILK){
+  document.documentElement.classList.add("pg-milk");
+  const back = "./" + (new URLSearchParams(location.search).get("lang")==="en" ? "?lang=en" : "");
+  ["logoA","navOff","navHome","dockHome"].forEach(id=>document.getElementById(id).href = back);
+  document.getElementById("milkBan").removeAttribute("href");
+}else{
+  const q = new URLSearchParams(location.search); q.set("p","milk");
+  document.getElementById("milkBan").href = "?" + q.toString();
 }
 const SRC = new URLSearchParams(location.search).get("src") || "";
 const icon = (id,cls="i")=>`<svg class="${cls}"><use href="#i-${id}"/></svg>`;
@@ -1139,7 +1201,8 @@ function toItem(r, i){
     code:(r["الكود"]||"").trim(), promo:col(r,"العرض"),
     offer: norm(r["النوع"]||"عرض") !== "منتج",
     hot: /هوت|hot|ويك/i.test(norm(r["النوع"])),
-    dia: /حفاض|حفاظ|بامبرز|diaper|pamper/i.test(norm(r["النوع"]) + " " + norm(r["الفئة"]))   /* قسم الحفاضات المنفصل */
+    dia: /حفاض|حفاظ|بامبرز|diaper|pamper/i.test(norm(r["النوع"]) + " " + norm(r["الفئة"])),   /* قسم الحفاضات المنفصل */
+    milk: /لبن|البان|formula|baby milk/i.test(norm(r["الفئة"]))   /* قسم ألبان الأطفال المنفصل (24/10) */
   };
 }
 
@@ -1474,6 +1537,75 @@ $("#dmore").onclick = ()=>{
   if(!RM) $$("#diaGrid .card").slice(before).forEach((c,i)=>c.animate && c.animate([{opacity:0,transform:"translateY(20px)"},{opacity:1,transform:"none"}],{duration:450,delay:i*40,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"}));
 };
 
+/* ---------- قسم ألبان الأطفال (24/10): النوع + المرحلة + عرض المزيد ---------- */
+let MILK = [], mBrand = "", mStage = "", mShown = PAGE;
+/* ترتيب العرض زي ما صاحب الشغل قال: بيبيلاك، هيرو، (سيسنس، نيوتراديفينس)، جولد */
+const M_BRANDS = [["bebelac","بيبيلاك","Bebelac","#e08a00"],["hero","هيرو","Hero Baby","#2aa6d6"],["sense","هيرو سيسنس","Hero Nutrasense","#1f9d55"],["defense","هيرو نيوتراديفينس","Hero Nutradefense","#1f4fa8"],["s26","S-26 جولد","S-26 Gold","#a8740a"]];
+function milkBrand(it){
+  const n = it.name || "";
+  if(/nutrasense/i.test(n)) return "sense";
+  if(/nutradefense/i.test(n)) return "defense";
+  if(/hero/i.test(n)) return "hero";
+  if(/s-?26/i.test(n)) return "s26";
+  if(/bebelac/i.test(n)) return "bebelac";
+  return "";
+}
+function milkStage(it){ const m = (it.name||"").match(/\(\s*([1-4])\s*\)/); return m ? m[1] : ""; }
+const mInBrand = d => !mBrand || milkBrand(d)===mBrand;
+const anim = sel => { if(!RM) $$(sel).forEach((c,i)=>c.animate && c.animate([{opacity:0,transform:"translateY(20px) scale(.95)"},{opacity:1,transform:"none"}],{duration:450,delay:i*50,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"})); };
+function renderMilkBanner(list){
+  const max = Math.max(0, ...list.map(d=>d.pct||0));
+  $("#mbH").innerHTML = max>=5 ? t("mbH").replace("{n}",max) : t("mbH0");
+  $("#mbBurst").hidden = max<5;
+  $("#mbPct").textContent = max + "%";
+  const bs = M_BRANDS.filter(b=>list.some(d=>milkBrand(d)===b[0]));
+  $("#mbBrands").textContent = bs.map(b=>L==="en"?b[2]:b[1]).join("  ·  ");
+  const st = [...new Set(list.map(milkStage).filter(Boolean))].sort();
+  $("#mbSizes").innerHTML = st.map((k,i)=>`<span data-c="${k}" style="--k:${i}">${k}</span>`).join("");
+}
+$("#mbSizes").onclick = e=>{
+  const sp = e.target.closest("span[data-c]"); if(!PG_MILK || !sp) return;
+  const b = $(`#mtabs button[data-c="${sp.dataset.c}"]`); if(!b) return;
+  b.click(); $("#milkList").scrollIntoView({behavior: RM ? "auto" : "smooth", block:"start"});
+};
+function renderMilkBrands(){
+  const list = M_BRANDS.filter(b=>MILK.some(d=>milkBrand(d)===b[0]));
+  const box = $("#mbrands");
+  box.hidden = list.length < 2;
+  box.innerHTML = `<button class="${mBrand?"":"on"}" data-b="">${t("allMilk")}</button>` +
+    list.map(b=>`<button class="${mBrand===b[0]?"on":""}" data-b="${b[0]}" style="--bc:${b[3]}">${L==="en"?b[2]:b[1]}</button>`).join("");
+}
+function renderMilkTabs(){
+  const st = [...new Set(MILK.filter(mInBrand).map(milkStage).filter(Boolean))].sort();
+  const tabs = $("#mtabs");
+  tabs.hidden = st.length < 2;
+  tabs.innerHTML = `<button class="${mStage?"":"on"}" data-c="">${t("allStages")}</button>` +
+    st.map(k=>`<button class="${mStage===k?"on":""}" data-c="${k}">${t("stage")} ${k}</button>`).join("");
+}
+function renderMilk(reset){
+  if(reset) mShown = PAGE;
+  const list = MILK.filter(d=>mInBrand(d) && (!mStage || milkStage(d)===mStage));
+  const g = $("#milkGrid");
+  g.innerHTML = list.slice(0,mShown).map((it,i)=> it.offer ? offerCard(it,i) : prodCard(it)).join("");
+  $("#mmore").hidden = list.length <= mShown;
+  bindWa(g);
+}
+$("#mbrands").onclick = e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  mBrand = b.dataset.b;
+  if(mStage && !MILK.some(d=>mInBrand(d) && milkStage(d)===mStage)) mStage = "";
+  renderMilkBrands(); renderMilkTabs(); renderMilk(true);
+  track("milk_brand", {brand: mBrand || "all"});
+  anim("#milkGrid .card");
+};
+$("#mtabs").onclick = e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  mStage = b.dataset.c;
+  $$("#mtabs button").forEach(x=>x.classList.toggle("on", x===b));
+  renderMilk(true); anim("#milkGrid .card");
+};
+$("#mmore").onclick = ()=>{ mShown += PAGE; renderMilk(false); };
+
 /* ---------- هوت أوفر الويك إند (بتوقيت القاهرة): الخميس 6 مساءً لآخر السبت ---------- */
 function cairoWeekSec(){
   const p = Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:"Africa/Cairo",weekday:"short",hour:"numeric",minute:"numeric",second:"numeric",hourCycle:"h23"}).formatToParts(new Date()).map(x=>[x.type,x.value]));
@@ -1666,14 +1798,15 @@ function render(rows){
   const hot = items.filter(i=>i.hot);
   const hotOn = hs.on ? hot : [];
   const dia = vis.filter(i=>i.dia && !i.hot);
+  const milk = vis.filter(i=>i.milk && !i.hot && !i.dia);
   /* الأحدث الأول: آخر سطر في الشيت بيظهر أول كارت (طلبه 15/10) */
-  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia).reverse(), prods = vis.filter(i=>!i.offer && !i.dia);
+  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk).reverse(), prods = vis.filter(i=>!i.offer && !i.dia && !i.milk);
 
   // امسح من السلة أي عرض خلص، وحدّث الأسماء باللغة الحالية
   Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; else cart[id] = cartEntry(ITEMS[id], cart[id].q); }); saveCart();
 
   renderHot(hot);
-  const allDeals = offers.concat(dia.filter(i=>i.offer));
+  const allDeals = milk.filter(i=>i.offer).concat(offers, dia.filter(i=>i.offer));   /* الألبان الأول (طلبه 24/10) */
   renderHero(allDeals.concat(hotOn), hotOn.length>0);
   renderTicker(hotOn.concat(allDeals));
   renderFeatured(allDeals);
@@ -1696,6 +1829,14 @@ function render(rows){
   const dg = $("#diaGrid");
   dg.classList.remove("anim");
   if(dia.length && !RM) dg.classList.add("wait");
+  /* الألبان: قسم لوحده فوق الخطوات (أول حاجة بعد الصورة) */
+  $("#milk").hidden = $("#navMilk").hidden = !milk.length;
+  $("#milkCount").textContent = milk.length ? offersTxt(milk.length) : "";
+  MILK = milk;
+  if(PG_MILK) $("#navMilk").hidden = true;
+  if(mBrand && !milk.some(d=>milkBrand(d)===mBrand)) mBrand = "";
+  if(mStage && !milk.some(d=>mInBrand(d) && milkStage(d)===mStage)) mStage = "";
+  renderMilkBanner(milk); renderMilkBrands(); renderMilkTabs(); renderMilk(false);
   PRODS = prods;
   if(pCat && !prods.some(p=>p.ck===pCat)) pCat = "";
   $("#products").hidden = $("#navProd").hidden = !prods.length;
@@ -1767,8 +1908,8 @@ function payHTML(){
 function applyLang(){
   const h = document.documentElement;
   h.lang = L; h.dir = L==="en" ? "ltr" : "rtl";
-  document.title = t(PG_DIA ? "diaTitle" : "title");
-  if(PG_DIA) $("#navOff").textContent = t("navAll");
+  document.title = t(PG_DIA ? "diaTitle" : PG_MILK ? "milkTitle" : "title");
+  if(PG_DIA || PG_MILK) $("#navOff").textContent = t("navAll");
   $$("[data-t]").forEach(e=>{ e.innerHTML = t(e.dataset.t); });
   $$("[data-ta]").forEach(e=>e.setAttribute("aria-label", t(e.dataset.ta)));
   $$("[data-talt]").forEach(e=>e.setAttribute("alt", t(e.dataset.talt)));
@@ -1797,7 +1938,7 @@ $("#langBtn").onclick = ()=>{
 };
 
 /* "الرئيسية" واللوجو في الصفحة الأولى: يطلع لأول الصفحة */
-if(!PG_DIA) ["logoA","navHome","dockHome"].forEach(id=>$("#"+id).addEventListener("click", e=>{ e.preventDefault(); scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }));
+if(!PG_DIA && !PG_MILK) ["logoA","navHome","dockHome"].forEach(id=>$("#"+id).addEventListener("click", e=>{ e.preventDefault(); scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }));
 
 /* الهيدر + شريط التقدم + الشريط اللي تحت بيستخبى وإنت نازل بسرعة */
 let lastY = 0, ticking = false;
@@ -1923,6 +2064,7 @@ document.addEventListener("click", e=>{
   if(so){ track("social_click", {network: so.getAttribute("aria-label")}); return; }
   if(e.target.closest("#langBtn")) track("language_switch", {to: L==="ar" ? "en" : "ar"});
   if(e.target.closest("#diaBan[href]")) track("diapers_banner_click");
+  if(e.target.closest("#milkBan[href]")) track("milk_banner_click");
 }, true);
 let searchT;
 $("#pq").addEventListener("input", e=>{ clearTimeout(searchT); const q = e.target.value.trim(); if(q.length>=2) searchT = setTimeout(()=>track("search", {search_term: q}), 1200); });

@@ -16,6 +16,8 @@ header h1{margin:0 0 8px;font-size:18px}
 .chips button{flex:none;font:inherit;border:0;border-radius:20px;padding:8px 16px;background:rgba(255,255,255,.2);color:#fff;min-height:44px}
 .chips button.on{background:#fff;color:var(--teal);font-weight:700}
 .chips:empty{display:none}
+.chips.fam button{font-size:17px;font-weight:700;min-height:46px;padding:6px 22px;background:rgba(0,0,0,.18)}
+.chips.fam button.on{background:var(--yel,#ffd23f);color:#12263a}
 .lbl{font-size:13px;opacity:.85;margin-top:8px}
 .chips{margin-top:4px}
 .chips button{font-size:15px;padding:6px 14px;min-height:40px}
@@ -43,8 +45,9 @@ main{padding:12px 16px;max-width:760px;margin:auto}
 <body>
 <header>
   <h1>أسعار الخصم — للستاف بس</h1>
+  <div class="chips fam" id="fams"></div>
   <div class="chips" id="chips"></div>
-  <div class="lbl">المقاس</div><div class="chips" id="sizes"></div>
+  <div class="lbl" id="sizeLbl">المقاس</div><div class="chips" id="sizes"></div>
 </header>
 <div class="cpbox" id="cpbox"><div><b>النسخ التلقائي مش شغال هنا — النص متحدد، اضغط عليه مطولاً واختار نسخ:</b><textarea id="cptxt" readonly></textarea><button id="cpclose">تمام</button></div></div>
 <main>
@@ -72,7 +75,7 @@ function parseCSV(t){
   return rows.filter(r => r.some(x => x.trim())).map(r => Object.fromEntries(head.map((h, i) => [h, (r[i] || "").trim()])));
 }
 
-let ALL = [], brand = "", typ = "", size = "";
+let ALL = [], fam = "milk", brand = "", typ = "", size = "";
 const BRANDS = [["pampers","بامبرز"],["molfix","مولفيكس"],["baby joy","بيبي جوي"]];
 const TYPES = ["عادي","شورت","بريميوم","بريميوم شورت","نيوبورن","مناديل"];
 /* المقاس من الاسم زي الموقع: "(4)" أو رقم لوحده 1–7 */
@@ -92,17 +95,34 @@ function typeOf(p){
   return "عادي";
 }
 const brandOf = p => (BRANDS.find(([k]) => clean(p.name).startsWith(k)) || [""])[0];
+/* الألبان (24/10): النوع + المرحلة */
+const M_BRANDS = [["bebelac","بيبيلاك"],["hero","هيرو"],["sense","هيرو سيسنس"],["defense","هيرو نيوتراديفينس"],["s26","S-26 جولد"]];
+function milkBrandOf(n){
+  if(/nutrasense/i.test(n)) return "sense";
+  if(/nutradefense/i.test(n)) return "defense";
+  if(/hero/i.test(n)) return "hero";
+  if(/s-?26/i.test(n)) return "s26";
+  if(/bebelac/i.test(n)) return "bebelac";
+  return "";
+}
+const FAMS = [["milk","🍼 لبن"],["dia","👶 حفاضات"]];
 const chips = (el, items, cur) => { el.innerHTML = items.length > 1 ? items.map(([v, l]) => `<button class="${v===cur?"on":""}" data-v="${esc(v)}">${esc(l)}</button>`).join("") : ""; };
 
 function render(){
-  const bs = BRANDS.filter(([k]) => ALL.some(p => p.brand===k));
+  const fs = FAMS.filter(([k]) => ALL.some(p => p.fam===k));
+  if(!fs.some(([k]) => k===fam)) fam = (fs[0]||[""])[0];
+  chips($("#fams"), fs, fam);
+  const FAM = ALL.filter(p => p.fam===fam), BR = fam==="milk" ? M_BRANDS : BRANDS;
+  $("#sizeLbl").textContent = fam==="milk" ? "المرحلة" : "المقاس";
+  const bs = BR.filter(([k]) => FAM.some(p => p.brand===k));
   if(bs.length < 2) brand = "";
   chips($("#chips"), bs.length > 1 ? [["","الكل"], ...bs.map(([k,a]) => [k,a])] : [], brand);
-  const pool1 = ALL.filter(p => !brand || p.brand===brand);
+  const pool1 = FAM.filter(p => !brand || p.brand===brand);
   const pool2 = pool1;   /* النوع اتشال بطلبه 18/10 — المقاسات بس */
   const ss = [...new Set(pool2.map(p => p.size).filter(Boolean))].sort();
   if(size && !ss.includes(size)) size = "";
-  chips($("#sizes"), [["","كل المقاسات"], ...ss.map(x => [x,"مقاس "+x])], size);
+  const w = fam==="milk" ? "مرحلة" : "مقاس";
+  chips($("#sizes"), [["","كل "+(fam==="milk"?"المراحل":"المقاسات")], ...ss.map(x => [x,w+" "+x])], size);
   const list = pool2.filter(p => !size || p.size===size);
   $("#info").textContent = list.length + " صنف";
   $("#list").innerHTML = list.length ? list.map(p => {
@@ -113,6 +133,7 @@ function render(){
   }).join("") : `<div class="empty">مفيش أصناف بالاختيار ده</div>`;
 }
 const pick = (id, set) => $(id).onclick = e => { const b = e.target.closest("button"); if(!b) return; set(b.dataset.v); render(); };
+pick("#fams", v => { fam = v; brand = ""; size = ""; });
 pick("#chips", v => { brand = v; });
 pick("#sizes", v => { size = v; });
 
@@ -142,10 +163,14 @@ $("#cpclose").onclick = () => $("#cpbox").classList.remove("on");
 
 fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
   ALL = parseCSV(t).map((r, i) => ({
-    i, name: r["الاسم"], code: r["الكود"], desc: r["الوصف"] || "", hidden: /^(لا|no|0|مخفي)$/i.test((r["ظاهر"]||"").trim()), was: Number(r["السعر قبل"]), now: Number(r["السعر بعد"]),
+    i, name: r["الاسم"], code: r["الكود"], desc: r["الوصف"] || "", cat: r["الفئة"] || "", hidden: /^(لا|no|0|مخفي)$/i.test((r["ظاهر"]||"").trim()), was: Number(r["السعر قبل"]), now: Number(r["السعر بعد"]),
     hay: clean(r["الاسم"] + " " + r["الكود"])
   })).filter(p => p.name && !isNaN(p.now) && !p.hidden);
-  ALL.forEach(p => { p.brand = brandOf(p); p.type = typeOf(p); p.size = sizeOf(p.name); });   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
+  ALL.forEach(p => {
+    p.fam = /لبن|ألبان|البان|formula/i.test(p.cat) ? "milk" : "dia";
+    p.brand = p.fam==="milk" ? milkBrandOf(p.name) : brandOf(p);
+    p.type = typeOf(p); p.size = sizeOf(p.name);
+  });   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
   render();
 }).catch(() => { $("#list").innerHTML = '<div class="empty">تعذر تحميل القائمة</div>'; });
 </script>
