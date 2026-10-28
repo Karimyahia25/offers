@@ -119,11 +119,11 @@ function render(){
   chips($("#chips"), bs.length > 1 ? [["","الكل"], ...bs.map(([k,a]) => [k,a])] : [], brand);
   const pool1 = FAM.filter(p => !brand || p.brand===brand);
   const pool2 = pool1;   /* النوع اتشال بطلبه 18/10 — المقاسات بس */
-  const ss = [...new Set(pool2.map(p => p.size).filter(Boolean))].sort();
+  const ss = [...new Set(pool2.flatMap(p => p.sizes))].sort();
   if(size && !ss.includes(size)) size = "";
   const w = fam==="milk" ? "مرحلة" : "مقاس";
   chips($("#sizes"), [["","كل "+(fam==="milk"?"المراحل":"المقاسات")], ...ss.map(x => [x,w+" "+x])], size);
-  const list = pool2.filter(p => !size || p.size===size);
+  const list = pool2.filter(p => !size || p.sizes.includes(size));
   $("#info").textContent = list.length + " صنف";
   $("#list").innerHTML = list.length ? list.map(p => {
     const pct = p.was > p.now ? Math.round((1 - p.now / p.was) * 100) : 0;
@@ -170,6 +170,9 @@ fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
     p.fam = /لبن|ألبان|البان|formula/i.test(p.cat) ? "milk" : "dia";
     p.brand = p.fam==="milk" ? milkBrandOf(p.name) : brandOf(p);
     p.type = typeOf(p); p.size = sizeOf(p.name);
+    /* لبن بكارت واحد لكل المراحل "(1-2-3)" (28/10) */
+    const ms = p.fam==="milk" && p.name.match(/\(\s*([1-4](?:\s*-\s*[1-4])+)\s*\)/);
+    p.sizes = ms ? ms[1].split("-").map(x => x.trim()) : p.size ? [p.size] : [];
   });   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
   render();
 }).catch(() => { $("#list").innerHTML = '<div class="empty">تعذر تحميل القائمة</div>'; });
