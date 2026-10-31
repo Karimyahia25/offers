@@ -174,6 +174,22 @@ fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
     const ms = p.fam==="milk" && p.name.match(/\(\s*([1-4](?:\s*-\s*[1-4])+)\s*\)/);
     p.sizes = ms ? ms[1].split("-").map(x => x.trim()) : p.size ? [p.size] : [];
   });   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
+  /* (31/10، طلبه) الموقع رجع كارت لكل مرحلة، والستاف يفضل كارت واحد لكل نوع لبن بكل مراحله (نفس السعر) */
+  const mg = new Map();
+  ALL = ALL.filter(p => {
+    if(p.fam !== "milk") return true;
+    const k = p.name.replace(/\(\s*[1-4](?:\s*-\s*[1-4])*\s*\)/, "()") + "|" + p.now + "|" + p.was;
+    const g = mg.get(k);
+    if(!g){ mg.set(k, p); return true; }
+    g.sizes = [...new Set([...g.sizes, ...p.sizes])].sort();
+    return false;
+  });
+  mg.forEach(g => {
+    if(g.sizes.length < 2) return;
+    g.name = g.name.replace(/\(\s*[1-4]\s*\)/, "(" + g.sizes.join("-") + ")");
+    g.code = g.code.replace(/-\d$/, "");
+    g.desc = g.desc.replace(/مرحلة \d · /, "مرحلة " + g.sizes.join(" و ") + " · ").replace(/ · من [^·]*$/, " · نفس السعر لكل المراحل");
+  });
   render();
 }).catch(() => { $("#list").innerHTML = '<div class="empty">تعذر تحميل القائمة</div>'; });
 </script>
