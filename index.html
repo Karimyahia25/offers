@@ -584,6 +584,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 .dock.has .d-wa{flex:0 0 50px}
 .dock.has .d-wa .t{display:none}
 .d-cart .n{font-family:var(--fh);background:var(--ink);color:var(--yel);min-width:26px;height:26px;border-radius:8px;display:grid;place-items:center;font-size:14px;padding:0 6px}
+.plus1{position:fixed;z-index:96;pointer-events:none;font:900 22px/1 Alexandria,sans-serif;color:#7fae3f;text-shadow:0 2px 0 #fff,0 0 12px rgba(255,255,255,.9)}
 .fly{position:fixed;z-index:95;width:48px;height:48px;border-radius:50%;background:var(--yel) center/cover no-repeat;border:3px solid #fff;box-shadow:0 8px 20px rgba(0,0,0,.35);pointer-events:none;left:0;top:0}
 .spark{position:fixed;z-index:96;width:8px;height:8px;border-radius:2px;pointer-events:none;left:0;top:0}
 
@@ -1347,8 +1348,24 @@ function flyToCart(fromEl, img){
   ],{duration:750,easing:"cubic-bezier(.45,0,.2,1)",fill:"forwards"});
   setTimeout(()=>{
     d.remove();
-    to.animate([{transform:"scale(1)"},{transform:"scale(1.12)"},{transform:"scale(1)"}],{duration:380,easing:"cubic-bezier(.34,1.56,.64,1)"});
+    to.animate([{transform:"scale(1)"},{transform:"scale(1.15) rotate(-4deg)"},{transform:"scale(.96) rotate(3deg)"},{transform:"scale(1)"}],{duration:500,easing:"cubic-bezier(.34,1.56,.64,1)"});
+    to.animate([{boxShadow:"0 0 0 0 rgba(255,210,63,.9)"},{boxShadow:"0 0 0 18px rgba(255,210,63,0)"}],{duration:650,easing:"ease-out"});
+    sparks($("#cartN"));
   }, 750);
+}
+/* (31/10) «+1» طالعة من الزرار + الزرار بيقول «اتضاف ✓» لحظة + هزة خفيفة على الموبايل */
+function addFx(btn){
+  if(navigator.vibrate) try{ navigator.vibrate(30); }catch(e){}
+  if(RM || !btn || !document.body.animate) return;
+  const r = btn.getBoundingClientRect();
+  const p = document.createElement("b"); p.className = "plus1"; p.textContent = "+1";
+  p.style.left = (r.left + r.width/2) + "px"; p.style.top = r.top + "px";
+  document.body.appendChild(p);
+  p.animate([{transform:"translate(-50%,0) scale(.6)",opacity:0},{transform:"translate(-50%,-26px) scale(1.25)",opacity:1,offset:.3},{transform:"translate(-50%,-70px) scale(1)",opacity:0}],{duration:900,easing:"cubic-bezier(.22,1,.36,1)",fill:"forwards"});
+  setTimeout(()=>p.remove(), 950);
+  btn.animate([{transform:"scale(1)"},{transform:"scale(.9)"},{transform:"scale(1.08)"},{transform:"scale(1)"}],{duration:420,easing:"cubic-bezier(.34,1.56,.64,1)"});
+  const card = btn.closest(".card,.feat");
+  if(card) card.animate([{boxShadow:"0 0 0 0 rgba(127,174,63,.8)"},{boxShadow:"0 0 0 10px rgba(127,174,63,0)"}],{duration:700,easing:"ease-out"});
 }
 
 document.addEventListener("click", e=>{
@@ -1357,7 +1374,7 @@ document.addEventListener("click", e=>{
   if(a.dataset.add){
     const id = a.dataset.add, it = ITEMS[id];
     const src = a.closest(".card,.feat");
-    sparks(a);
+    sparks(a); addFx(a);
     setQty(id, 1); toast(t("added"));
     flyToCart(src ? (src.querySelector(".media,.fm")||a) : a, it && it.img);
   }
