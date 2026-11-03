@@ -254,7 +254,7 @@ const W = 1080, H = () => size === "story" ? 1920 : 1350;
 const hlSize = t => { const n = t.length; const big = size === "story" ? 100 : 86; return n > 34 ? big * .66 : n > 24 ? big * .8 : big; };
 const redPct = t => esc(t).replace(/(\d+\s*%|%\s*\d+)/g, '<span class="red">$1</span>');
 function topBar(yel){ return `<div class="top"><div class="logo"><img src="img/logo-full.png" alt=""></div>${S[tpl].badge ? `<div class="pill${yel ? " yel" : ""}">${esc(S[tpl].badge)}</div>` : "<span></span>"}</div>`; }
-function foot(){ return `<div class="foot"><div class="wa"><i>${WA}</i><div><b>01288827555</b><small>ابعت طلبك واتساب</small></div></div><div class="perks"><span>توصيل مجاني</span> · فاتحين 24 ساعة<br>المعمورة الشاطئ – جنب البوابة الرئيسية</div></div>`; }
+function foot(){ return `<div class="foot"><div class="wa"><i>${WA}</i><div><b>01288827555</b><small>ابعت طلبك واتساب</small></div></div><div class="perks"><span>توصيل لحد باب بيتك</span> · فاتحين 24 ساعة<br>المعمورة الشاطئ – جنب البوابة الرئيسية</div></div>`; }
 function burst(s){ return s.burstBig ? `<div class="burst"><big>${esc(s.burstBig)}</big>${s.burstSmall ? `<small>${esc(s.burstSmall)}</small>` : ""}</div>` : ""; }
 function render(){
   const P = $("#poster"), s = S[tpl];
@@ -303,7 +303,7 @@ function slug(){
 function caption(){
   const s = S[tpl];
   const link = `anasnehila.com/${meta.diapers ? "diapers/" : ""}?src=fb_${slug()}`;
-  const tail = `\n\nابعت طلبك واتساب على 01288827555 🛵\nتوصيل مجاني وفاتحين 24 ساعة.\nكل العروض: ${link}\n#صيدلية_د_أنس_نحيلة #المعمورة #اسكندرية`;
+  const tail = `\n\nابعت طلبك واتساب على 01288827555 🛵\nنوصلك لحد باب بيتك وفاتحين 24 ساعة.\nكل العروض: ${link}\n#صيدلية_د_أنس_نحيلة #المعمورة #اسكندرية`;
   if(tpl === "offer"){
     const a = num(s.after), b = num(s.before);
     return `${s.title} ${s.mark || ""} 🎉` + (s.sub ? `\n${s.sub}` : "") + (a ? `\nبـ ${a} جنيه${b > a ? ` بدل ${b}` : ""}` : "") + tail;
