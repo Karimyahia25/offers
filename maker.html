@@ -535,6 +535,7 @@ $("#copy").addEventListener("click", async () => {
   catch(_){ $("#cap").select(); document.execCommand("copy"); $("#msg").textContent = "✅ الكابشن اتنسخ"; }
 });
 
+if(theme.badge) [S.offer, S.text].forEach(s => { if(s.badge === "عرض جديد") s.badge = theme.badge; });
 buildThemes(); buildColors();
 setSize("post"); setTpl("offer"); loadData();
 </script>
