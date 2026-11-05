@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" crossorigin="anonymous" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Oswald:wght@700&display=block">
 <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 /* ================= واجهة الصفحة ================= */
 :root{--navy:#073a4b;--tq:#0781a0;--tq-lt:#e5f6fa;--red:#d42f25;--yel:#ffd23f;--ink:#0f1b16;--ink2:#44524c;--line:#dfe5e3;--bg:#f5f6f1;--card:#fff}
@@ -47,6 +48,18 @@ input[type=file]{padding:9px}
 .btn:disabled{opacity:.6;cursor:wait}
 #cap{margin-top:12px;min-height:150px;font-size:15px}
 .msg{font-size:14px;margin-top:8px;color:var(--tq);min-height:20px;font-weight:600}
+button{touch-action:manipulation}
+.colors{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:4px 10px;margin-top:10px}
+input[type=color]{padding:3px;cursor:pointer}
+input[type=checkbox]{width:auto;min-height:0;margin-inline-end:8px;accent-color:var(--tq)}
+.f label.chk{display:flex;align-items:center;cursor:pointer;min-height:44px}
+.throw{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:12px;align-items:center}
+.strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.th{position:relative;aspect-ratio:1;border:2px solid var(--line);border-radius:10px;background:#fff;padding:0;cursor:pointer;overflow:hidden}
+.th img{width:100%;height:100%;object-fit:contain}
+.th b{position:absolute;top:2px;right:2px;background:var(--navy);color:#fff;border-radius:6px;font-size:12px;padding:0 6px}
+.th.on{border-color:var(--red);box-shadow:0 0 0 2px var(--red)}
+.batch{margin-top:14px;padding:12px;border-radius:14px;background:var(--tq-lt)}
 
 /* ================= البوست نفسه (نفس هوية posts/brand.css) ================= */
 #poster{--navy:#073a4b;--navy2:#0a5770;--tq2:#14b5d6;--red:#d42f25;--yel:#ffd23f;--yel-lt:#fff4c7;--ink:#0f1b16;--ink2:#44524c;
@@ -59,7 +72,7 @@ input[type=file]{padding:9px}
 #poster .top{display:flex;align-items:center;justify-content:space-between;gap:24px}
 #poster .logo{background:#fff;border-radius:28px;padding:12px 20px;box-shadow:0 10px 30px rgba(7,58,75,.14)}
 #poster .logo img{height:118px;display:block}
-#poster .pill{font-family:Alexandria;font-weight:800;font-size:34px;padding:14px 30px;border-radius:999px;background:var(--red);color:#fff;box-shadow:0 8px 20px rgba(212,47,37,.3)}
+#poster .pill{font-family:Alexandria;font-weight:800;font-size:34px;padding:14px 30px;border-radius:999px;background:var(--red);color:#fff;box-shadow:0 8px 20px color-mix(in srgb,var(--red) 30%,transparent)}
 #poster .pill.yel{background:var(--yel);color:var(--ink)}
 #poster .hl{font-family:Alexandria;font-weight:900;font-size:86px;line-height:1.18;color:var(--navy);margin-top:34px}
 #poster.dark .hl{color:#fff}
@@ -77,7 +90,7 @@ input[type=file]{padding:9px}
   display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:var(--red);font-family:Alexandria;font-weight:900;line-height:1.05}
 #poster .burst big{font-size:72px;direction:ltr}
 #poster .burst small{font-size:30px;color:var(--ink)}
-#poster .price{position:absolute;bottom:18px;right:40px;background:var(--red);color:#fff;border-radius:28px;padding:16px 34px;box-shadow:0 14px 30px rgba(212,47,37,.35);display:flex;align-items:baseline;gap:18px;transform:rotate(2deg)}
+#poster .price{position:absolute;bottom:18px;right:40px;background:var(--red);color:#fff;border-radius:28px;padding:16px 34px;box-shadow:0 14px 30px color-mix(in srgb,var(--red) 35%,transparent);display:flex;align-items:baseline;gap:18px;transform:rotate(2deg)}
 #poster .price b{font-family:Alexandria;font-size:78px;font-weight:900;line-height:1}
 #poster .price span{font-size:32px;font-weight:600}
 #poster .price s{font-size:38px;opacity:.85}
@@ -85,7 +98,7 @@ input[type=file]{padding:9px}
 #poster .deal{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;position:relative}
 #poster .deal .brand{font-family:Oswald;font-weight:700;font-size:150px;line-height:1;color:var(--navy);direction:ltr;letter-spacing:2px}
 #poster .deal .what{font-size:46px;font-weight:600;color:var(--ink2)}
-#poster .deal .ticket{margin-top:26px;background:var(--red);color:#fff;font-family:Alexandria;font-weight:900;font-size:92px;line-height:1.15;padding:34px 64px;border-radius:44px;transform:rotate(-3deg);box-shadow:0 24px 50px rgba(212,47,37,.35);border:6px dashed rgba(255,255,255,.55);max-width:100%}
+#poster .deal .ticket{margin-top:26px;background:var(--red);color:#fff;font-family:Alexandria;font-weight:900;font-size:92px;line-height:1.15;padding:34px 64px;border-radius:44px;transform:rotate(-3deg);box-shadow:0 24px 50px color-mix(in srgb,var(--red) 35%,transparent);border:6px dashed rgba(255,255,255,.55);max-width:100%}
 #poster .deal .ticket small{display:block;font-size:46px;font-weight:700;color:var(--yel)}
 #poster .deal .burst{top:auto;bottom:40px;left:30px;width:210px;height:210px}
 #poster .deal .burst big{font-size:46px}
@@ -97,7 +110,10 @@ input[type=file]{padding:9px}
 #poster .tip p small{display:block;font-size:28px;font-weight:400;color:var(--ink2)}
 #poster .note{text-align:center;font-size:26px;color:#bfe3ec;margin-bottom:18px}
 #poster .foot{margin:0 -60px;background:var(--navy);color:#fff;padding:24px 60px 26px;display:flex;align-items:center;justify-content:space-between;gap:24px;border-top:8px solid var(--yel)}
-#poster.dark .foot{background:#04262f}
+#poster.dark .foot{background:color-mix(in srgb,var(--foot,#073a4b) 70%,#000)}
+#poster.dark .deal .brand,#poster.dark .name{color:#fff}
+#poster.dark .deal .what,#poster.dark .sub{color:#d9e4e8}
+#poster.dark .deal .until{background:rgba(255,255,255,.12);color:var(--yel)}
 #poster .wa{display:flex;align-items:center;gap:18px}
 #poster .wa i{width:78px;height:78px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center}
 #poster .wa i svg{width:50px;height:50px;fill:#fff}
@@ -147,8 +163,21 @@ input[type=file]{padding:9px}
       <button data-v="post">بوست (فيسبوك/إنستجرام)</button>
       <button data-v="story">ستوري / ريلز</button>
     </div>
-    <div class="lbl" id="pickLbl">3. هات البيانات من الشيت (اختياري)</div>
-    <select id="pick"><option value="">— اختار عرض أو منتج —</option></select>
+    <div class="lbl">3. الثيم والألوان</div>
+    <div class="seg" id="themes"></div>
+    <div class="colors" id="colors"></div>
+    <div class="throw">
+      <input id="tname" aria-label="اسم الثيم الجديد" placeholder="اسم الثيم الجديد…" autocomplete="off">
+      <button class="btn ghost" id="tsave" type="button" style="padding:0 16px">💾 احفظ الثيم</button>
+    </div>
+    <button class="btn ghost" id="tdel" type="button" hidden style="width:100%;margin-top:8px">🗑️ امسح الثيم ده</button>
+    <div class="lbl" id="pickLbl">4. هات البيانات من الشيت (اختياري)</div>
+    <select id="pick" aria-labelledby="pickLbl"><option value="">— اختار عرض أو منتج —</option></select>
+    <div class="batch" id="stripBox" hidden>
+      <div class="lbl" style="margin-top:0">الصور المرفوعة (<span id="stripCount">0</span>) — دوس على صورة تعدّل بياناتها</div>
+      <div class="strip" id="strip"></div>
+      <button class="btn" id="dlAll" type="button" style="width:100%;margin-top:12px">📦 نزّل كل البوستات (ZIP + الكابشنات)</button>
+    </div>
     <div id="fields"></div>
     <div class="rules">⚠️ <b>ممنوع أدوية أو جرعات</b> في البوستات — تجميل وعناية وأطفال بس.<br>الأسعار لازم تكون نفس اللي في الشيت · الرقم والعنوان ثابتين تحت لوحدهم.</div>
   </section>
@@ -169,7 +198,7 @@ const FIELDS = {
     ["title","العنوان (اسم المنتج)"],
     ["mark","السطر المميز بالأصفر"],
     ["sub","سطر صغير تحت العنوان"],
-    ["photo","صورة المنتج","file","صوّر المنتج على ورقة بيضا في النور، والمنتج مالي الكادر"],
+    ["photo","صورة المنتج (تقدر تختار أكتر من صورة مرة واحدة)","file","صوّر المنتج على ورقة بيضا في النور، والمنتج مالي الكادر. لو اخترت أكتر من صورة بيتعمل بوست لكل واحدة، واسم الملف بيبقى العنوان."],
     ["zoom","تكبير الصورة","range"],
     ["before","السعر قبل","num"], ["after","السعر بعد","num"],
     ["burstBig","النجمة الصفرا — كبير"], ["burstSmall","النجمة الصفرا — صغير"],
@@ -209,7 +238,7 @@ function buildFields(){
   $("#fields").innerHTML = FIELDS[tpl].map(([k, label, type, hint]) => {
     const id = "f_" + k;
     let inp;
-    if(type === "file") inp = `<input type="file" id="${id}" accept="image/*">`;
+    if(type === "file") inp = `<input type="file" id="${id}" accept="image/*" multiple>`;
     else if(type === "range") inp = `<input type="range" id="${id}" min="50" max="180" value="${s[k]}">`;
     else if(type === "area") inp = `<textarea id="${id}">${esc(s[k])}</textarea>`;
     else if(type === "num") inp = `<input id="${id}" inputmode="numeric" value="${esc(s[k])}">`;
@@ -227,7 +256,10 @@ function buildFields(){
     render();
   }));
   const f = $("#f_photo");
-  if(f) f.addEventListener("change", () => f.files[0] && loadPhoto(f.files[0]));
+  if(f) f.addEventListener("change", () => {
+    const fs = [...f.files].sort((a, b) => a.name.localeCompare(b.name, undefined, {numeric: true}));
+    if(fs.length > 1) loadMany(fs); else if(fs[0]) loadPhoto(fs[0]);
+  });
 }
 function setField(k, v){ S[tpl][k] = v; const el = $("#f_" + k); if(el && el.type !== "file") el.value = v; }
 function autoDiscount(){
@@ -238,16 +270,95 @@ function autoDiscount(){
     if(!s.mark || /خصم\s*\d+\s*%/.test(s.mark)) setField("mark", `بخصم ${p}%`);
   }
 }
-function loadPhoto(file){
-  const img = new Image();
-  img.onload = () => {
-    const m = 1400, r = Math.min(1, m / Math.max(img.width, img.height));
-    const c = document.createElement("canvas"); c.width = img.width * r; c.height = img.height * r;
-    const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
-    S.offer.photo = c.toDataURL("image/jpeg", .9); URL.revokeObjectURL(img.src); render();
-  };
-  img.src = URL.createObjectURL(file);
+function readPhoto(file){
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const m = 1400, r = Math.min(1, m / Math.max(img.width, img.height));
+      const c = document.createElement("canvas"); c.width = img.width * r; c.height = img.height * r;
+      const x = c.getContext("2d"); x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(img.src); res(c.toDataURL("image/jpeg", .9));
+    };
+    img.onerror = () => rej(new Error("bad image"));
+    img.src = URL.createObjectURL(file);
+  });
 }
+async function loadPhoto(file){ S.offer.photo = await readPhoto(file); render(); buildStrip(); }
+
+/* ---------- أكتر من صورة (دفعة) ---------- */
+let items = [], cur = 0;
+async function loadMany(files){
+  $("#msg").textContent = "⏳ بنحمّل الصور...";
+  const base = S.offer, list = [];
+  try {
+    for(const f of files){
+      list.push({...DEF.offer, badge: base.badge, mark: base.mark, burstBig: base.burstBig, burstSmall: base.burstSmall,
+        photo: await readPhoto(f), title: f.name.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim()});
+    }
+  } catch(_){ $("#msg").textContent = "في صورة مش مفهومة — جرّب تاني."; return; }
+  items = list; cur = 0; S.offer = items[0]; capEdited = false;
+  buildFields(); buildStrip(); render();
+  $("#msg").textContent = `✅ اتحمّل ${items.length} صورة — عدّل العنوان والسعر لكل صورة، وبعدين «نزّل كل البوستات».`;
+}
+function buildStrip(){
+  const box = $("#stripBox"); box.hidden = !(items.length > 1 && tpl === "offer");
+  $("#stripCount").textContent = items.length;
+  $("#strip").innerHTML = items.map((s, i) => `<button type="button" class="th${i === cur ? " on" : ""}" data-i="${i}" aria-label="صورة ${i + 1}: ${esc(s.title)}"><img src="${s.photo}" alt=""><b>${i + 1}</b></button>`).join("");
+}
+$("#strip").addEventListener("click", e => {
+  const b = e.target.closest(".th"); if(!b) return;
+  cur = +b.dataset.i; S.offer = items[cur]; capEdited = false; buildFields(); buildStrip(); render();
+});
+
+/* ---------- الثيمات ---------- */
+const THEMES = {
+  brand: {name: "الهوية", bg1: "#f2fbfd", bg2: "#e5f6fa", glow: "#14b5d6", main: "#073a4b", accent: "#d42f25", pop: "#ffd23f", foot: "#073a4b", dark: false},
+  bf:    {name: "بلاك فرايداي", bg1: "#2a2a2a", bg2: "#000000", glow: "#e10600", main: "#0b0b0b", accent: "#e10600", pop: "#ffd23f", foot: "#000000", dark: true, badge: "BLACK FRIDAY 27/11"},
+  sale:  {name: "أحمر تخفيضات", bg1: "#fff1f0", bg2: "#ffdcd8", glow: "#d42f25", main: "#7a0f0a", accent: "#d42f25", pop: "#ffd23f", foot: "#7a0f0a", dark: false},
+  green: {name: "أخضر طبيعي", bg1: "#effaf1", bg2: "#d6f0dc", glow: "#2fb457", main: "#0b4a2a", accent: "#e07a00", pop: "#ffd23f", foot: "#0b4a2a", dark: false},
+  gold:  {name: "أسود وذهبي", bg1: "#1f1a10", bg2: "#070605", glow: "#c9a227", main: "#0b0905", accent: "#c9a227", pop: "#f5d76e", foot: "#000000", dark: true},
+};
+const COLOR_KEYS = [["bg1","الخلفية (فوق)"],["bg2","الخلفية (تحت)"],["glow","زخرفة الخلفية"],["main","العناوين"],["accent","الأكشن (الأحمر)"],["pop","التمييز (الأصفر)"],["foot","الفوتر"]];
+let saved = [], themeId = "brand", theme = {...THEMES.brand};
+try { saved = JSON.parse(localStorage.getItem("maker_themes") || "[]"); } catch(_){}
+try { const t = JSON.parse(localStorage.getItem("maker_theme") || "null"); if(t && t.theme){ theme = {...THEMES.brand, ...t.theme}; themeId = t.id || "custom"; } } catch(_){}
+const persist = () => { try { localStorage.setItem("maker_theme", JSON.stringify({id: themeId, theme})); localStorage.setItem("maker_themes", JSON.stringify(saved)); } catch(_){} };
+function themeList(){ return [...Object.entries(THEMES).map(([id, t]) => ({id, ...t})), ...saved.map((t, i) => ({...t, id: "s" + i}))]; }
+function buildThemes(){
+  $("#themes").innerHTML = themeList().map(t => `<button type="button" data-id="${t.id}" class="${t.id === themeId ? "on" : ""}">${esc(t.name)}</button>`).join("")
+    + (themeId === "custom" ? '<button type="button" class="on" data-id="custom">مخصص ✎</button>' : "");
+  $("#tdel").hidden = !/^s\d+$/.test(themeId);
+}
+function buildColors(){
+  $("#colors").innerHTML = COLOR_KEYS.map(([k, l]) => `<div class="f"><label for="c_${k}">${l}</label><input type="color" id="c_${k}" value="${theme[k]}"></div>`).join("")
+    + `<div class="f" style="grid-column:1/-1"><label class="chk"><input type="checkbox" id="c_dark" ${theme.dark ? "checked" : ""}> بوست غامق (نص أبيض على كل القوالب)</label></div>`;
+}
+function applyTheme(id){
+  const base = themeList().find(t => t.id === id); if(!base) return;
+  const oldB = theme.badge || "عرض جديد", nb = base.badge || "عرض جديد";
+  theme = {...base}; delete theme.id; delete theme.name; themeId = id;
+  [S.offer, S.text, ...items].forEach(s => { if(s.badge === oldB) s.badge = nb; });
+  buildThemes(); buildColors(); buildFields(); persist(); render();
+}
+$("#themes").addEventListener("click", e => { const b = e.target.closest("button"); if(b && b.dataset.id !== "custom") applyTheme(b.dataset.id); });
+$("#colors").addEventListener("input", e => {
+  const el = e.target;
+  if(el.id === "c_dark") theme.dark = el.checked;
+  else if(el.id && el.id.startsWith("c_")) theme[el.id.slice(2)] = el.value;
+  else return;
+  if(themeId !== "custom"){ themeId = "custom"; buildThemes(); }
+  persist(); render();
+});
+$("#tsave").addEventListener("click", () => {
+  const name = $("#tname").value.trim() || "ثيم " + (saved.length + 1);
+  saved.push({...theme, name}); themeId = "s" + (saved.length - 1); $("#tname").value = "";
+  buildThemes(); persist(); $("#msg").textContent = "✅ الثيم اتحفظ على الجهاز ده.";
+});
+$("#tdel").addEventListener("click", () => {
+  const i = +themeId.slice(1); saved.splice(i, 1); themeId = "custom"; buildThemes(); persist();
+  $("#msg").textContent = "اتمسح الثيم المحفوظ.";
+});
+const rgba = (h, a) => { const n = parseInt(h.slice(1), 16); return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`; };
 
 /* ---------- البوست ---------- */
 const W = 1080, H = () => size === "story" ? 1920 : 1350;
@@ -258,8 +369,14 @@ function foot(){ return `<div class="foot"><div class="wa"><i>${WA}</i><div><b>0
 function burst(s){ return s.burstBig ? `<div class="burst"><big>${esc(s.burstBig)}</big>${s.burstSmall ? `<small>${esc(s.burstSmall)}</small>` : ""}</div>` : ""; }
 function render(){
   const P = $("#poster"), s = S[tpl];
-  P.className = (tpl === "tip" ? "dark " : "") + (size === "story" ? "story" : "");
+  const t = theme, dk = t.dark || tpl === "tip";
+  P.className = (dk ? "dark " : "") + (size === "story" ? "story" : "");
   P.style.width = W + "px"; P.style.height = H() + "px";
+  P.style.setProperty("--navy", t.main); P.style.setProperty("--red", t.accent); P.style.setProperty("--yel", t.pop); P.style.setProperty("--foot", t.foot);
+  P.style.setProperty("--navy2", `color-mix(in srgb,${t.main} 82%,#fff)`); P.style.setProperty("--yel-lt", `color-mix(in srgb,${t.pop} 22%,#fff)`);
+  P.style.background = `radial-gradient(circle at ${dk ? "90% 6%" : "88% 8%"},${rgba(t.glow, dk ? .35 : .22)} 0 ${dk ? 280 : 260}px,transparent ${dk ? 281 : 261}px),`
+    + `radial-gradient(circle at ${dk ? "4% 70%" : "6% 62%"},${rgba(t.pop, dk ? .18 : .28)} 0 ${dk ? 220 : 200}px,transparent ${dk ? 221 : 201}px),`
+    + (!dk ? `linear-gradient(170deg,${t.bg1} 0%,#fff 55%,${t.bg2} 100%)` : t.dark ? `linear-gradient(160deg,${t.bg1} 0%,${t.bg2} 70%)` : `linear-gradient(160deg,var(--navy2) 0%,var(--navy) 70%)`);
   let mid = "";
   if(tpl === "offer"){
     const b = num(s.before), a = num(s.after);
@@ -354,12 +471,13 @@ $("#pick").addEventListener("change", e => {
   S.text = {...S.text, brand: name.toUpperCase(), what: desc, t1: a ? `بـ ${a} جنيه بس` : deal || "عرض خاص", t2: a && b > a ? `بدل ${b} جنيه` : "",
             until: untilText(r["ينتهي"]), burstBig: p ? `-${p}%` : "عرض", burstSmall: p ? "خصم" : "خاص"};
   capEdited = false;
+  if(items.length) items[cur] = S.offer;
   setTpl(img ? "offer" : "text");
   $("#msg").textContent = img ? "" : "العرض ده ملوش صورة جاهزة — لو صوّرته، اختار «عرض بصورة» وارفعها.";
 });
 
 /* ---------- الأزرار ---------- */
-function setTpl(v){ tpl = v; document.querySelectorAll("#tpl button").forEach(b => b.classList.toggle("on", b.dataset.v === v)); buildFields(); render(); }
+function setTpl(v){ tpl = v; document.querySelectorAll("#tpl button").forEach(b => b.classList.toggle("on", b.dataset.v === v)); buildFields(); buildStrip(); render(); }
 function setSize(v){ size = v; document.querySelectorAll("#size button").forEach(b => b.classList.toggle("on", b.dataset.v === v)); render(); }
 $("#tpl").addEventListener("click", e => { const b = e.target.closest("button"); if(b){ capEdited = false; setTpl(b.dataset.v); } });
 $("#size").addEventListener("click", e => { const b = e.target.closest("button"); if(b) setSize(b.dataset.v); });
@@ -379,12 +497,30 @@ async function busy(btn, fn){
   try { await fn(); } catch(err){ console.error(err); $("#msg").textContent = "حصلت مشكلة — جرّب تاني."; }
   finally { document.querySelectorAll(".btn").forEach(b => b.disabled = false); }
 }
-function download(blob){
+function download(blob, name, text){
   const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob); a.download = fname(); document.body.append(a); a.click(); a.remove();
+  a.href = URL.createObjectURL(blob); a.download = name || fname(); document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-  $("#msg").textContent = "✅ الصورة نزلت — انسخ الكابشن وانشر.";
+  $("#msg").textContent = text || "✅ الصورة نزلت — انسخ الكابشن وانشر.";
 }
+$("#dlAll").addEventListener("click", () => busy(null, async () => {
+  const zip = new JSZip(), keepCur = cur, keepMeta = meta, keepEdit = capEdited, caps = [];
+  try {
+    for(let i = 0; i < items.length; i++){
+      const n = String(i + 1).padStart(2, "0");
+      cur = i; S.offer = items[i]; capEdited = false; meta = {slug: "bf_" + n, diapers: false}; render();
+      $("#msg").textContent = `⏳ بنجهّز ${i + 1} من ${items.length}...`;
+      await new Promise(r => setTimeout(r, 200));
+      zip.file(`anas-${n}-${size}.png`, await makeBlob());
+      caps.push(`#${n} — ${items[i].title}\n${caption()}`);
+    }
+    zip.file("captions.txt", caps.join("\n\n----------\n\n"));
+    const blob = await zip.generateAsync({type: "blob"});
+    download(blob, "anas-posts.zip", `✅ نزل ملف فيه ${items.length} بوست + الكابشنات.`);
+  } finally {
+    cur = keepCur; S.offer = items[cur]; meta = keepMeta; capEdited = keepEdit; buildFields(); buildStrip(); render();
+  }
+}));
 $("#dl").addEventListener("click", () => busy(null, async () => download(await makeBlob())));
 $("#share").addEventListener("click", () => busy(null, async () => {
   const blob = await makeBlob(), file = new File([blob], fname(), {type: "image/png"});
@@ -399,6 +535,7 @@ $("#copy").addEventListener("click", async () => {
   catch(_){ $("#cap").select(); document.execCommand("copy"); $("#msg").textContent = "✅ الكابشن اتنسخ"; }
 });
 
+buildThemes(); buildColors();
 setSize("post"); setTpl("offer"); loadData();
 </script>
 </body>
