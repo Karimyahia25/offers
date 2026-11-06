@@ -313,6 +313,22 @@ html:not(.pg-dia) #diaList{display:none}
 html:not(.pg-milk) #milkList{display:none}
 .pg-milk #hero,.pg-milk #hot,.pg-milk #featured,.pg-milk #offers,.pg-milk #products,.pg-milk #diapers,.pg-dia #milk{display:none!important}
 .pg-milk #milk{padding-top:18px!important}
+/* العطور والبودي سبلاش (6/11): بانر + صفحة ?p=perfumes — كل صورة كاملة بالطول علشان ستيكر السعر */
+.dban.pban{background:linear-gradient(125deg,#4a1238 0%,#a32a6b 52%,#e0709f 100%);box-shadow:0 24px 50px -22px rgba(163,42,107,.85)}
+@media(hover:hover){.dban.pban[href]:hover{box-shadow:0 30px 60px -22px rgba(163,42,107,.95)}}
+.pban .db-art .circ .em{filter:none}
+.pban h2{font-size:clamp(25px,5.4vw,46px)}
+#perf .cat{display:none}
+#perf .media{aspect-ratio:3/4}
+#perf .media img{object-fit:contain}
+@media(hover:hover){#perf .card:hover .media img{transform:none}}
+#perf .desc{color:var(--ink);font-weight:700;font-size:14px;-webkit-line-clamp:2;margin-top:2px}
+#perf .box-d{background:linear-gradient(180deg,#fdeef5,#fbf8f1);border-color:#f3cfe0}
+html:not(.pg-perf) #perfList{display:none}
+.pg-milk #perf,.pg-dia #perf,.pg-perf #hero,.pg-perf #hot,.pg-perf #featured,.pg-perf #offers,.pg-perf #products,.pg-perf #diapers,.pg-perf #milk{display:none!important}
+.pg-perf #perf{padding-top:18px!important}
+.pg-perf .pban .db-cta{display:none}
+nav.links a#navPerf{--nc:#a32a6b}
 .pg-milk .mban .db-cta{display:none}
 .pg-milk .mban .db-sizes span{cursor:pointer;transition:background .2s,transform .2s}
 .pg-milk .mban .db-sizes span:hover{background:var(--yel);color:var(--ink);transform:translateY(-2px)}
@@ -705,6 +721,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
       <a href="#" class="nl-home" id="navHome" data-t="navHome">الرئيسية</a>
       <a href="#offers" data-t="navOffers" id="navOff">العروض</a>
       <a href="#milk" data-t="navMilk" id="navMilk" hidden>ألبان</a>
+      <a href="?p=perfumes" data-t="navPerf" id="navPerf" hidden>عطور</a>
       <a href="#diapers" data-t="navDia" id="navDia" hidden>حفاضات</a>
       <a href="#products" data-t="navProducts" id="navProd">متوفر عندنا</a>
       <a href="#visit" data-t="navVisit">العنوان</a>
@@ -779,6 +796,30 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
       <div class="tabs ptabs" id="mtabs"></div>
       <div class="grid" id="milkGrid"></div>
       <div class="pmore"><button class="btn btn-dark" id="mmore" hidden><span data-t="more">عرض المزيد</span></button></div>
+    </div>
+  </div>
+</section>
+
+<section id="perf" style="padding-top:22px;padding-bottom:0" hidden>
+  <div class="wrap">
+    <a class="dban pban" id="perfBan" href="?p=perfumes">
+      <i class="bub" style="width:46px;height:46px;left:8%;animation-delay:0s"></i>
+      <i class="bub" style="width:22px;height:22px;left:30%;animation-delay:2.2s;animation-duration:6s"></i>
+      <i class="bub" style="width:70px;height:70px;left:52%;animation-delay:4s;animation-duration:10s"></i>
+      <i class="stripe"></i>
+      <div>
+        <span class="db-kick"><span data-t="perfKick">عروض جديدة</span></span>
+        <h2>Perfumes &amp; Body Splashes</h2>
+        <p id="pbBrands"></p>
+        <span class="btn btn-yel db-cta"><span data-t="perfCta">شوف كل العروض</span><svg class="i"><use href="#i-arrow"/></svg></span>
+      </div>
+      <div class="db-art">
+        <div class="circ"><span class="em" aria-hidden="true">🌸</span></div>
+        <div class="burst" id="pbBurst" hidden><div><span data-t="burstMax">خصم لحد</span><b class="num" id="pbPct"></b></div></div>
+      </div>
+    </a>
+    <div class="box-d" id="perfList">
+      <div class="grid" id="perfGrid"></div>
     </div>
   </div>
 </section>
@@ -982,7 +1023,7 @@ const I18N = {
     title:"صيدلية د. أنس نحيلة | صيدلية 24 ساعة في المعمورة الشاطئ، إسكندرية",
     demo:"بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية",
     brand:"د. أنس نحيلة", brandSub:"صيدلية",
-    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
+    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", navPerf:"عطور", perfKick:"عروض جديدة", perfCta:"شوف كل العروض", perfTitle:"Perfumes & Body Splashes | صيدلية د. أنس نحيلة", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
     langBtn:"EN", langAria:"English",
     heroAlt:"واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ",
     hello:"المعمورة الشاطئ، جنب البوابة الرئيسية", openNow:"فاتحين دلوقتي",
@@ -1030,7 +1071,7 @@ const I18N = {
     title:"Dr. Anas Nehila Pharmacy | 24-hour pharmacy in El Maamoura Beach, Alexandria",
     demo:"Demo data. Connect the Google Sheet to show the real offers",
     brand:"Dr. Anas Nehila", brandSub:"Pharmacy",
-    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
+    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", navPerf:"Perfumes", perfKick:"New offers", perfCta:"See all offers", perfTitle:"Perfumes & Body Splashes | Dr. Anas Nehila Pharmacy", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
     langBtn:"ع", langAria:"العربية",
     heroAlt:"Dr. Anas Mohamed Nehila pharmacy storefront in El Maamoura Beach",
     hello:"El Maamoura Beach, next to the main gate", openNow:"Open now",
@@ -1105,6 +1146,17 @@ if(PG_MILK){
 }else{
   const q = new URLSearchParams(location.search); q.set("p","milk");
   document.getElementById("milkBan").href = "?" + q.toString();
+}
+/* صفحة العطور لوحدها: ?p=perfumes (واللينك القصير /perfumes/) */
+const PG_PERF = new URLSearchParams(location.search).get("p") === "perfumes";
+if(PG_PERF){
+  document.documentElement.classList.add("pg-perf");
+  const back = "./" + (new URLSearchParams(location.search).get("lang")==="en" ? "?lang=en" : "");
+  ["logoA","navOff","navHome","dockHome"].forEach(id=>document.getElementById(id).href = back);
+  document.getElementById("perfBan").removeAttribute("href");
+}else{
+  const q = new URLSearchParams(location.search); q.set("p","perfumes");
+  document.getElementById("perfBan").href = document.getElementById("navPerf").href = "?" + q.toString();
 }
 const SRC = new URLSearchParams(location.search).get("src") || "";
 const icon = (id,cls="i")=>`<svg class="${cls}"><use href="#i-${id}"/></svg>`;
@@ -1205,7 +1257,8 @@ function toItem(r, i){
     offer: norm(r["النوع"]||"عرض") !== "منتج",
     hot: /هوت|hot|ويك/i.test(norm(r["النوع"])),
     dia: /حفاض|حفاظ|بامبرز|diaper|pamper/i.test(norm(r["النوع"]) + " " + norm(r["الفئة"])),   /* قسم الحفاضات المنفصل */
-    milk: /لبن|البان|formula|baby milk/i.test(norm(r["الفئة"]))   /* قسم ألبان الأطفال المنفصل (24/10) */
+    milk: /لبن|البان|formula|baby milk/i.test(norm(r["الفئة"])),   /* قسم ألبان الأطفال المنفصل (24/10) */
+    perf: /perfume|splash|عطور/i.test(norm(r["الفئة"]))   /* قسم العطور المنفصل (6/11) */
   };
 }
 
@@ -1821,13 +1874,14 @@ function render(rows){
   const dia = vis.filter(i=>i.dia && !i.hot);
   const milk = vis.filter(i=>i.milk && !i.hot && !i.dia);
   /* الأحدث الأول: آخر سطر في الشيت بيظهر أول كارت (طلبه 15/10) */
-  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk).reverse(), prods = vis.filter(i=>!i.offer && !i.dia && !i.milk);
+  const perf = vis.filter(i=>i.perf && !i.hot);
+  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk && !i.perf).reverse(), prods = vis.filter(i=>!i.offer && !i.dia && !i.milk && !i.perf);
 
   // امسح من السلة أي عرض خلص، وحدّث الأسماء باللغة الحالية
   Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; else cart[id] = cartEntry(ITEMS[id], cart[id].q); }); saveCart();
 
   renderHot(hot);
-  const allDeals = milk.filter(i=>i.offer).concat(offers, dia.filter(i=>i.offer));   /* الألبان الأول (طلبه 24/10) */
+  const allDeals = milk.filter(i=>i.offer).concat(perf, offers, dia.filter(i=>i.offer));   /* الألبان الأول (طلبه 24/10) */
   renderHero(allDeals.concat(hotOn), hotOn.length>0);
   renderTicker(hotOn.concat(allDeals));
   renderFeatured(allDeals);
@@ -1858,6 +1912,12 @@ function render(rows){
   if(mBrand && !milk.some(d=>milkBrand(d)===mBrand)) mBrand = "";
   if(mStage && !milk.some(d=>mInBrand(d) && mHas(d,mStage))) mStage = "";
   renderMilkBanner(milk); renderMilkBrands(); renderMilkTabs(); renderMilk(false);
+  $("#perf").hidden = $("#navPerf").hidden = !perf.length;
+  if(PG_PERF) $("#navPerf").hidden = true;
+  const pMax = Math.max(0, ...perf.map(d=>d.pct||0));
+  $("#pbBurst").hidden = pMax<5; $("#pbPct").textContent = pMax + "%";
+  $("#pbBrands").textContent = [...new Set(perf.map(d=>d.name.split(" ")[0]))].map(n=>n[0]+n.slice(1).toLowerCase()).join("  ·  ");
+  $("#perfGrid").innerHTML = perf.map(offerCard).join(""); bindWa($("#perfGrid"));
   PRODS = prods;
   if(pCat && !prods.some(p=>p.ck===pCat)) pCat = "";
   $("#products").hidden = $("#navProd").hidden = !prods.length;
@@ -1933,8 +1993,8 @@ function payHTML(){
 function applyLang(){
   const h = document.documentElement;
   h.lang = L; h.dir = L==="en" ? "ltr" : "rtl";
-  document.title = t(PG_DIA ? "diaTitle" : PG_MILK ? "milkTitle" : "title");
-  if(PG_DIA || PG_MILK) $("#navOff").textContent = t("navAll");
+  document.title = t(PG_DIA ? "diaTitle" : PG_MILK ? "milkTitle" : PG_PERF ? "perfTitle" : "title");
+  if(PG_DIA || PG_MILK || PG_PERF) $("#navOff").textContent = t("navAll");
   $$("[data-t]").forEach(e=>{ e.innerHTML = t(e.dataset.t); });
   $$("[data-ta]").forEach(e=>e.setAttribute("aria-label", t(e.dataset.ta)));
   $$("[data-talt]").forEach(e=>e.setAttribute("alt", t(e.dataset.talt)));
@@ -1963,7 +2023,7 @@ $("#langBtn").onclick = ()=>{
 };
 
 /* "الرئيسية" واللوجو في الصفحة الأولى: يطلع لأول الصفحة */
-if(!PG_DIA && !PG_MILK) ["logoA","navHome","dockHome"].forEach(id=>$("#"+id).addEventListener("click", e=>{ e.preventDefault(); scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }));
+if(!PG_DIA && !PG_MILK && !PG_PERF) ["logoA","navHome","dockHome"].forEach(id=>$("#"+id).addEventListener("click", e=>{ e.preventDefault(); scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }));
 
 /* الهيدر + شريط التقدم + الشريط اللي تحت بيستخبى وإنت نازل بسرعة */
 let lastY = 0, ticking = false;
@@ -2090,6 +2150,7 @@ document.addEventListener("click", e=>{
   if(e.target.closest("#langBtn")) track("language_switch", {to: L==="ar" ? "en" : "ar"});
   if(e.target.closest("#diaBan[href]")) track("diapers_banner_click");
   if(e.target.closest("#milkBan[href]")) track("milk_banner_click");
+  if(e.target.closest("#perfBan[href]")) track("perfumes_banner_click");
 }, true);
 let searchT;
 $("#pq").addEventListener("input", e=>{ clearTimeout(searchT); const q = e.target.value.trim(); if(q.length>=2) searchT = setTimeout(()=>track("search", {search_term: q}), 1200); });

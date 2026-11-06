@@ -105,7 +105,7 @@ function milkBrandOf(n){
   if(/bebelac/i.test(n)) return "bebelac";
   return "";
 }
-const FAMS = [["milk","🍼 لبن"],["dia","👶 حفاضات"]];
+const FAMS = [["milk","🍼 لبن"],["dia","👶 حفاضات"],["perf","🌸 عطور"]];
 const chips = (el, items, cur) => { el.innerHTML = items.length > 1 ? items.map(([v, l]) => `<button class="${v===cur?"on":""}" data-v="${esc(v)}">${esc(l)}</button>`).join("") : ""; };
 
 function render(){
@@ -113,7 +113,7 @@ function render(){
   if(!fs.some(([k]) => k===fam)) fam = (fs[0]||[""])[0];
   chips($("#fams"), fs, fam);
   const FAM = ALL.filter(p => p.fam===fam), BR = fam==="milk" ? M_BRANDS : BRANDS;
-  $("#sizeLbl").textContent = fam==="milk" ? "المرحلة" : "المقاس";
+  $("#sizeLbl").textContent = fam==="milk" ? "المرحلة" : fam==="perf" ? "" : "المقاس";
   const bs = BR.filter(([k]) => FAM.some(p => p.brand===k));
   if(bs.length < 2) brand = "";
   chips($("#chips"), bs.length > 1 ? [["","الكل"], ...bs.map(([k,a]) => [k,a])] : [], brand);
@@ -167,12 +167,12 @@ fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
     hay: clean(r["الاسم"] + " " + r["الكود"])
   })).filter(p => p.name && !isNaN(p.now) && !p.hidden);
   ALL.forEach(p => {
-    p.fam = /لبن|ألبان|البان|formula/i.test(p.cat) ? "milk" : "dia";
+    p.fam = /لبن|ألبان|البان|formula/i.test(p.cat) ? "milk" : /perfume|splash|عطور/i.test(p.cat) ? "perf" : "dia";
     p.brand = p.fam==="milk" ? milkBrandOf(p.name) : brandOf(p);
     p.type = typeOf(p); p.size = sizeOf(p.name);
     /* لبن بكارت واحد لكل المراحل "(1-2-3)" (28/10) */
     const ms = p.fam==="milk" && p.name.match(/\(\s*([1-4](?:\s*-\s*[1-4])+)\s*\)/);
-    p.sizes = ms ? ms[1].split("-").map(x => x.trim()) : p.size ? [p.size] : [];
+    p.sizes = p.fam==="perf" ? [] : ms ? ms[1].split("-").map(x => x.trim()) : p.size ? [p.size] : [];
   });   /* اللي "ظاهر = لا" مش معروض للستاف كمان */
   /* (31/10، طلبه) الموقع رجع كارت لكل مرحلة، والستاف يفضل كارت واحد لكل نوع لبن بكل مراحله (نفس السعر) */
   const mg = new Map();
