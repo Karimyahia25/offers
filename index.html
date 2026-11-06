@@ -318,11 +318,20 @@ html:not(.pg-milk) #milkList{display:none}
 @media(hover:hover){.dban.pban[href]:hover{box-shadow:0 30px 60px -22px rgba(163,42,107,.95)}}
 .pban .db-art .circ .em{filter:none}
 .pban h2{font-size:clamp(25px,5.4vw,46px)}
-#perf .cat{display:none}
-#perf .media{aspect-ratio:3/4}
-#perf .media img{object-fit:contain}
-@media(hover:hover){#perf .card:hover .media img{transform:none}}
-#perf .desc{color:var(--ink);font-weight:700;font-size:14px;-webkit-line-clamp:2;margin-top:2px}
+/* (6/11، طلبه) BLACK FRIDAY + موشن: الخلفية بتتحرك، شريط جاري تحت، البادج بينبض، الوردة بتعوم */
+.dban.pban{background-size:220% 220%;animation:pbPan 7s ease-in-out infinite alternate;padding-bottom:62px}
+@keyframes pbPan{from{background-position:0% 50%}to{background-position:100% 50%}}
+.pb-bf{background:#0b0b0d;color:var(--yel);font-weight:900;font-size:clamp(16px,2.6vw,22px);letter-spacing:.06em;padding:8px 16px;direction:ltr;animation:pbPulse 1.5s ease-in-out infinite}
+@keyframes pbPulse{0%,100%{transform:rotate(-2deg) scale(1);box-shadow:0 0 0 0 rgba(255,210,63,.65)}50%{transform:rotate(-2deg) scale(1.08);box-shadow:0 0 0 12px rgba(255,210,63,0)}}
+.pban .db-art .circ{animation:vfloat 3.2s ease-in-out infinite}
+.pb-strip{position:absolute;inset-inline:0;bottom:0;z-index:2;height:38px;overflow:hidden;background:#0b0b0d;color:var(--yel);font-family:var(--fh);font-weight:900;font-size:15px;letter-spacing:.08em;line-height:38px;direction:ltr}
+.pb-run{display:flex;width:max-content;animation:marq 16s linear infinite}
+.pb-run span{white-space:nowrap}
+.pfc .cat{display:none}
+.pfc .media{aspect-ratio:3/4}
+.pfc .media img{object-fit:contain}
+@media(hover:hover){.pfc.card:hover .media img{transform:none}}
+.pfc .desc{color:var(--ink);font-weight:700;font-size:14px;-webkit-line-clamp:2;margin-top:2px}
 #perf .box-d{background:linear-gradient(180deg,#fdeef5,#fbf8f1);border-color:#f3cfe0}
 html:not(.pg-perf) #perfList{display:none}
 .pg-milk #perf,.pg-dia #perf,.pg-perf #hero,.pg-perf #hot,.pg-perf #featured,.pg-perf #offers,.pg-perf #products,.pg-perf #diapers,.pg-perf #milk{display:none!important}
@@ -657,6 +666,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 
 @media(prefers-reduced-motion:reduce){
   .dban .bub{display:none}
+  .pb-strip .pb-run span+span{display:none}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .rv,.grid.wait .card{opacity:1;transform:none}
   .whero h1 em svg{stroke-dashoffset:0}
@@ -808,7 +818,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
       <i class="bub" style="width:70px;height:70px;left:52%;animation-delay:4s;animation-duration:10s"></i>
       <i class="stripe"></i>
       <div>
-        <span class="db-kick"><span data-t="perfKick">عروض جديدة</span></span>
+        <span class="db-kick pb-bf">BLACK FRIDAY</span>
         <h2>Perfumes &amp; Body Splashes</h2>
         <p id="pbBrands"></p>
         <span class="btn btn-yel db-cta"><span data-t="perfCta">شوف كل العروض</span><svg class="i"><use href="#i-arrow"/></svg></span>
@@ -817,6 +827,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
         <div class="circ"><span class="em" aria-hidden="true">🌸</span></div>
         <div class="burst" id="pbBurst" hidden><div><span data-t="burstMax">خصم لحد</span><b class="num" id="pbPct"></b></div></div>
       </div>
+      <div class="pb-strip" aria-hidden="true"><div class="pb-run"><span>BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★&nbsp;</span><span>BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★&nbsp;</span></div></div>
     </a>
     <div class="box-d" id="perfList">
       <div class="grid" id="perfGrid"></div>
@@ -1023,7 +1034,7 @@ const I18N = {
     title:"صيدلية د. أنس نحيلة | صيدلية 24 ساعة في المعمورة الشاطئ، إسكندرية",
     demo:"بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية",
     brand:"د. أنس نحيلة", brandSub:"صيدلية",
-    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", navPerf:"عطور", perfKick:"عروض جديدة", perfCta:"شوف كل العروض", perfTitle:"Perfumes & Body Splashes | صيدلية د. أنس نحيلة", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
+    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", navPerf:"عطور", perfCta:"شوف كل العروض", perfTitle:"Perfumes & Body Splashes | صيدلية د. أنس نحيلة", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
     langBtn:"EN", langAria:"English",
     heroAlt:"واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ",
     hello:"المعمورة الشاطئ، جنب البوابة الرئيسية", openNow:"فاتحين دلوقتي",
@@ -1071,7 +1082,7 @@ const I18N = {
     title:"Dr. Anas Nehila Pharmacy | 24-hour pharmacy in El Maamoura Beach, Alexandria",
     demo:"Demo data. Connect the Google Sheet to show the real offers",
     brand:"Dr. Anas Nehila", brandSub:"Pharmacy",
-    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", navPerf:"Perfumes", perfKick:"New offers", perfCta:"See all offers", perfTitle:"Perfumes & Body Splashes | Dr. Anas Nehila Pharmacy", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
+    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", navPerf:"Perfumes", perfCta:"See all offers", perfTitle:"Perfumes & Body Splashes | Dr. Anas Nehila Pharmacy", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
     langBtn:"ع", langAria:"العربية",
     heroAlt:"Dr. Anas Mohamed Nehila pharmacy storefront in El Maamoura Beach",
     hello:"El Maamoura Beach, next to the main gate", openNow:"Open now",
@@ -1454,7 +1465,7 @@ function endsHTML(it){
   return days<=7 ? `<span class="ends">${icon("clock")}${daysTxt(days)}</span>` : `<span class="ends far">${icon("clock")}${t("until").replace("{d}",dateTxt(it.end))}</span>`;
 }
 function offerCard(it, i){
-  return `<article class="card" data-ck="${esc(it.ck)}" style="--i:${i}">
+  return `<article class="card${it.perf?" pfc":""}" data-ck="${esc(it.ck)}" style="--i:${i}">
     <div class="media">${imgHTML(it)}
     </div>
     <div class="cbody">
@@ -1885,12 +1896,14 @@ function render(rows){
   renderHero(allDeals.concat(hotOn), hotOn.length>0);
   renderTicker(hotOn.concat(allDeals));
   renderFeatured(allDeals);
-  renderTabs(offers);
-  const oc = $("#offerCount"); oc.hidden = !offers.length; oc.textContent = offers.length ? offersTxt(offers.length) : "";
+  /* (6/11، طلبه) العطور بتظهر كمان في أول العروض الحالية، وقسمها زي ما هو */
+  const shown = perf.concat(offers);
+  renderTabs(shown);
+  const oc = $("#offerCount"); oc.hidden = !shown.length; oc.textContent = shown.length ? offersTxt(shown.length) : "";
   const grid = $("#offerGrid");
-  grid.innerHTML = offers.length ? offers.map(offerCard).join("") : `<div class="empty">${t("noOffers")}</div>`;
+  grid.innerHTML = shown.length ? shown.map(offerCard).join("") : `<div class="empty">${t("noOffers")}</div>`;
   grid.classList.remove("anim");
-  if(offers.length && !RM) grid.classList.add("wait");
+  if(shown.length && !RM) grid.classList.add("wait");
   /* الحفاضات: قسم لوحده تحت العروض على طول */
   $("#diapers").hidden = $("#navDia").hidden = !dia.length;
   $("#diaCount").textContent = dia.length ? offersTxt(dia.length) : "";

@@ -127,7 +127,7 @@ function render(){
   $("#info").textContent = list.length + " صنف";
   $("#list").innerHTML = list.length ? list.map(p => {
     const pct = p.was > p.now ? Math.round((1 - p.now / p.was) * 100) : 0;
-    return `<div class="row"><div class="nm"><b>${esc(p.name)}</b>${p.desc ? `<span class="desc">${esc(p.desc)}</span>` : ""}${p.code ? `<small>كود ${esc(p.code)}</small>` : ""}</div>
+    return `<div class="row"><div class="nm"><b>${esc(p.name)}</b>${p.desc ? `<span class="desc">${p.names && p.names.length > 1 ? "نفس السعر للكل" : esc(p.desc)}</span>` : ""}${p.code ? `<small>كود ${esc(p.code)}</small>` : ""}</div>
       <div class="pr"><div class="now">${p.now}<small> ج</small></div>${pct ? `<div class="was">${p.was}</div>` : ""}</div>
       <button class="cp" data-i="${p.i}">نسخ</button></div>`;
   }).join("") : `<div class="empty">مفيش أصناف بالاختيار ده</div>`;
@@ -189,6 +189,20 @@ fetch("products.csv?t=" + Date.now()).then(r => r.text()).then(t => {
     g.name = g.name.replace(/\(\s*[1-4]\s*\)/, "(" + g.sizes.join("-") + ")");
     g.code = g.code.replace(/-\d$/, "");
     g.desc = g.desc.replace(/مرحلة \d · /, "مرحلة " + g.sizes.join(" و ") + " · ").replace(/ · من [^·]*$/, " · نفس السعر لكل المراحل");
+  });
+  /* (6/11، طلبه) العطور اللي بنفس السعر = صف واحد ورسالة واحدة */
+  const pg = new Map();
+  ALL = ALL.filter(p => {
+    if(p.fam !== "perf") return true;
+    const k = p.now + "|" + p.was, g = pg.get(k);
+    if(!g){ p.names = [p.name]; pg.set(k, p); return true; }
+    g.names.push(p.name);
+    return false;
+  });
+  pg.forEach(g => {
+    if(g.names.length < 2) return;
+    g.name = g.names.join(" · "); g.code = "";
+    g.desc = g.names.join("\n");
   });
   render();
 }).catch(() => { $("#list").innerHTML = '<div class="empty">تعذر تحميل القائمة</div>'; });
