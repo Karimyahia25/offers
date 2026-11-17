@@ -21,6 +21,15 @@ gtag('js', new Date());
 (function(){
   var src = new URLSearchParams(location.search).get("src");
   if(src) gtag('set', 'user_properties', {ad_src: src});
+  // ترافيك داخلي (الصيدلية/الستاف): افتح الموقع مرة بـ ?internal=1 على الجهاز يتعلّم ويتستبعد من GA — ?internal=0 يلغيه
+  var internal = false;
+  try{
+    var q = new URLSearchParams(location.search).get("internal");
+    if(q === "1") localStorage.setItem("anas_internal", "1");
+    if(q === "0") localStorage.removeItem("anas_internal");
+    internal = localStorage.getItem("anas_internal") === "1";
+  }catch(e){}
+  if(internal) gtag('set', {traffic_type: 'internal'});
 })();
 gtag('config', 'G-SK4WXJPFK9');
 </script>
