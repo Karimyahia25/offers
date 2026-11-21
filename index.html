@@ -33,6 +33,17 @@ gtag('js', new Date());
 })();
 gtag('config', 'G-SK4WXJPFK9');
 </script>
+<!-- Meta Pixel — dataset الصفحة 1590130022330090 (21/11). أجهزة الصيدلية (?internal=1) مش بتتحسب -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+(function(){
+  var internal = false;
+  try{ internal = localStorage.getItem("anas_internal") === "1"; }catch(e){}
+  if(internal){ window.fbq = function(){}; return; }
+  fbq('init', '1590130022330090');
+  fbq('track', 'PageView');
+})();
+</script>
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ar_EG">
 <meta property="og:url" content="https://anasnehila.com/">
@@ -2153,6 +2164,22 @@ async function load(){
 
 /* ---------- تتبع الأحداث في Google Analytics ---------- */
 function track(name, params){ try{ if(window.gtag) gtag("event", name, Object.assign({ad_src: SRC || "(none)", lang: L}, params||{})); }catch(e){} }
+/* نفس الأحداث لـ Meta Pixel (21/11): أسماء ميتا القياسية علشان الإعلانات تتعلم منها */
+const FB_EVENTS = {item_link_open:"ViewContent", add_to_cart:"AddToCart", generate_lead:"Lead", whatsapp_click:"Contact", phone_call:"Contact", search:"Search", subscribe_whatsapp:"Subscribe"};
+const _track = track;
+track = function(name, params){
+  _track(name, params);
+  try{
+    const ev = FB_EVENTS[name]; if(!ev || !window.fbq) return;
+    if(name === "item_link_open" && params && params.found === false) return;
+    const p = params || {}, out = {};
+    if(p.value != null){ out.value = +p.value || 0; out.currency = "EGP"; }
+    const ids = p.items ? p.items.map(x=>x.item_id).filter(Boolean) : (p.item_id ? String(p.item_id).split(",") : []);
+    if(ids.length){ out.content_ids = ids; out.content_type = "product"; }
+    // كلمات البحث متتبعتش لميتا (ممكن تبقى اسم دوا = داتا صحية)
+    fbq("track", ev, out);
+  }catch(e){}
+};
 document.addEventListener("click", e=>{
   const add = e.target.closest("[data-add]");
   if(add){ const it = ITEMS[add.dataset.add]; track("add_to_cart", {currency:"EGP", value: it && !isNaN(it.now) ? it.now : 0, items:[{item_id: add.dataset.add, item_name: it ? it.name : "", item_category: it ? it.cat : ""}], hot: !!(it && it.hot)}); return; }
