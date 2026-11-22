@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>صيدلية د. أنس نحيلة</title>
+<!--
+  صفحة تحويل أزرار رسائل الواتساب الرسمي (الرقم +20 10 50822954) ← واتساب الصيدلية الأساسي 012.
+  اللينك: /w/?k=o-1234  (o = جهزوا طلبي، q = اسأل الصيدلي، والرقم = كود العميل في فارما فلاي)
+  بتسجل حدث GA «wa_reminder_click» وبعدين تفتح الواتساب والرسالة جاهزة.
+-->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SK4WXJPFK9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('set', 'user_properties', {ad_src: 'wa_reminder'});
+  gtag('config', 'G-SK4WXJPFK9');
+
+  (function () {
+    var WA = "201288827555";
+    var k = (new URLSearchParams(location.search).get("k") || "").trim();
+    var m = /^([oq])(?:-(\d{1,10}))?$/i.exec(k);
+    var type = m ? m[1].toLowerCase() : "q";
+    var code = m && m[2] ? m[2] : "";
+    var tag = code ? " (كود " + code + ")" : "";
+    var text = type === "o"
+      ? "السلام عليكم، عايز أجدد طلبي الشهري" + tag
+      : "السلام عليكم، عندي استفسار" + tag;
+    var dest = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text);
+    window.__dest = dest;
+
+    var gone = false;
+    function go() { if (!gone) { gone = true; location.replace(dest); } }
+    gtag("event", "wa_reminder_click", {
+      ad_src: "wa_reminder",
+      kind: type === "o" ? "order" : "question",
+      event_callback: go,
+      event_timeout: 800
+    });
+    setTimeout(go, 1000);
+  })();
+</script>
+</head>
+<body style="font-family:system-ui,sans-serif;text-align:center;padding:48px 16px;background:#f5f6f1;color:#12324a">
+  <p style="font-size:18px">بنفتحلك واتساب الصيدلية…</p>
+  <p><a id="go" href="https://wa.me/201288827555" style="display:inline-block;padding:14px 22px;min-height:44px;border-radius:12px;background:#0b6e66;color:#fff;text-decoration:none;font-size:17px">لو مفتحش، دوس هنا</a></p>
+  <script>try{document.getElementById("go").href = window.__dest;}catch(e){}</script>
+</body>
+</html>
