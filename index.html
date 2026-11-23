@@ -2121,13 +2121,15 @@ addEventListener("scroll", ()=>{
 async function load(){
   if(!SHEET_CSV_URL){ $("#demoBar").hidden=false; return render(DEMO); }
   try{
-    const [res, cat] = await Promise.all([
+    const [res, cat, cat2] = await Promise.all([
       fetch(SHEET_CSV_URL + (SHEET_CSV_URL.includes("?")?"&":"?") + "t=" + Date.now()),
-      fetch("products.csv?t=" + Math.floor(Date.now()/3.6e6)).catch(()=>null)   /* كتالوج المنتجات من السيستم (اختياري) */
+      fetch("products.csv?t=" + Math.floor(Date.now()/3.6e6)).catch(()=>null),   /* كتالوج المنتجات من السيستم (اختياري) */
+      fetch("catalog.csv?t=" + Math.floor(Date.now()/1.8e6)).catch(()=>null)    /* (24/11) كتالوج المتجر الحي — سيرفر الصيدلية بيكتبه (رصيد وسعر)، مش بإيدنا */
     ]);
     if(!res.ok) throw new Error(res.status);
     const rows = parseCSV(await res.text());
     if(cat && cat.ok) rows.push(...parseCSV(await cat.text()).map(r=>({...r, "النوع": r["النوع"] || "منتج"})));
+    if(cat2 && cat2.ok) rows.push(...parseCSV(await cat2.text()).map(r=>({...r, "النوع": r["النوع"] || "منتج"})));
     render(rows);
   }catch(e){
     console.error(e);
