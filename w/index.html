@@ -31,7 +31,7 @@ fbq('track', 'Contact', { content_category: 'wa_reminder' });
     var m = /^([oq])(?:-(\d{1,10}))?$/i.exec(k);
     var type = m ? m[1].toLowerCase() : "q";
     var code = m && m[2] ? m[2] : "";
-    var tag = code ? " (كود " + code + ")" : "";
+    var tag = "\n🔔 من تذكير الواتساب" + (code ? " — كود العميل " + code : "");   // الفرع يعرف إنه جاي من الرقم الجديد
     var text = type === "o"
       ? "السلام عليكم، عايز أجدد طلبي الشهري" + tag
       : "السلام عليكم، عندي استفسار" + tag;
