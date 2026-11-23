@@ -47,26 +47,38 @@ fbq('track', 'Contact', { content_category: 'wa_reminder' });
     }
     setDest(build([]));
 
-    var gone = false, ga = false, items = !(tok && type === "o");
+    // (24/11) الأصناف مظهرتش في تجربة د. يحيى من الموبايل ← الانتظار بقى لحد 4 ثواني (كان 1.8)،
+    // وحدث GA بيتبعت بعد ما الأصناف توصل/تفشل وفيه tk = ok/empty/timeout/error + items_n — علشان نعرف السبب.
+    var gone = false, t0 = Date.now();
     function go() { if (!gone) { gone = true; location.replace(window.__dest); } }
-    function maybe() { if (ga && items) go(); }
-    if (!items) {
-      var done = function (arr) { if (!items) { items = true; if (arr && arr.length) setDest(build(arr)); maybe(); } };
+    function track(st, n) {
+      gtag("event", "wa_reminder_click", {
+        ad_src: "wa_reminder",
+        kind: type === "o" ? "order" : "question",
+        tk: st, items_n: n || 0, tk_ms: Date.now() - t0,
+        event_callback: function(){ setTimeout(go, 300); },   // نستنى البيكسل يلحق يتبعت
+        event_timeout: 800
+      });
+      setTimeout(go, 1500);
+    }
+    if (tok && type === "o") {
+      var fin = false;
+      var done = function (arr, st) {
+        if (fin) return; fin = true;
+        if (arr && arr.length) setDest(build(arr));
+        track(st || (arr && arr.length ? "ok" : "empty"), arr ? arr.length : 0);
+      };
       try {
-        fetch("https://anas-wa.anasnehila.workers.dev/tk/" + tok)
+        fetch("https://anas-wa.anasnehila.workers.dev/tk/" + tok, { cache: "no-store" })
           .then(function (r) { return r.json(); })
           .then(function (j) { done((j && j.items || []).slice(0, 8).map(String)); })
-          .catch(function () { done([]); });
-      } catch (e) { done([]); }
-      setTimeout(function () { done([]); }, 1800);   // الـ Worker اتأخر ← نكمّل من غير الأصناف
+          .catch(function () { done([], "error"); });
+      } catch (e) { done([], "error"); }
+      setTimeout(function () { done([], "timeout"); }, 4000);   // الـ Worker اتأخر ← نكمّل من غير الأصناف
+    } else {
+      track("none", 0);
     }
-    gtag("event", "wa_reminder_click", {
-      ad_src: "wa_reminder",
-      kind: type === "o" ? "order" : "question",
-      event_callback: function(){ setTimeout(function () { ga = true; maybe(); }, 700); },   // نستنى البيكسل يلحق يتبعت
-      event_timeout: 800
-    });
-    setTimeout(go, 2500);
+    setTimeout(go, 6500);   // آخر حاجة: مهما حصل العميل يتحوّل
   })();
 </script>
 </head>
