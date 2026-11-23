@@ -7,7 +7,7 @@
 <title>صيدلية د. أنس نحيلة</title>
 <!--
   صفحة تحويل أزرار رسائل الواتساب الرسمي (الرقم +20 10 50822954) ← واتساب الصيدلية الأساسي 012.
-  اللينك: /w/?k=o-1234  (o = جهزوا طلبي، q = اسأل الصيدلي، والرقم = كود العميل في فارما فلاي)
+  اللينك: /w/?k=o-1234 (قديم: كود العميل) أو /w/?k=o-a7k2m9x4qp (24/11: رقم عشوائي ← الأصناف من الـ Worker /tk)  (o = جهزوا طلبي، q = اسأل الصيدلي)
   بتسجل حدث GA «wa_reminder_click» وبعدين تفتح الواتساب والرسالة جاهزة.
 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SK4WXJPFK9"></script>
@@ -28,27 +28,45 @@ fbq('track', 'Contact', { content_category: 'wa_reminder' });
   (function () {
     var WA = "201288827555";
     var k = (new URLSearchParams(location.search).get("k") || "").trim();
-    var m = /^([oq])(?:-(\d{1,10}))?$/i.exec(k);
+    // k = o-<كود قديم أرقام> أو o-<رقم عشوائي 10 حروف> (24/11: القالبين الجداد — الأصناف متخزنة في الـ Worker بالرقم ده)
+    var m = /^([oq])(?:-(\d{1,10}|[a-z0-9]{10}))?$/i.exec(k);
     var type = m ? m[1].toLowerCase() : "q";
-    var code = m && m[2] ? m[2] : "";
+    var tok = m && m[2] && /[a-z]/i.test(m[2]) ? m[2].toLowerCase() : "";
     // (23/11، طلبه) الفرع بيسجّل برقم التليفون مش بالكود — والرسالة بتيجي من نفس الرقم اللي اتبعتله التذكير (المتسجل عندنا).
-    // الرقم نفسه ممنوع يتحط في اللينك (بيروح لـ GA وسجلات الاستضافة) — فالرسالة بتقول بس إنه جاي من التذكير.
+    // الرقم والأصناف ممنوع يتحطوا في اللينك (بيروحوا لـ GA وسجلات الاستضافة) — الأصناف بتتجاب من الـ Worker بالرقم العشوائي.
     var tag = "\n🔔 من تذكير الواتساب";
-    var text = type === "o"
-      ? "السلام عليكم، عايز أجدد طلبي الشهري" + tag
-      : "السلام عليكم، عندي استفسار" + tag;
-    var dest = "https://wa.me/" + WA + "?text=" + encodeURIComponent(text);
-    window.__dest = dest;
+    function build(items) {
+      var list = items && items.length ? ":\n" + items.map(function (x) { return "- " + x; }).join("\n") : "";
+      return type === "o"
+        ? "السلام عليكم، عايز أجدد طلبي الشهري" + list + tag
+        : "السلام عليكم، عندي استفسار" + tag;
+    }
+    function setDest(t) {
+      window.__dest = "https://wa.me/" + WA + "?text=" + encodeURIComponent(t);
+      try { document.getElementById("go").href = window.__dest; } catch (e) {}
+    }
+    setDest(build([]));
 
-    var gone = false;
-    function go() { if (!gone) { gone = true; location.replace(dest); } }
+    var gone = false, ga = false, items = !(tok && type === "o");
+    function go() { if (!gone) { gone = true; location.replace(window.__dest); } }
+    function maybe() { if (ga && items) go(); }
+    if (!items) {
+      var done = function (arr) { if (!items) { items = true; if (arr && arr.length) setDest(build(arr)); maybe(); } };
+      try {
+        fetch("https://anas-wa.anasnehila.workers.dev/tk/" + tok)
+          .then(function (r) { return r.json(); })
+          .then(function (j) { done((j && j.items || []).slice(0, 8).map(String)); })
+          .catch(function () { done([]); });
+      } catch (e) { done([]); }
+      setTimeout(function () { done([]); }, 1800);   // الـ Worker اتأخر ← نكمّل من غير الأصناف
+    }
     gtag("event", "wa_reminder_click", {
       ad_src: "wa_reminder",
       kind: type === "o" ? "order" : "question",
-      event_callback: function(){ setTimeout(go, 700); },   // نستنى البيكسل يلحق يتبعت
+      event_callback: function(){ setTimeout(function () { ga = true; maybe(); }, 700); },   // نستنى البيكسل يلحق يتبعت
       event_timeout: 800
     });
-    setTimeout(go, 1500);
+    setTimeout(go, 2500);
   })();
 </script>
 </head>
