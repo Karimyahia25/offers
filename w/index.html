@@ -11,6 +11,13 @@
   بتسجل حدث GA «wa_reminder_click» وبعدين تفتح الواتساب والرسالة جاهزة.
 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SK4WXJPFK9"></script>
+<!-- (23/11) Meta Pixel — نفس بيكسل الموقع: «Contact» = داس زرار في تذكير الواتساب (من غير اسم ولا أصناف) -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1590130022330090');
+fbq('trackCustom', 'WaReminderClick', { kind: /^[?&]?k=o/i.test(location.search.replace(/^\?/, '')) ? 'order' : 'question' });
+fbq('track', 'Contact', { content_category: 'wa_reminder' });
+</script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -36,10 +43,10 @@
     gtag("event", "wa_reminder_click", {
       ad_src: "wa_reminder",
       kind: type === "o" ? "order" : "question",
-      event_callback: go,
+      event_callback: function(){ setTimeout(go, 700); },   // نستنى البيكسل يلحق يتبعت
       event_timeout: 800
     });
-    setTimeout(go, 1000);
+    setTimeout(go, 1500);
   })();
 </script>
 </head>
