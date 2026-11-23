@@ -29,7 +29,7 @@ fbq('track', 'Contact', { content_category: 'wa_reminder' });
     var WA = "201288827555";
     var k = (new URLSearchParams(location.search).get("k") || "").trim();
     // k = o-<كود قديم أرقام> أو o-<رقم عشوائي 10 حروف> (24/11: القالبين الجداد — الأصناف متخزنة في الـ Worker بالرقم ده)
-    var m = /^([oq])(?:-(\d{1,10}|[a-z0-9]{10}))?$/i.exec(k);
+    var m = /^([oqn])(?:-(\d{1,10}|[a-z0-9]{10}))?$/i.exec(k);   // n = رسالة تعريف لعميل جديد (24/11)
     var type = m ? m[1].toLowerCase() : "q";
     var tok = m && m[2] && /[a-z]/i.test(m[2]) ? m[2].toLowerCase() : "";
     // (23/11، طلبه) الفرع بيسجّل برقم التليفون مش بالكود — والرسالة بتيجي من نفس الرقم اللي اتبعتله التذكير (المتسجل عندنا).
@@ -39,6 +39,7 @@ fbq('track', 'Contact', { content_category: 'wa_reminder' });
       var list = items && items.length ? ":\n" + items.map(function (x) { return "- " + x; }).join("\n") : "";
       return type === "o"
         ? "السلام عليكم، عايز أجدد طلبي الشهري" + list + tag
+        : type === "n" ? "السلام عليكم، عايز أطلب من الصيدلية" + tag
         : "السلام عليكم، عندي استفسار" + tag;
     }
     function setDest(t) {
@@ -54,7 +55,7 @@ fbq('track', 'Contact', { content_category: 'wa_reminder' });
     function track(st, n) {
       gtag("event", "wa_reminder_click", {
         ad_src: "wa_reminder",
-        kind: type === "o" ? "order" : "question",
+        kind: type === "o" ? "order" : type === "n" ? "new_order" : "question",
         tk: st, items_n: n || 0, tk_ms: Date.now() - t0,
         event_callback: function(){ setTimeout(go, 300); },   // نستنى البيكسل يلحق يتبعت
         event_timeout: 800
