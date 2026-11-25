@@ -508,16 +508,6 @@ nav.links a#navPerf{--nc:#a32a6b}
 .sg{flex:0 0 132px;scroll-snap-align:start;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:5px;font-size:12.5px}
 .sg .th{height:84px;border-radius:10px;overflow:hidden;position:relative;background:#f3f1ea}.sg .th img{width:100%;height:100%;object-fit:contain}
 .sg b{line-height:1.3;max-height:2.6em;overflow:hidden}.sg .add,.sg .stp{min-height:36px;font-size:13px}
-.sheet .foot[hidden],.sheet .list[hidden]{display:none}.ordf{padding:14px 18px 18px;display:grid;gap:10px;overflow-y:auto}.ordf[hidden],.orddone[hidden]{display:none}
-.ordf label{display:grid;gap:5px;font-weight:700;font-size:14px}
-.ordf input:not(.hp){width:100%;height:50px;border-radius:12px;border:1.5px solid var(--line);background:#fff;padding:0 14px;font:inherit;font-size:16px;color:var(--ink)}
-.ordf input:not(.hp):focus{outline:none;border-color:var(--g-600);box-shadow:0 0 0 4px rgba(7,129,160,.12)}
-.ordf .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
-.ordf .btn{width:100%}.ordmsg{background:#fdecea;color:#9b1c1c;border-radius:10px;padding:10px 12px;font-size:14px}.ordmsg[hidden]{display:none}
-.btn-ghost{background:#fff;border:1.5px solid var(--line);color:var(--ink)}
-.orddone{padding:26px 22px 28px;text-align:center;display:grid;gap:10px;justify-items:center}
-.orddone .ok{width:64px;height:64px;border-radius:50%;background:var(--wa);color:#fff;font-size:34px;display:grid;place-items:center}
-.orddone h3{margin:0;font-family:var(--fh);font-size:20px}.orddone p{margin:0;color:var(--muted)}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 16px;background:#fff;border:1.5px dashed var(--line);border-radius:var(--r)}
 
 /* skeleton */
@@ -1091,26 +1081,8 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
   <div class="sug" id="csug" hidden></div>
   <div class="foot">
     <a class="btn btn-wa" id="sendBtn" target="_blank" rel="noopener"><svg class="wa"><use href="#i-wa"/></svg><span data-t="sendBtn">ابعت الطلب على واتساب</span></a>
-    <button class="btn btn-dark" id="directBtn" type="button" data-t="ordBtn">اطلب مباشر (هنكلمك للتأكيد)</button>
     <div class="note" data-t="sheetNote"></div>
     <button class="clr" id="clearBtn" data-t="clearBtn">امسح الطلب</button>
-  </div>
-  <form class="ordf" id="ordForm" hidden novalidate>
-    <label><span data-t="ordName">الاسم</span><input id="ordName" name="name" autocomplete="name" maxlength="60" required></label>
-    <label><span data-t="ordPhone">رقم الموبايل</span><input id="ordPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" maxlength="16" placeholder="01xxxxxxxxx" required></label>
-    <label><span data-t="ordAddr">العنوان والمنطقة</span><input id="ordAddr" name="address" autocomplete="street-address" maxlength="200" required></label>
-    <label><span data-t="ordNote">ملاحظة (اختياري)</span><input id="ordNote" name="note" maxlength="200"></label>
-    <input class="hp" id="ordHp" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <div class="ordmsg" id="ordMsg" role="alert" hidden></div>
-    <button class="btn btn-wa" id="ordSend" type="submit" data-t="ordSend">ابعت الطلب</button>
-    <a class="btn btn-ghost" id="ordWa" target="_blank" rel="noopener" hidden data-t="sendBtn">ابعت الطلب على واتساب</a>
-    <button class="clr" id="ordBack" type="button" data-t="ordBack">رجوع للطلب</button>
-  </form>
-  <div class="orddone" id="ordDone" hidden>
-    <div class="ok">✓</div>
-    <h3><span data-t="ordDone">اتسجل طلبك رقم</span> <b class="num" id="ordNo"></b></h3>
-    <p data-t="ordDoneP">هنكلمك على رقمك خلال دقايق نأكد الطلب والتوصيل. شكراً لثقتك 💚</p>
-    <button class="btn btn-dark" id="ordClose" type="button" data-t="close">إغلاق</button>
   </div>
 </div>
 
@@ -1186,7 +1158,7 @@ const I18N = {
     mapBtn:"افتح على الخريطة",
     foot:"صيدلية د. أنس نحيلة. الأسعار قابلة للتغيير والعروض لحد نفاد الكمية.",
     callAria:"اتصل", dockWa:"اطلب على واتساب", dockCart:"طلبك جاهز، ابعته",
-    sheetH:"طلبك", ordBtn:"اطلب مباشر (هنكلمك للتأكيد)", ordName:"الاسم", ordPhone:"رقم الموبايل", ordAddr:"العنوان والمنطقة", ordNote:"ملاحظة (اختياري)", ordSend:"ابعت الطلب", ordBack:"رجوع للطلب", ordDone:"اتسجل طلبك رقم", ordDoneP:"هنكلمك على رقمك خلال دقايق نأكد الطلب والتوصيل. شكراً لثقتك 💚", ordErrPhone:"اكتب رقم موبايل صحيح (01xxxxxxxxx)", ordErrFill:"كمّل الاسم والعنوان", ordErr:"مقدرناش نسجل الطلب دلوقتي. ابعته على الواتساب وهنرد عليك على طول", ordSending:"بنسجل طلبك...", closeAria:"قفل", sendBtn:"ابعت الطلب على واتساب",
+    sheetH:"طلبك", closeAria:"قفل", sendBtn:"ابعت الطلب على واتساب",
     sheetNote:"هيفتحلك الواتساب والطلب مكتوب جاهز، وفريقنا هيأكد معاك السعر والعنوان.", clearBtn:"امسح الطلب",
     cartEmpty:"طلبك فاضي، اختار من العروض", added:"اتضاف لطلبك",
     add:"أضف للطلب", ask:"اسأل عليه", unit:"سعر القطعة", cur:"ج.م", off:"خصم",
@@ -1234,7 +1206,7 @@ const I18N = {
     mapBtn:"Open in Maps",
     foot:"Dr. Anas Nehila Pharmacy. Prices may change; offers while stocks last.",
     callAria:"Call", dockWa:"Order on WhatsApp", dockCart:"Your order is ready, send it",
-    sheetH:"Your order", ordBtn:"Order directly (we will call you)", ordName:"Name", ordPhone:"Mobile number", ordAddr:"Address and area", ordNote:"Note (optional)", ordSend:"Send order", ordBack:"Back to order", ordDone:"Your order number is", ordDoneP:"We will call you within minutes to confirm the order and delivery. Thank you 💚", ordErrPhone:"Enter a valid mobile number (01xxxxxxxxx)", ordErrFill:"Please fill in name and address", ordErr:"We could not register your order right now. Send it on WhatsApp and we will reply right away", ordSending:"Sending your order...", closeAria:"Close", sendBtn:"Send order on WhatsApp",
+    sheetH:"Your order", closeAria:"Close", sendBtn:"Send order on WhatsApp",
     sheetNote:"WhatsApp opens with your order written. Our team will confirm the price and address.", clearBtn:"Clear order",
     cartEmpty:"Your order is empty. Pick from the offers", added:"Added to your order",
     add:"Add to order", ask:"Ask about it", unit:"Price per piece", cur:"EGP", off:"Off",
@@ -1468,51 +1440,8 @@ function renderCart(stagger){
   renderSug($("#csug"), ids.map(id=>{ const x = ITEMS[id]||cart[id]; return {id, name:x.name, ck:x.ck||""}; }), ids, t("sugCart"));
   $("#sendBtn").style.display = ids.length ? "" : "none";
   $("#clearBtn").style.display = ids.length ? "" : "none";
-  $("#directBtn").style.display = ids.length ? "" : "none";
 }
-/* ---------- طلب مباشر (25/11): الاسم والتليفون والعنوان ← سيرفر الصيدلية ← جروب التليجرام. الواتساب زي ما هو جنبه ---------- */
-const ORDER_URL = "https://anas-comments.anasnehila.workers.dev/order";
-const ordLS = {get(k){ try{ return localStorage.getItem("anas_o_"+k)||""; }catch(e){ return ""; } }, set(k,v){ try{ localStorage.setItem("anas_o_"+k, v); }catch(e){} }};
-function ordView(m){   /* cart | form | done */
-  $("#cartList").hidden = $(".sheet .foot").hidden = m!=="cart";
-  if(m==="cart") renderCart(false); else $("#csug").hidden = true;
-  $("#ordForm").hidden = m!=="form"; $("#ordDone").hidden = m!=="done";
-  $("#sheetT").textContent = m==="cart" ? t("sheetH") : m==="form" ? t("ordBtn").replace(/\s*\(.*\)/,"") : "";
-}
-function ordMsg(txt, wa){ const el = $("#ordMsg"); el.hidden = !txt; el.textContent = txt||""; $("#ordWa").hidden = !wa; if(wa) $("#ordWa").href = waLink(cartMsg()); }
-$("#directBtn").onclick = ()=>{
-  if(!cartCount()) return;
-  $("#ordName").value ||= ordLS.get("name"); $("#ordPhone").value ||= ordLS.get("phone"); $("#ordAddr").value ||= ordLS.get("addr");
-  ordMsg(""); ordView("form"); track("direct_order_open", {items_count: cartCount()});
-  setTimeout(()=>{ const f = [$("#ordName"),$("#ordPhone"),$("#ordAddr")].find(x=>!x.value); f && f.focus(); }, 300);
-};
-$("#ordBack").onclick = ()=>ordView("cart");
-$("#ordClose").onclick = ()=>{ openSheet(false); };
-$("#ordForm").addEventListener("submit", async e=>{
-  e.preventDefault();
-  const name = $("#ordName").value.trim(), addr = $("#ordAddr").value.trim();
-  const phone = $("#ordPhone").value.replace(/[٠-٩]/g,d=>d.charCodeAt(0)-1632).replace(/\D/g,"");
-  if(!/^(?:0020|20|0)?1[0125]\d{8}$/.test(phone)) return ordMsg(t("ordErrPhone"));
-  if(name.length<2 || addr.length<3) return ordMsg(t("ordErrFill"));
-  const btn = $("#ordSend"); btn.disabled = true; const old = btn.textContent; btn.textContent = t("ordSending"); ordMsg("");
-  const items = Object.values(cart).map(x=>({name:x.name, code:x.code||"", promo:x.promo||"", q:x.q, price: isNaN(x.now)?0:x.now}));
-  try{
-    const ctl = new AbortController(); setTimeout(()=>ctl.abort(), 15000);
-    const r = await fetch(ORDER_URL, {method:"POST", headers:{"Content-Type":"application/json"}, signal: ctl.signal,
-      body: JSON.stringify({name, phone, address: addr, note: $("#ordNote").value.trim(), src: SRC, website: $("#ordHp").value, items})});
-    const j = await r.json();
-    if(!j.ok) throw new Error(j.error||"fail");
-    ordLS.set("name", name); ordLS.set("phone", phone); ordLS.set("addr", addr);
-    track("generate_lead", {method:"direct_order", currency:"EGP", items_count: cartCount(), order_id: j.id,
-      value: items.reduce((s,x)=>s + x.price*x.q, 0), items: items.map(x=>({item_id:x.code||x.name, item_name:x.name, quantity:x.q}))});
-    $("#ordNo").textContent = j.id;
-    const ids = Object.keys(cart); cart = {}; saveCart(); ids.forEach(id=>refreshActs(id)); updateDock();
-    ordView("done");
-  }catch(err){ ordMsg(t("ordErr"), true); }
-  btn.disabled = false; btn.textContent = old;
-});
 function openSheet(o){
-  if(o){ ordView("cart"); ordMsg(""); }
   if(o) renderCart(true);
   $("#sheet").classList.toggle("open", o); $("#ov").classList.toggle("open", o);
   document.body.style.overflow = o ? "hidden" : "";
