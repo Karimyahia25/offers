@@ -310,6 +310,17 @@ section{padding:44px 0;scroll-margin-top:110px}
 .db-art .burst b{font-size:clamp(16px,4.6vw,30px)}
 .db-art .burst span{font-size:clamp(9px,2.4vw,13px)}
 @media(max-width:480px){.dban{grid-template-columns:1fr}.db-art{position:absolute;top:18px;inset-inline-end:14px;width:84px}.dban h2{font-size:32px;margin-inline-end:92px}.db-sizes span{min-width:34px;height:34px;font-size:14px}}
+/* (25/11، طلبه) بانرات الألبان والحفاضات في الرئيسية أصغر على الموبايل — العروض تبدأ أقرب */
+@media(max-width:480px){
+  html:not(.pg-dia):not(.pg-milk) .dban{padding:16px 14px 16px;border-radius:22px}
+  html:not(.pg-dia):not(.pg-milk) .dban h2{font-size:26px;margin:10px 0 6px;margin-inline-end:84px}
+  html:not(.pg-dia):not(.pg-milk) .dban p{font-size:13px}
+  html:not(.pg-dia):not(.pg-milk) .db-sizes{margin:10px 0 12px;gap:6px}
+  html:not(.pg-dia):not(.pg-milk) .db-sizes span{min-width:30px;height:30px;font-size:13px}
+  html:not(.pg-dia):not(.pg-milk) .db-cta{height:44px;font-size:15px}
+  html:not(.pg-dia):not(.pg-milk) .db-art{top:14px;width:72px}
+  html:not(.pg-dia):not(.pg-milk) .db-art .circ .em{font-size:40px}
+}
 /* صفحة الحفاضات (?p=diapers): البانر فوق، والعروض التانية مستخبية */
 #diaList{margin-top:22px}
 .dbrands{display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 14px;padding:4px 2px}
@@ -1279,7 +1290,8 @@ const col = (r,k) => ((L==="en" && (r[k+" EN"]||"").trim()) || (r[k]||"")).trim(
 function toItem(r, i){
   const was = num(r["السعر قبل"]), now = num(r["السعر بعد"]);
   const ck = norm(r["الفئة"]);
-  const cat = col(r,"الفئة");
+  let cat = col(r,"الفئة");
+  if(L!=="en" && /perfume|splash/i.test(ck) && !/[ء-ي]/.test(cat)) cat = "عطور وبودي سبلاش";   /* (25/11) الشيت فيه الفئة بالإنجليزي؛ الـ ck بيفضل زي ما هو علشان قسم العطور */
   if(ck && !catLabel[ck]) catLabel[ck] = cat;
   return {
     id: (r["الكود"]||"").trim() || ("n"+i+"_"+(r["الاسم"]||"").trim()),
