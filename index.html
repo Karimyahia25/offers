@@ -327,6 +327,28 @@ section{padding:44px 0;scroll-margin-top:110px}
 .dban.vban .db-art .circ{background:radial-gradient(circle at 35% 30%,#fff 0%,#fff1d6 70%)}
 .pg-dia #vit,.pg-milk #vit,.pg-perf #vit{display:none!important}
 #vit{margin-top:14px}
+/* (25/11، طلبه) الـ3 بانرات جنب بعض في أول الصفحة: 3 أعمدة على الشاشة الكبيرة، وشريط بيتسحب يمين/شمال على الموبايل */
+.dban[hidden]{display:none}
+html:not(.pg-dia):not(.pg-milk):not(.pg-perf) #milk,html:not(.pg-dia):not(.pg-milk):not(.pg-perf) #diapers,html:not(.pg-dia):not(.pg-milk):not(.pg-perf) #vit{display:none!important}
+.pg-dia #bnr,.pg-milk #bnr,.pg-perf #bnr{display:none}
+.bnrow{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 18px;margin:0 -2px;scrollbar-width:none}
+.bnrow::-webkit-scrollbar{display:none}
+.bnrow .dban{flex:0 0 84%;scroll-snap-align:center;grid-template-columns:1fr;padding:16px 14px;border-radius:22px;align-content:start}
+.bnrow .dban h2{font-size:26px;margin:10px 0 6px;margin-inline-end:84px}
+.bnrow .dban p{font-size:13px}
+.bnrow .db-sizes{margin:10px 0 12px;gap:6px}
+.bnrow .db-sizes span{min-width:30px;height:30px;font-size:13px}
+.bnrow .db-cta{height:44px;font-size:15px}
+.bnrow .db-art{position:absolute;top:14px;inset-inline-end:12px;width:72px}
+.bnrow .db-art .circ .em{font-size:40px}
+.bnrow .db-art .burst b{font-size:15px}
+@media(min-width:760px){
+  .bnrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible;padding:6px 0 10px;margin:0}
+  .bnrow .dban{flex:none;padding:20px 18px}
+  .bnrow .dban:hover{transform:translateY(-4px)}
+  .bnrow .dban h2{font-size:30px;margin-inline-end:96px}
+  .bnrow .db-art{width:84px;top:18px}
+}
 /* صفحة الحفاضات (?p=diapers): البانر فوق، والعروض التانية مستخبية */
 #diaList{margin-top:22px}
 .dbrands{display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 14px;padding:4px 2px}
@@ -806,6 +828,10 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
   </div></div>
 </div>
 
+<section id="bnr" style="padding:14px 0 0">
+  <div class="wrap"><div class="bnrow" id="bnrow"></div></div>
+</section>
+
 <section id="pick" hidden>
   <div class="wrap">
     <div class="sh"><div><h2><span class="ic flame"><svg class="i"><use href="#i-flame"/></svg></span><span data-t="pickH">العرض اللي اخترته</span></h2><p data-t="pickP"></p></div></div>
@@ -1230,6 +1256,12 @@ if(PG_PERF){
 }else{
   const q = new URLSearchParams(location.search); q.set("p","perfumes");
   document.getElementById("perfBan").href = document.getElementById("navPerf").href = "?" + q.toString();
+}
+/* الرئيسية: بانرات الألبان والحفاضات والفيتامينات تتجمع في صف واحد فوق (25/11) */
+if(!PG_DIA && !PG_MILK && !PG_PERF){
+  const row = document.getElementById("bnrow");
+  ["milkBan","diaBan","vitBan"].forEach(id=>row.appendChild(document.getElementById(id)));
+  document.getElementById("navDia").setAttribute("href","#bnr");
 }
 const SRC = new URLSearchParams(location.search).get("src") || "";
 const icon = (id,cls="i")=>`<svg class="${cls}"><use href="#i-${id}"/></svg>`;
@@ -2036,7 +2068,9 @@ function render(rows){
   renderMilkBanner(milk); renderMilkBrands(); renderMilkTabs(); renderMilk(false);
   /* بانر الفيتامينات: بيظهر لو فيه عروض فيتامينات، وبيفلتر العروض الحالية على فئتها */
   const vit = shown.filter(i=>/vitamin/i.test(i.ck));
-  $("#vit").hidden = !vit.length;
+  $("#vit").hidden = $("#vitBan").hidden = !vit.length;
+  $("#milkBan").hidden = !milk.length; $("#diaBan").hidden = !dia.length;
+  $("#bnr").hidden = !(milk.length || dia.length || vit.length);
   if(vit.length){
     const en = L==="en", vMax = Math.max(0, ...vit.map(d=>d.pct||0));
     $("#vbK").textContent = en ? "Vitamin offers" : "عروض الفيتامينات";
