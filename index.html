@@ -354,6 +354,8 @@ html:not(.pg-milk) #milkList{display:none}
 .pfc .desc{color:var(--ink);font-weight:700;font-size:14px;-webkit-line-clamp:2;margin-top:2px}
 #perf .box-d{background:linear-gradient(180deg,#fdeef5,#fbf8f1);border-color:#f3cfe0}
 html:not(.pg-perf) #perfList{display:none}
+html:not(.pg-perf) #perf{display:none!important}   /* (25/11، طلبه) بانر العطور اتشال من الرئيسية — مكانه بانر الحفاضات */
+html:not(.pg-dia):not(.pg-milk):not(.pg-perf) #diapers{padding-top:22px!important}
 .pg-milk #perf,.pg-dia #perf,.pg-perf #hero,.pg-perf #hot,.pg-perf #featured,.pg-perf #offers,.pg-perf #products,.pg-perf #diapers,.pg-perf #milk{display:none!important}
 .pg-perf #perf{padding-top:18px!important}
 .pg-perf .pban .db-cta{display:none}
@@ -1166,6 +1168,7 @@ if(PG_DIA){
   /* البانر بيودّي لصفحة الحفاضات ومعاه ?src و ?lang لو موجودين */
   const q = new URLSearchParams(location.search); q.set("p","diapers");
   document.getElementById("diaBan").href = "?" + q.toString();
+  document.getElementById("how").before(document.getElementById("diapers"));   /* (25/11) بانر الحفاضات فوق، مكان العطور */
 }
 /* صفحة الألبان لوحدها: ?p=milk (واللينك القصير /milk/) */
 const PG_MILK = new URLSearchParams(location.search).get("p") === "milk";
@@ -1518,13 +1521,43 @@ function prodCard(it){
 const PAGE = 12;
 let PRODS = [], pCat = "", pQ = "", pShown = PAGE;
 const fold = s => norm(s).toLowerCase();
+/* بحث بالعربي في أسماء إنجليزي (25/11، طلبه): قاموس كلمات شائعة + مطابقة بالصوت (هيكل الحروف الساكنة: شامبو ≈ SHAMPOO) */
+const AR2EN = {
+  "شمس":["sunscreen","sun screen","spf","aquasun","sun kids"],"واقي":["sunscreen","sun screen","spf","aquasun","sun kids"],"مرطب":["moist","lotion","cream"],"ترطيب":["moist","lotion"],"غسول":["wash","clean","foam"],
+  "صابون":["soap","bar"],"معجون":["toothpaste","tooth","paste"],"اسنان":["tooth","oral","dent"],"فرشه":["brush"],"بلسم":["conditioner"],
+  "شعر":["hair","shampoo"],"جسم":["body"],"وجه":["face"],"بشره":["skin","cream","serum"],"عرق":["roll","deodorant","spray","stick"],"مزيل":["deodorant","roll","spray","stick"],
+  "عطر":["perfume","mist","splash","spray"],"عطور":["perfume","mist","splash"],"حلاقه":["shav","razor","gillette","venus"],"ماكينه":["razor","gillette"],"موس":["razor","gillette"],
+  "فوط":["pad","always","molped","sani","maxi"],"نسائيه":["pad","always","molped"],"مناديل":["tissue","wipes","wibes"],"حفاض":["pampers","molfix","pants","diaper","joy","sani"],"حفاضات":["pampers","molfix","pants","diaper","joy","sani"],
+  "اطفال":["baby","johnson","pampers","molfix"],"طفل":["baby","johnson"],"مكياج":["makeup","lip","mascara","yolo","pretty"],"روج":["lip","lipstick"],"اظافر":["nail","acetone","polish"],
+  "حشرات":["raid","insect","off"],"بعوض":["raid","insect","off"],"صبغه":["color","bigen","henna"],"حنه":["henna"],"كريم":["cream"],"سيروم":["serum"],"جل":["gel"],
+  "استحمام":["shower","gel","soap"],"فازلين":["vaseline"],"قطن":["cotton"],"لاصق":["plast","plaster","glue"],"شريط":["plast","tape"],"رموش":["lash"],"عسل":["honey"]
+};
+const ARL = {"ب":"b","ت":"t","ث":"s","ج":"j","ح":"","خ":"k","د":"t","ذ":"s","ر":"r","ز":"s","س":"s","ش":"S","ص":"s","ض":"t","ط":"t","ظ":"s","غ":"j","ف":"f","ق":"k","ك":"k","ل":"l","م":"m","ن":"n","ه":""};
+function skAr(w){ let s = ""; for(const c of w) s += ARL[c] || ""; return s.replace(/(.)\1+/g,"$1"); }
+function skEn(w){
+  w = w.toLowerCase().replace(/[^a-z]/g,"").replace(/sh|ch/g,"S").replace(/ph/g,"f").replace(/th/g,"t").replace(/ck/g,"k").replace(/c(?=[eiy])/g,"s").replace(/c/g,"k").replace(/q/g,"k").replace(/x/g,"ks");
+  return w.replace(/[aeiouywh]/g,"").replace(/v/g,"f").replace(/p/g,"b").replace(/[gj]/g,"j").replace(/d/g,"t").replace(/z/g,"s").replace(/(.)\1+/g,"$1");
+}
+const hasAr = w => /[ء-ي]/.test(w);
+function pSk(p){ return p._sk || (p._sk = (p.name||"").split(/[^A-Za-z]+/).filter(x=>x.length>1).map(skEn).filter(Boolean)); }
+function wordHit(w, hay, p){
+  if(hay.includes(w)) return true;
+  if(!hasAr(w)) return false;
+  const base = w.replace(/^ال/,"");
+  if(base!==w && hay.includes(base)) return true;
+  const alts = AR2EN[base] || AR2EN[base.replace(/ات$/,"")];
+  if(alts && alts.some(a=>hay.includes(a))) return true;
+  const s = skAr(base);
+  if(s.length<2) return false;
+  return pSk(p).some(k=> s.length===2 ? k===s : k.startsWith(s));
+}
 function renderProducts(reset){
   if(reset) pShown = PAGE;
   const qs = fold(pQ).replace(/[()+\-_,]/g," ").split(/\s+/).filter(Boolean);
   const list = PRODS.filter(p=>{
     if(pCat && p.ck!==pCat) return false;
     const hay = fold(p.name + " " + p.cat + " " + p.desc).replace(/[()+\-_,]/g," ");
-    return qs.every(w=>hay.includes(w));
+    return qs.every(w=>wordHit(w, hay, p));
   });
   const grid = $("#prodGrid");
   grid.innerHTML = list.length ? list.slice(0,pShown).map(prodCard).join("") :
@@ -1918,7 +1951,8 @@ function render(rows){
   renderTicker(hotOn.concat(allDeals));
   renderFeatured(allDeals);
   /* (6/11، طلبه) العطور بتظهر كمان في أول العروض الحالية، وقسمها زي ما هو */
-  const shown = perf.concat(offers);
+  /* (25/11، طلبه) الأحدث الأول في كل العروض (العطور مدموجة بترتيب الشيت مش في الأول) */
+  const shown = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk).reverse();
   renderTabs(shown);
   const oc = $("#offerCount"); oc.hidden = !shown.length; oc.textContent = shown.length ? offersTxt(shown.length) : "";
   const grid = $("#offerGrid");
