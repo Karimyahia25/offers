@@ -1669,7 +1669,7 @@ function renderProducts(reset){
 }
 /* ---------- ترشيح منتج مكمّل (زي أمازون) — قواعد على الأسماء، ومن الأصناف المتاحة بس ---------- */
 const COMP = [
-  [/shampoo|شامبو/i, /conditioner|mask|hair oil|hair serum|hair cream|بلسم/i],
+  [/shampoo|شامبو/i, [/conditioner|بلسم/i, /mask|hair oil|hair serum|hair cream/i]],
   [/conditioner|بلسم|hair mask/i, /shampoo|شامبو|hair serum|hair oil/i],
   [/hair (oil|serum|cream)|zero frizz|keratin/i, /shampoo|conditioner|mask/i],
   [/bigen|henna|hair colou?r|صبغ/i, /conditioner|mask|shampoo/i],
@@ -1690,11 +1690,16 @@ const COMP = [
   [/vaseline|body lotion|body butter/i, /shower|soap|lip|scrub/i],
   [/\braid\b|off insect|insect/i, /raid|off insect|insect|cream/i]
 ];
+let REL = {};   /* «بيتباع مع» من فواتير الصيدلية الحقيقية — related.json بيكتبه السيرفر (أكواد بس) */
+try{ fetch("related.json?t=" + Math.floor(Date.now()/1.8e6)).then(r=>r.ok?r.json():{}).then(j=>{ REL = j||{}; }).catch(()=>{}); }catch(e){}
 function suggestFor(bases, exclude, n){
   const ex = new Set(exclude), tg = [], seenB = new Set(bases.map(b=>b.id));
-  bases.forEach(b=>COMP.forEach(([a,c])=>{ if(a.test(b.name||"")) tg.push(c); }));
+  bases.forEach(b=>COMP.forEach(([a,c])=>{ if(a.test(b.name||"")) tg.push([].concat(c)); }));
   const out = [], put = it=>{ if(it && !ex.has(it.id) && !seenB.has(it.id) && !out.includes(it)) out.push(it); };
-  tg.forEach(c=>PRODS.filter(p=>c.test(p.name||"")).slice(0,2).forEach(put));   /* الأكتر مبيعاً الأول: PRODS مترتبة بالمبيعات */
+  const byCode = {}; PRODS.forEach(p=>{ if(p.code) byCode[p.code] = p; });
+  tg.forEach(cs=>put(PRODS.find(p=>cs[0].test(p.name||"") && !ex.has(p.id))));                  /* أول مكمّل منطقي (شامبو ← بلسم) */
+  bases.forEach(b=>{ const bc = (ITEMS[b.id]||b).code || b.code; (REL[bc]||[]).forEach(c=>put(byCode[c])); });   /* بعدها اللي اتباع معاه فعلاً */
+  tg.forEach(cs=>cs.forEach(c=>PRODS.filter(p=>c.test(p.name||"")).slice(0,3).forEach(put)));
   if(out.length<n) bases.forEach(b=>PRODS.filter(p=>p.ck===b.ck).slice(0,6).forEach(put));
   return out.slice(0,n);
 }
