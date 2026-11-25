@@ -503,6 +503,11 @@ nav.links a#navPerf{--nc:#a32a6b}
 .ask{width:100%;height:100%;border-radius:12px;border:1.5px solid var(--line);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;gap:7px;color:var(--ink);transition:border-color .2s,background .2s}
 .ask:hover{border-color:var(--wa);background:#effbf3}
 .ask svg.wa{width:18px;height:18px;fill:var(--wa)}
+.sug{margin:16px 0 4px;min-width:0;max-width:100%;overflow:hidden}.sheet .sug{margin:6px 0 10px;padding:0 18px}.sug h4{margin:0 0 8px;font-size:15px}
+.sgrow{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:6px}
+.sg{flex:0 0 132px;scroll-snap-align:start;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:5px;font-size:12.5px}
+.sg .th{height:84px;border-radius:10px;overflow:hidden;position:relative;background:#f3f1ea}.sg .th img{width:100%;height:100%;object-fit:contain}
+.sg b{line-height:1.3;max-height:2.6em;overflow:hidden}.sg .add,.sg .stp{min-height:36px;font-size:13px}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 16px;background:#fff;border:1.5px dashed var(--line);border-radius:var(--r)}
 
 /* skeleton */
@@ -679,7 +684,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
 .ov.open{opacity:1;visibility:visible}
 .sheet{position:fixed;z-index:90;left:0;right:0;bottom:0;max-height:86vh;background:#fff;border-radius:24px 24px 0 0;transform:translateY(105%);transition:transform .5s cubic-bezier(.32,.72,0,1);display:flex;flex-direction:column;padding-bottom:env(safe-area-inset-bottom)}
 @media(min-width:640px){.sheet{left:50%;right:auto;width:480px;margin-left:-240px}}
-.sheet.open{transform:none}
+.sheet.open{transform:none;color:var(--ink);padding:0 0 env(safe-area-inset-bottom);border:0;font-size:inherit;font-weight:inherit}
 .sheet .grab{width:44px;height:5px;border-radius:3px;background:var(--line);margin:10px auto 0}
 .sheet header{position:static;background:none;backdrop-filter:none;-webkit-backdrop-filter:none;display:flex;align-items:center;justify-content:space-between;padding:10px 18px 12px;border-bottom:1px solid var(--line)}
 .sheet header h3{font-family:var(--fh);font-weight:800;font-size:20px}
@@ -1019,6 +1024,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
     <div class="psearch"><svg class="i"><use href="#i-search"/></svg><input id="pq" type="search" autocomplete="off" data-tph="searchPh" placeholder="دوّر على منتج"></div>
     <div class="tabs ptabs" id="ptabs"></div>
     <div class="grid" id="prodGrid"></div>
+    <div class="sug" id="psug" hidden></div>
     <div class="pmore"><button class="btn btn-dark" id="pmore" hidden><span data-t="more">عرض المزيد</span></button></div>
   </div>
 </section>
@@ -1071,6 +1077,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
   <div class="grab"></div>
   <header><h3 id="sheetT" data-t="sheetH">طلبك</h3><button class="x" id="sheetX" data-ta="closeAria" aria-label="قفل"><svg class="i"><use href="#i-x"/></svg></button></header>
   <div class="list" id="cartList"></div>
+  <div class="sug" id="csug" hidden></div>
   <div class="foot">
     <a class="btn btn-wa" id="sendBtn" target="_blank" rel="noopener"><svg class="wa"><use href="#i-wa"/></svg><span data-t="sendBtn">ابعت الطلب على واتساب</span></a>
     <div class="note" data-t="sheetNote"></div>
@@ -1142,7 +1149,7 @@ const I18N = {
     hotH:"هوت أوفر الويك إند", hotP:"عروض نار لحد آخر يوم السبت بس", hotEnds:"بيخلص بعد", hotStartsIn:"بيبدأ بعد",
     hotTeaseTomorrow:"الهوت أوفر جاي بكرة الخميس 6 مساءً", hotTeaseToday:"الهوت أوفر بيبدأ النهارده الساعة 6 مساءً",
     hotSticker:"هوت أوفر الويك إند شغال دلوقتي", burstHot:"هوت", burstHotB:"أوفر",
-    searchPh:"دوّر على منتج بالاسم أو الماركة", more:"عرض المزيد", noMatch:"مش لاقيين المنتج ده في القايمة، بس ممكن نوفرهولك.",
+    searchPh:"دوّر على منتج بالاسم أو الماركة", more:"عرض المزيد", noMatch:"مش لاقيين المنتج ده في القايمة، بس ممكن نوفرهولك.", nearMatch:"مفيش تطابق كامل، دي أقرب نتايج", sugWith:"يكمّل مع", sugCart:"كمّل طلبك بـ",
     visitH:"العنوان والتليفونات", follow:"تابعنا", soundOn:"شغّل الصوت", soundOff:"اقفل الصوت",
     addr:"جنب البوابة الرئيسية، <b>عمارة لافي</b>، المعمورة الشاطئ، إسكندرية",
     and:"و", waLbl:"واتساب",
@@ -1190,7 +1197,7 @@ const I18N = {
     hotH:"Weekend Hot Offers", hotP:"Hot deals until the end of Saturday only", hotEnds:"Ends in", hotStartsIn:"Starts in",
     hotTeaseTomorrow:"Hot offers start tomorrow, Thursday 6 PM", hotTeaseToday:"Hot offers start today at 6 PM",
     hotSticker:"Weekend hot offers are live now", burstHot:"Hot", burstHotB:"Offers",
-    searchPh:"Search by product or brand", more:"Show more", noMatch:"We couldn't find it in the list, but we can get it for you.",
+    searchPh:"Search by product or brand", more:"Show more", noMatch:"We couldn't find it in the list, but we can get it for you.", nearMatch:"No exact match, closest results", sugWith:"Goes well with", sugCart:"Complete your order with",
     visitH:"Address and phones", follow:"Follow us", soundOn:"Sound on", soundOff:"Sound off",
     addr:"Next to the main gate, <b>Lavy Building</b>, El Maamoura Beach, Alexandria",
     and:"and", waLbl:"WhatsApp",
@@ -1429,6 +1436,7 @@ function renderCart(stagger){
     </div>`;
   }).join("") : `<div class="empty" style="margin:12px 0">${t("cartEmpty")}</div>`;
   $("#sendBtn").href = waLink(cartMsg());
+  renderSug($("#csug"), ids.map(id=>{ const x = ITEMS[id]||cart[id]; return {id, name:x.name, ck:x.ck||""}; }), ids, t("sugCart"));
   $("#sendBtn").style.display = ids.length ? "" : "none";
   $("#clearBtn").style.display = ids.length ? "" : "none";
 }
@@ -1620,37 +1628,84 @@ function pSk(p){
   return p._sk; }
 function skHit(s, p){
   pSk(p);
-  if(s.length===2) return p._sk.some(k=>k===s);
-  return p._tails.some(t=>t.startsWith(s));
+  return p._tails.some(t=>t.startsWith(s));   /* أول حرف أو اتنين كفاية: «لار» تطلع لاروش */
 }
 function wordHit(w, hay, p){
   if(hay.includes(w)) return true;
   if(!hasAr(w)) return false;
   const base = w.replace(/^ال/,"");
   if(base!==w && hay.includes(base)) return true;
-  const alts = AR2EN[base] || AR2EN[base.replace(/ات$/,"")];
+  let alts = AR2EN[base] || AR2EN[base.replace(/ات$/,"")];
+  if(!alts && base.length>=2){ const k = Object.keys(AR2EN).find(k=>k.startsWith(base)); if(k) alts = AR2EN[k]; }   /* «شام» وهو لسه بيكتب */
   if(alts && alts.some(a=>hay.includes(a))) return true;
   const s = skAr(base);
-  if(s.length<2) return false;
+  if(!s) return true;
   return skHit(s, p);
 }
 function renderProducts(reset){
   if(reset) pShown = PAGE;
   const qs = fold(pQ).replace(/[()+\-_,]/g," ").split(/\s+/).filter(Boolean);
-  const list = PRODS.filter(p=>{
+  const hayOf = p=>fold(p.name + " " + p.cat + " " + p.desc).replace(/[()+\-_,]/g," ");
+  let list = PRODS.filter(p=>{
     if(pCat && p.ck!==pCat) return false;
-    const hay = fold(p.name + " " + p.cat + " " + p.desc).replace(/[()+\-_,]/g," ");
+    const hay = hayOf(p);
     if(qs.every(w=>wordHit(w, hay, p))) return true;
     /* أكتر من كلمة عربي بتكوّن اسم واحد: «لا روش» = LA ROCHE */
     if(qs.length>1 && qs.every(hasAr)){ const s = skAr(qs.join("")); return s.length>=3 && skHit(s, p); }
     return false;
   });
+  let loose = false;
+  if(!list.length && qs.length>1){   /* مفيش تطابق كامل؟ اعرض اللي فيه كلمة من اللي كتبها بدل شاشة فاضية */
+    list = PRODS.filter(p=>(!pCat || p.ck===pCat) && qs.some(w=>wordHit(w, hayOf(p), p)));
+    loose = list.length>0;
+  }
   const grid = $("#prodGrid");
-  grid.innerHTML = list.length ? list.slice(0,pShown).map(prodCard).join("") :
+  grid.innerHTML = list.length ? (loose?`<div class="empty" style="padding:12px;border-style:solid">${t("nearMatch")}</div>`:"") + list.slice(0,pShown).map(prodCard).join("") :
     `<div class="empty">${t("noMatch")}<br><a class="btn btn-wa" style="margin-top:12px" data-wa="${esc(t("waLooking") + pQ)}">${icon("wa","wa")}${t("bandBtn")}</a></div>`;
   $("#pmore").hidden = list.length <= pShown;
   $("#prodCount").textContent = PRODS.length ? `${PRODS.length}` : "";
   bindWa(grid);
+  renderSug($("#psug"), pQ && list.length && !loose ? [list[0]] : [], list.slice(0,pShown).map(x=>x.id), list[0] ? t("sugWith") + " " + list[0].name : "");
+}
+/* ---------- ترشيح منتج مكمّل (زي أمازون) — قواعد على الأسماء، ومن الأصناف المتاحة بس ---------- */
+const COMP = [
+  [/shampoo|شامبو/i, /conditioner|mask|hair oil|hair serum|hair cream|بلسم/i],
+  [/conditioner|بلسم|hair mask/i, /shampoo|شامبو|hair serum|hair oil/i],
+  [/hair (oil|serum|cream)|zero frizz|keratin/i, /shampoo|conditioner|mask/i],
+  [/bigen|henna|hair colou?r|صبغ/i, /conditioner|mask|shampoo/i],
+  [/sun ?screen|\bspf\b|aquasun|sun kids|واقي/i, /moist|lotion|after ?sun|cleans|wash/i],
+  [/cleans|face wash|foam|micellar|gel wash|غسول/i, /toner|moist|cream|serum|sun ?screen|spf/i],
+  [/moist|day cream|night cream|hyaluronic|ceramide/i, /sun ?screen|spf|cleans|serum/i],
+  [/serum|vitamin c|niacinamide|retinol|glycolic/i, /moist|sun ?screen|spf|cleans/i],
+  [/tooth ?paste|معجون|sensodyne/i, /brush|mouth|floss|فرشة|فرشه/i],
+  [/brush|فرشة|فرشه/i, /tooth ?paste|mouth|sensodyne|معجون/i],
+  [/gillette|razor|venus|shav|حلاقة|ماكينة/i, /shav(ing)? (gel|foam)|after ?shave|razor|blade/i],
+  [/always|molped|pads?\b|فوط/i, /wipes|femfresh|intimate|wash/i],
+  [/femfresh|intimate/i, /always|molped|pads?\b|wipes/i],
+  [/baby|johnson|wipes|nappy|sudocrem/i, /wipes|sudocrem|nappy|baby (lotion|oil|powder|shampoo|soap)|johnson/i],
+  [/nail polish|acetone/i, /acetone|remover|nail|cuticle/i],
+  [/mascara|eye ?liner|lipstick|lip ?stick|lash/i, /micellar|remover|cleans|lip balm/i],
+  [/deodorant|roll|mist|body spray|fogg|axe|rexona/i, /shower|soap|body wash|dove/i],
+  [/shower|body wash|soap|dove/i, /lotion|body butter|vaseline|deodorant|roll|loofah|ليف/i],
+  [/vaseline|body lotion|body butter/i, /shower|soap|lip|scrub/i],
+  [/\braid\b|off insect|insect/i, /raid|off insect|insect|cream/i]
+];
+function suggestFor(bases, exclude, n){
+  const ex = new Set(exclude), tg = [], seenB = new Set(bases.map(b=>b.id));
+  bases.forEach(b=>COMP.forEach(([a,c])=>{ if(a.test(b.name||"")) tg.push(c); }));
+  const out = [], put = it=>{ if(it && !ex.has(it.id) && !seenB.has(it.id) && !out.includes(it)) out.push(it); };
+  tg.forEach(c=>PRODS.filter(p=>c.test(p.name||"")).slice(0,2).forEach(put));   /* الأكتر مبيعاً الأول: PRODS مترتبة بالمبيعات */
+  if(out.length<n) bases.forEach(b=>PRODS.filter(p=>p.ck===b.ck).slice(0,6).forEach(put));
+  return out.slice(0,n);
+}
+function sugCard(it){
+  return `<div class="sg"><div class="th">${ph()}${it.img?`<img src="${esc(it.img)}" alt="" referrerpolicy="no-referrer" onerror="this.remove()" style="position:relative">`:""}</div><b>${esc(it.name)}</b>${!isNaN(it.now)?`<bdi class="pp">${fmt(it.now)} ${t("cur")}</bdi>`:""}<div class="act" data-id="${esc(it.id)}">${actHTML(it.id)}</div></div>`;
+}
+function renderSug(box, bases, exclude, title){
+  if(!box) return;
+  const list = bases.length ? suggestFor(bases, exclude.concat(Object.keys(cart)), 4) : [];
+  box.hidden = !list.length;
+  box.innerHTML = list.length ? `<h4>${esc(title)}</h4><div class="sgrow">${list.map(sugCard).join("")}</div>` : "";
 }
 function renderProdTabs(){
   const counts = {};
