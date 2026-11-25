@@ -841,6 +841,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
   <div class="wrap">
     <div class="sh"><div><h2><span class="ic flame"><svg class="i"><use href="#i-flame"/></svg></span><span data-t="pickH">العرض اللي اخترته</span></h2><p data-t="pickP"></p></div></div>
     <div class="grid pickg" id="pickGrid"></div>
+    <button class="btn btn-wa" id="pickOrder" style="margin:14px auto 0;display:flex" type="button"><svg class="wa"><use href="#i-wa"/></svg><span data-t="pickOrder">اطلب دلوقتي</span></button>
   </div>
 </section>
 
@@ -1165,7 +1166,7 @@ const I18N = {
     until:"لحد {d}", endsOn:"عرض بيخلص قريب", left:"باقي", day:"يوم", andT:"و",
     noOffers:"العروض الجديدة جاية قريب، تابعنا",
     pickH:"العرض اللي اخترته", pickP:"دوس أضف للطلب، وكمّل شوف باقي العروض تحت",
-    pickGone:"العرض ده خلص، بس شوف العروض الشغالة تحت 👇",
+    pickGone:"العرض ده خلص، بس شوف العروض الشغالة تحت 👇", pickOrder:"اطلب دلوقتي",
     loadErr:"مش قادرين نحمّل العروض دلوقتي. كلمنا على الواتساب ونقولك كل العروض",
     waHello:"السلام عليكم", waOrderStart:"السلام عليكم، عايز أطلب", waAskOffers:"السلام عليكم، عايز أستفسر عن العروض",
     waLooking:"السلام عليكم، بدور على منتج: ", waAsk:"السلام عليكم، عايز أسأل على: ",
@@ -1213,7 +1214,7 @@ const I18N = {
     until:"Until {d}", endsOn:"Ending soon", left:"Ends in", day:"d", andT:"",
     noOffers:"New offers coming soon",
     pickH:"Your pick", pickP:"Tap Add to order, then check the other offers below",
-    pickGone:"This offer has ended, but check the live offers below 👇",
+    pickGone:"This offer has ended, but check the live offers below 👇", pickOrder:"Order now",
     loadErr:"We couldn't load the offers right now. Message us on WhatsApp and we'll tell you all of them",
     waHello:"Hello", waOrderStart:"Hello, I'd like to order", waAskOffers:"Hello, I'd like to ask about the offers",
     waLooking:"Hello, I'm looking for a product: ", waAsk:"Hello, I'd like to ask about: ",
@@ -2200,6 +2201,11 @@ function renderPick(){
     return;
   }
   sec.hidden = false;
+  $("#pickOrder").onclick = ()=>{   /* (25/11) كومنت ← طلب: ضغطة واحدة تحط الصنف في الطلب وتفتح الطلب جاهز للإرسال */
+    its.forEach(it=>{ if(!qty(it.id)) setQty(it.id, 1); });
+    track("pick_order_click", {item_id: its.map(x=>x.id).join(","), item_name: its.map(x=>x.name).join(" | ")});
+    openSheet(true);
+  };
   $("#pickGrid").classList.toggle("multi", its.length>1);
   $("#pickGrid").innerHTML = its.map((it,i)=> it.offer ? offerCard(it, i) : prodCard(it)).join("");
   if(pickDone) return;
