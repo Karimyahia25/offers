@@ -321,6 +321,12 @@ section{padding:44px 0;scroll-margin-top:110px}
   html:not(.pg-dia):not(.pg-milk) .db-art{top:14px;width:72px}
   html:not(.pg-dia):not(.pg-milk) .db-art .circ .em{font-size:40px}
 }
+/* بانر الفيتامينات (25/11، طلبه): برتقالي/أخضر، بيودّي لعروض الفيتامينات في العروض الحالية */
+.dban.vban{background:linear-gradient(125deg,#0b4a2a 0%,#1e8a4c 48%,#f0a020 100%);box-shadow:0 24px 50px -22px rgba(30,138,76,.85)}
+@media(hover:hover){.dban.vban[href]:hover{box-shadow:0 30px 60px -22px rgba(30,138,76,.95)}}
+.dban.vban .db-art .circ{background:radial-gradient(circle at 35% 30%,#fff 0%,#fff1d6 70%)}
+.pg-dia #vit,.pg-milk #vit,.pg-perf #vit{display:none!important}
+#vit{margin-top:14px}
 /* صفحة الحفاضات (?p=diapers): البانر فوق، والعروض التانية مستخبية */
 #diaList{margin-top:22px}
 .dbrands{display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 14px;padding:4px 2px}
@@ -868,6 +874,27 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
   </div>
 </section>
 
+<section id="vit" style="padding-top:0;padding-bottom:0" hidden>
+  <div class="wrap">
+    <a class="dban vban" id="vitBan" href="?cat=vitamines#offers">
+      <i class="bub" style="width:46px;height:46px;left:8%;animation-delay:0s"></i>
+      <i class="bub" style="width:22px;height:22px;left:34%;animation-delay:2.2s;animation-duration:6s"></i>
+      <i class="bub" style="width:70px;height:70px;left:58%;animation-delay:4s;animation-duration:10s"></i>
+      <i class="stripe"></i>
+      <div>
+        <span class="db-kick"><svg class="i"><use href="#i-spark"/></svg><span id="vbK"></span></span>
+        <h2 id="vbH"></h2>
+        <p id="vbBrands"></p>
+        <span class="btn btn-yel db-cta"><span id="vbCta"></span><svg class="i"><use href="#i-arrow"/></svg></span>
+      </div>
+      <div class="db-art">
+        <div class="circ"><span class="em" aria-hidden="true">🍊</span></div>
+        <div class="burst" id="vbBurst" hidden><div><span data-t="burstMax">خصم لحد</span><b class="num" id="vbPct"></b></div></div>
+      </div>
+    </a>
+  </div>
+</section>
+
 <section id="how" style="padding-bottom:0">
   <div class="wrap">
     <div class="stepsbox rv">
@@ -1180,6 +1207,7 @@ if(PG_DIA){
   const q = new URLSearchParams(location.search); q.set("p","diapers");
   document.getElementById("diaBan").href = "?" + q.toString();
   document.getElementById("how").before(document.getElementById("diapers"));   /* (25/11) بانر الحفاضات فوق، مكان العطور */
+  document.getElementById("how").before(document.getElementById("vit"));        /* وبعده بانر الفيتامينات */
 }
 /* صفحة الألبان لوحدها: ?p=milk (واللينك القصير /milk/) */
 const PG_MILK = new URLSearchParams(location.search).get("p") === "milk";
@@ -1287,11 +1315,14 @@ let ROWS = null;         // آخر بيانات اتحملت (علشان تغي�
 let ITEMS = {};          // id -> item
 let catLabel = {};       // norm -> first label seen
 const col = (r,k) => ((L==="en" && (r[k+" EN"]||"").trim()) || (r[k]||"")).trim();
+const CAT_AR = {"hair care":"العناية بالشعر","vitamines":"فيتامينات","vitamins":"فيتامينات","skin care":"العناية بالبشرة","baby care":"العناية بالطفل",
+  "skin & hair":"بشرة وشعر","body care":"العناية بالجسم","boby care":"العناية بالجسم","oral care":"العناية بالفم","make up":"مكياج","makeup":"مكياج"};
 function toItem(r, i){
   const was = num(r["السعر قبل"]), now = num(r["السعر بعد"]);
   const ck = norm(r["الفئة"]);
   let cat = col(r,"الفئة");
-  if(L!=="en" && /perfume|splash/i.test(ck) && !/[ء-ي]/.test(cat)) cat = "عطور وبودي سبلاش";   /* (25/11) الشيت فيه الفئة بالإنجليزي؛ الـ ck بيفضل زي ما هو علشان قسم العطور */
+  /* (25/11) الشيت فيه فئات بالإنجليزي؛ الاسم المعروض بس هو اللي بيتعرّب، والـ ck بيفضل زي ما هو علشان الأقسام */
+  if(L!=="en" && !/[ء-ي]/.test(cat)){ const ar = CAT_AR[ck.toLowerCase().replace(/\s+/g," ")] || (/perfume|splash/i.test(ck) ? "عطور وبودي سبلاش" : ""); if(ar) cat = ar; }
   if(ck && !catLabel[ck]) catLabel[ck] = cat;
   return {
     id: (r["الكود"]||"").trim() || ("n"+i+"_"+(r["الاسم"]||"").trim()),
@@ -1551,7 +1582,15 @@ function skEn(w){
   return w.replace(/[aeiouywh]/g,"").replace(/v/g,"f").replace(/p/g,"b").replace(/[gj]/g,"j").replace(/d/g,"t").replace(/z/g,"s").replace(/(.)\1+/g,"$1");
 }
 const hasAr = w => /[ء-ي]/.test(w);
-function pSk(p){ return p._sk || (p._sk = (p.name||"").split(/[^A-Za-z]+/).filter(x=>x.length>1).map(skEn).filter(Boolean)); }
+function pSk(p){
+  if(!p._sk){ const ws = (p.name||"").split(/[^A-Za-z]+/).filter(Boolean).map(skEn);
+    p._sk = ws.filter(Boolean); p._tails = ws.map((_,i)=>ws.slice(i).join("")); }   /* من أول أي كلمة لآخر الاسم ملزوق: لاروش = LA ROCHE */
+  return p._sk; }
+function skHit(s, p){
+  pSk(p);
+  if(s.length===2) return p._sk.some(k=>k===s);
+  return p._tails.some(t=>t.startsWith(s));
+}
 function wordHit(w, hay, p){
   if(hay.includes(w)) return true;
   if(!hasAr(w)) return false;
@@ -1561,7 +1600,7 @@ function wordHit(w, hay, p){
   if(alts && alts.some(a=>hay.includes(a))) return true;
   const s = skAr(base);
   if(s.length<2) return false;
-  return pSk(p).some(k=> s.length===2 ? k===s : k.startsWith(s));
+  return skHit(s, p);
 }
 function renderProducts(reset){
   if(reset) pShown = PAGE;
@@ -1569,7 +1608,10 @@ function renderProducts(reset){
   const list = PRODS.filter(p=>{
     if(pCat && p.ck!==pCat) return false;
     const hay = fold(p.name + " " + p.cat + " " + p.desc).replace(/[()+\-_,]/g," ");
-    return qs.every(w=>wordHit(w, hay, p));
+    if(qs.every(w=>wordHit(w, hay, p))) return true;
+    /* أكتر من كلمة عربي بتكوّن اسم واحد: «لا روش» = LA ROCHE */
+    if(qs.length>1 && qs.every(hasAr)){ const s = skAr(qs.join("")); return s.length>=3 && skHit(s, p); }
+    return false;
   });
   const grid = $("#prodGrid");
   grid.innerHTML = list.length ? list.slice(0,pShown).map(prodCard).join("") :
@@ -1992,6 +2034,22 @@ function render(rows){
   if(mBrand && !milk.some(d=>milkBrand(d)===mBrand)) mBrand = "";
   if(mStage && !milk.some(d=>mInBrand(d) && mHas(d,mStage))) mStage = "";
   renderMilkBanner(milk); renderMilkBrands(); renderMilkTabs(); renderMilk(false);
+  /* بانر الفيتامينات: بيظهر لو فيه عروض فيتامينات، وبيفلتر العروض الحالية على فئتها */
+  const vit = shown.filter(i=>/vitamin/i.test(i.ck));
+  $("#vit").hidden = !vit.length;
+  if(vit.length){
+    const en = L==="en", vMax = Math.max(0, ...vit.map(d=>d.pct||0));
+    $("#vbK").textContent = en ? "Vitamin offers" : "عروض الفيتامينات";
+    $("#vbH").textContent = vMax>=5 ? (en ? `Vitamins up to ${vMax}% off` : `فيتامينات بخصم لحد ${vMax}%`) : (en ? "Vitamin offers" : "عروض الفيتامينات");
+    $("#vbBurst").hidden = vMax<5; $("#vbPct").textContent = vMax + "%";
+    $("#vbBrands").textContent = [...new Set(vit.map(d=>d.name.split(" ")[0]))].slice(0,5).join("  ·  ");
+    $("#vbCta").textContent = en ? "See vitamin offers" : "شوف عروض الفيتامينات";
+    $("#vitBan").onclick = e=>{
+      const b = $$("#tabs button").find(x=>x.dataset.c && /vitamin/i.test(x.dataset.c));
+      if(!b) return;
+      e.preventDefault(); b.click(); $("#offers").scrollIntoView({behavior: RM ? "auto" : "smooth"});
+    };
+  }
   $("#perf").hidden = $("#navPerf").hidden = !perf.length;
   if(PG_PERF) $("#navPerf").hidden = true;
   const pMax = Math.max(0, ...perf.map(d=>d.pct||0));
