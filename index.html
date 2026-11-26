@@ -523,6 +523,11 @@ nav.links a#navXmas{--nc:#c8281f}
 .sg{flex:0 0 132px;scroll-snap-align:start;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:5px;font-size:12.5px}
 .sg .th{height:84px;border-radius:10px;overflow:hidden;position:relative;background:#f3f1ea}.sg .th img{width:100%;height:100%;object-fit:contain}
 .sg b{line-height:1.3;max-height:2.6em;overflow:hidden}.sg .add,.sg .stp{min-height:36px;font-size:13px}
+.stkbox{margin-top:22px}.stkbox h3{margin:0 0 4px;font-family:var(--fh);font-size:18px}.stkbox p{margin:0 0 12px;color:var(--muted);font-size:14px}
+.stkbox[hidden],.btn[hidden]{display:none!important}.stkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.stkc{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;justify-content:space-between}
+.stkc .n{font-weight:700;line-height:1.35;overflow-wrap:anywhere}.stkc .pr2{font-family:var(--fh);font-weight:800;font-size:18px}.stkc .pr2 small{font-weight:600;font-size:12px;margin-inline-start:3px}
+.stkc .no{font-size:13px;color:var(--muted)}.stkc .btn{min-height:44px;font-size:14px;justify-content:center}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 16px;background:#fff;border:1.5px dashed var(--line);border-radius:var(--r)}
 
 /* skeleton */
@@ -1066,6 +1071,11 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
     <div class="psearch"><svg class="i"><use href="#i-search"/></svg><input id="pq" type="search" autocomplete="off" data-tph="searchPh" placeholder="دوّر على منتج"></div>
     <div class="tabs ptabs" id="ptabs"></div>
     <div class="grid" id="prodGrid"></div>
+    <div class="stkbox" id="stkBox" hidden>
+      <h3 id="stkH"></h3><p id="stkP"></p>
+      <div class="stkgrid" id="stkGrid"></div>
+      <div class="pmore"><button class="btn btn-dark" id="stkMore" hidden></button></div>
+    </div>
     <div class="sug" id="psug" hidden></div>
     <div class="pmore"><button class="btn btn-dark" id="pmore" hidden><span data-t="more">عرض المزيد</span></button></div>
   </div>
@@ -1210,7 +1220,7 @@ const I18N = {
     pickGone:"العرض ده خلص، بس شوف العروض الشغالة تحت 👇", pickOrder:"اطلب دلوقتي",
     loadErr:"مش قادرين نحمّل العروض دلوقتي. كلمنا على الواتساب ونقولك كل العروض",
     waHello:"السلام عليكم", waOrderStart:"السلام عليكم، عايز أطلب", waAskOffers:"السلام عليكم، عايز أستفسر عن العروض",
-    waLooking:"السلام عليكم، بدور على منتج: ", waAsk:"السلام عليكم، عايز أسأل على: ",
+    waLooking:"السلام عليكم، بدور على منتج: ", waAsk:"السلام عليكم، عايز أسأل على: ", stkH:"أصناف تانية عندنا", stkP:"من غير صورة — السعر والرصيد من السيستم دلوقتي", stkNone:"مش متوفر دلوقتي، هنحاول نوفره", stkAskBtn:"ابلغنا على واتساب", stkMoreT:"عرض باقي النتائج",
     waOrder:"السلام عليكم، عايز أطلب:", code:"كود", src:"مصدر"
   },
   en:{
@@ -1258,7 +1268,7 @@ const I18N = {
     pickGone:"This offer has ended, but check the live offers below 👇", pickOrder:"Order now",
     loadErr:"We couldn't load the offers right now. Message us on WhatsApp and we'll tell you all of them",
     waHello:"Hello", waOrderStart:"Hello, I'd like to order", waAskOffers:"Hello, I'd like to ask about the offers",
-    waLooking:"Hello, I'm looking for a product: ", waAsk:"Hello, I'd like to ask about: ",
+    waLooking:"Hello, I'm looking for a product: ", waAsk:"Hello, I'd like to ask about: ", stkH:"More items we carry", stkP:"No photo yet — price and stock are live from our system", stkNone:"Out of stock now, we will try to get it", stkAskBtn:"Tell us on WhatsApp", stkMoreT:"Show more results",
     waOrder:"Hello, I'd like to order:", code:"code", src:"source"
   }
 };
@@ -1438,7 +1448,7 @@ let cart = {};
 try{ cart = JSON.parse(localStorage.getItem("anas_cart")||"{}") || {}; }catch(e){ cart = {}; }
 function saveCart(){ try{ localStorage.setItem("anas_cart", JSON.stringify(cart)); }catch(e){} }
 function qty(id){ return cart[id]?.q || 0; }
-function cartEntry(it, q){ return {q, name:it.name, promo:it.promo, code:it.code, now:it.now, img:it.img, cat:it.cat}; }
+function cartEntry(it, q){ return {q, name:it.name, promo:it.promo, code:it.code, now:it.now, img:it.img, cat:it.cat, stk:!!it.stk}; }
 function setQty(id, q){
   const it = ITEMS[id] || cart[id];
   if(!it) return;
@@ -1669,6 +1679,41 @@ const AR2EN = {
   "حشرات":["raid","insect","off"],"بعوض":["raid","insect","off"],"صبغه":["color","bigen","henna"],"حنه":["henna"],"كريم":["cream"],"سيروم":["serum"],"جل":["gel"],
   "استحمام":["shower","gel","soap"],"فازلين":["vaseline"],"قطن":["cotton"],"لاصق":["plast","plaster","glue"],"شريط":["plast","tape"],"رموش":["lash"],"عسل":["honey"]
 };
+const AR_BR = {
+  // ماركات
+  eva: "ايفا, إيفا", limitless: "ليمتلس, ليميتلس, ليمتليس", loreal: "لوريال, لوريل", roche: "روش, لاروش, لا روش", garnier: "جارنييه, جارنير, غارنييه, غارنير, جارنيه",
+  vatika: "فاتيكا, فاتيكه", hero: "هيرو", signal: "سيجنال, سغنال, سجنال", vaseline: "فازلين, فاسلين", vaselline: "فازلين", sensodyne: "سنسوداين, سينسوداين, سنسودين",
+  nivea: "نيفيا, نيڤيا, نيفيه", alice: "اليس, أليس", molfix: "مولفيكس, مولفكس, مولفيكيس", pampers: "بامبرز, بامبرس, بمبرز", nebula: "نيبولا, نبولا",
+  dove: "دوف, داف", vichy: "فيشي, فيشى", sunsilk: "صانسيلك, سانسيلك, سنسيلك, صن سيلك", cerave: "سيرافي, سيرا في, سيرافى", beesline: "بيزلين, بي لاين, بيس لاين",
+  gillette: "جيليت, جيلت, جيلات, جيليته", gillitte: "جيليت", venus: "فينوس, فيونس", dettol: "ديتول, ديتل", pantene: "بانتين, بانتن", palmers: "بالمرز, بالمرس",
+  clear: "كلير, كلييير", always: "اولويز, أولويز, اوالويز, أولويز", molped: "مولبد, مولبيد, مولبيت", johnsons: "جونسون, جونسونز, جونسن", johnson: "جونسون, جونسونز", lux: "لوكس, لكس",
+  mood: "مود", dabur: "دابر, دابور", isis: "ايزيس, إيزيس", capixy: "كابيكسي, كابيكسى", clary: "كلاري, كلارى", fogg: "فوج, فوجي, فوغ", axe: "اكس, أكس", rexona: "ريكسونا, ركسونا",
+  zak: "زاك", lifebuoy: "لايف بوي, لايفبوي", tresemme: "تريسمي, تريسيمي", eucerin: "يوسيرين, يوسرين", bioderma: "بيوديرما, بيودرما", neutrogena: "نيتروجينا, نيوتروجينا",
+  ordinary: "اورديناري, اوردينري, ذا اورديناري, اوردنري", colgate: "كولجيت, كولغيت, كلجيت", closeup: "كلوز اب, كلوزاب", parodontax: "بارودونتاكس, بارادونتاكس", veet: "فيت", yolo: "يولو",
+  eveline: "ايفلين, إيفلين", sudocrem: "سودوكريم, سودكريم", cicaplast: "سيكابلاست, سيكا بلاست", effaclar: "افاكلار, إفاكلار", anthelios: "انثيليوس, أنثيليوس",
+  bebelac: "ببيلاك, بيبيلاك", cerelac: "سيريلاك, سيرلاك", aptamil: "ابتاميل, أبتاميل", nestogen: "نستوجين, نيستوجين", pediasure: "بيدياشور, بيدياشيور", tempo: "تمبو, تيمبو",
+  fine: "فاين", handy: "هاندي", joy: "جوي", huggies: "هاجيز, هجيز", sani: "ساني", tampax: "تامباكس, تامبكس", cantu: "كانتو", penduline: "بندولين, بنديولين",
+  elvive: "الفيف, ألفيف", head: "هيد", shoulders: "شولدرز", fructis: "فركتيس, فروكتيس", vera: "فيرا", aloe: "الو, ألو, الوفيرا", argan: "ارجان, أرجان, ارجن", coconut: "جوز هند, كوكونت, كوكوناتس",
+  almond: "لوز", shea: "شيا", keratin: "كيراتين", collagen: "كولاجين, كولاجن", retinol: "ريتينول", niacinamide: "نياسيناميد", hyaluronic: "هيالورونيك", glycolic: "جليكوليك",
+  starville: "ستارفيل", luna: "لونا", bobana: "بوبانا", alejon: "اليجون", vacation: "فاكيشن", kolagra: "كولاجرا", babi: "بابي", qualita: "كواليتا", shaan: "شان",
+  infinity: "انفينيتي", bionnex: "بيونكس", bio: "بيو", dermactive: "ديرماكتيف", fiancee: "فيانسيه, فيانسي", dear: "دير", bless: "بلس", kiki: "كيكي", vebix: "فيبكس",
+  seropipe: "سيروبايب", drakon: "دراكون", amanda: "اماندا", lab: "لاب", avuva: "افوفا", sweetal: "سويتال", glamy: "جلامي", spire: "سباير", nunu: "نونو", sanosan: "سانوسان",
+  sheglam: "شيجلام", hiet: "هايت", casanova: "كازانوفا", enchanteur: "انشانتور, إنشانتور", ingram: "انجرام", sensoderm: "سنسوديرم", bonita: "بونيتا", kleen: "كلين",
+  cetaphil: "سيتافيل, سيتافل", bepanthen: "بيبانثين", uriage: "يورياج", frida: "فريدا", mustela: "موستيلا", wibes: "وايبس",
+  wips: "وايبس", sekem: "سيكم", olay: "اولاي, أولاي", camay: "كامي, كاماي", nuxe: "نوكس", maybelline: "مايبيلين, ميبيلين", rimmel: "ريميل",
+  essence: "اسنس, إسنس", catrice: "كاتريس", kiko: "كيكو", flormar: "فلورمار", pretty: "بريتي", glade: "جليد", raid: "ريد, ريـد", off: "اوف, أوف", mach: "ماك",
+  // مكملات (26/11): كلمات مميزة كفاية نرد عليها بأكتر 3 مبيعاً
+  omega: "اوميجا, أوميجا, اوميغا, اوميجا 3", zinc: "زنك", magnesium: "ماغنسيوم, ماجنسيوم, مغنيسيوم, ماجنيسيوم", centrum: "سنتروم, سنترم", melatonin: "ميلاتونين, ميلاتونن, ميلاتونين",
+  calcium: "كالسيوم, كالسيم", iron: "حديد", biotin: "بيوتين", probiotic: "بروبيوتيك, بروبيوتك", ginseng: "جنسنج, جينسنج", collagen_: "كولاجين", d3: "د3, دي3, دي 3", b12: "ب12, بي12, بي 12",
+  redoxon: "ريدوكسون", now: "ناو"
+};
+/* (26/11) أسماء ماركات عربي ← إنجليزي (نفس قاموس سيرفر الكومنتات) داخل بحث الموقع */
+for(const [lat, ars] of Object.entries(AR_BR)){
+  for(const a of ars.split(",")){
+    const k = norm(a.trim()).replace(/^ال/,""); if(!k || k.includes(" ")) continue;
+    (AR2EN[k] = AR2EN[k] || []).push(lat.replace(/_+$/,""));
+  }
+}
 const ARL = {"ب":"b","ت":"t","ث":"s","ج":"j","ح":"","خ":"k","د":"t","ذ":"s","ر":"r","ز":"s","س":"s","ش":"S","ص":"s","ض":"t","ط":"t","ظ":"s","غ":"j","ف":"f","ق":"k","ك":"k","ل":"l","م":"m","ن":"n","ه":""};
 function skAr(w){ let s = ""; for(const c of w) s += ARL[c] || ""; return s.replace(/(.)\1+/g,"$1"); }
 function skEn(w){
@@ -1696,6 +1741,60 @@ function wordHit(w, hay, p){
   if(!s) return true;
   return skHit(s, p);
 }
+/* ---------- كل أصناف السيستم غير الدوائية (stock.json): كروت نصية من غير صورة (26/11، طلبه) ---------- */
+let STK = [], STKMAP = {}, stkLoaded = false, stkShown = 12;
+function loadStockOnly(){
+  if(stkLoaded) return; stkLoaded = true;
+  try{ fetch("stock.json?t=" + Math.floor(Date.now()/1.8e6)).then(r=>r.ok?r.json():null).then(j=>{
+    if(!j || !j.items) return;
+    j.items.forEach(([code, name, price, inS])=>{
+      code = String(code);
+      if(ITEMS[code]) return;                                   /* على الموقع بصورة أو عرض — بيظهر هناك */
+      const it = {id:code, name:String(name), desc:"", was:NaN, now:Number(price), pct:0, cat:"", ck:"__stk", img:"", end:null, code, promo:"", offer:false, hot:false, stk:true, inStock: !!inS};
+      STK.push(it); STKMAP[code] = it;
+      if(inS) ITEMS[code] = it;                                 /* يتضاف للسلة */
+    });
+    if(pQ) renderProducts(false);
+  }).catch(()=>{}); }catch(e){}
+}
+function stkCard(it){
+  const price = isNaN(it.now) ? "" : `<div class="pr2">${fmt(it.now)}<small>${t("cur")}</small></div>`;
+  const act = it.inStock ? `<div class="act" data-id="${esc(it.id)}">${actHTML(it.id)}</div>`
+    : `<div class="no">${t("stkNone")}</div><a class="btn btn-wa" data-wa="${esc(t("waAsk") + it.name)}">${icon("wa","wa")}${t("stkAskBtn")}</a>`;
+  return `<div class="stkc"><div class="n">${esc(it.name)}</div>${price}${act}</div>`;
+}
+/* مطابقة أدق لكروت الأصناف من غير صورة: القاموس + تطابق صوتي كامل (مش بداية) — «بانادول» ≠ Penduline */
+function stkHit(w, p){
+  if(!p._lt){ p._low = fold(p.name); p._lt = p._low.split(/[^a-z0-9]+/).filter(Boolean); p._at = p._low.split(/[^؀-ۿ0-9]+/).filter(Boolean); }
+  if(/^\d+$/.test(w)) return p._lt.includes(w) || p._at.includes(w);
+  const base = w.replace(/^ال/,"");
+  const alts = [w, base];
+  if(hasAr(w)){
+    let al = AR2EN[base] || AR2EN[base.replace(/ات$/,"")];
+    if(!al && base.length>=3){ const k = Object.keys(AR2EN).find(k=>k.startsWith(base)); if(k) al = AR2EN[k]; }
+    if(al) alts.push(...al);
+  }
+  for(const a of alts){
+    if(!hasAr(a)){ if(p._lt.some(x=>x.startsWith(a)) || (a.length>3 && p._low.includes(a))) return true; }
+    else if(p._at.some(x=>x.startsWith(a))) return true;
+  }
+  if(hasAr(w) && !AR2EN[base]){ const sk = skAr(base); if(sk.length>=3){ pSk(p); return p._tails.some(t=>t===sk); } }
+  return false;
+}
+function renderStkBox(qs, hayOf){
+  const box = $("#stkBox");
+  if(!qs.length || pCat){ box.hidden = true; return 0; }
+  const hits = STK.filter(p=>qs.every(w=>stkHit(w, p)));
+  hits.sort((a,b)=>(b.inStock?1:0)-(a.inStock?1:0));
+  box.hidden = !hits.length;
+  if(!hits.length) return 0;
+  $("#stkH").textContent = t("stkH"); $("#stkP").textContent = t("stkP");
+  $("#stkGrid").innerHTML = hits.slice(0, stkShown).map(stkCard).join("");
+  const more = $("#stkMore"); more.hidden = hits.length <= stkShown; more.textContent = t("stkMoreT") + " (" + (hits.length - stkShown) + ")";
+  bindWa($("#stkGrid"));
+  return hits.length;
+}
+$("#stkMore").onclick = ()=>{ stkShown += 12; renderProducts(false); };
 function renderProducts(reset){
   if(reset) pShown = PAGE;
   const qs = fold(pQ).replace(/[()+\-_,]/g," ").split(/\s+/).filter(Boolean);
@@ -1713,8 +1812,10 @@ function renderProducts(reset){
     list = PRODS.filter(p=>(!pCat || p.ck===pCat) && qs.some(w=>wordHit(w, hayOf(p), p)));
     loose = list.length>0;
   }
+  if(reset) stkShown = 12;
+  const sn = renderStkBox(qs, hayOf);
   const grid = $("#prodGrid");
-  grid.innerHTML = list.length ? (loose?`<div class="empty" style="padding:12px;border-style:solid">${t("nearMatch")}</div>`:"") + list.slice(0,pShown).map(prodCard).join("") :
+  grid.innerHTML = (!list.length && sn) ? "" : list.length ? (loose?`<div class="empty" style="padding:12px;border-style:solid">${t("nearMatch")}</div>`:"") + list.slice(0,pShown).map(prodCard).join("") :
     `<div class="empty">${t("noMatch")}<br><a class="btn btn-wa" style="margin-top:12px" data-wa="${esc(t("waLooking") + pQ)}">${icon("wa","wa")}${t("bandBtn")}</a></div>`;
   $("#pmore").hidden = list.length <= pShown;
   $("#prodCount").textContent = PRODS.length ? `${PRODS.length}` : "";
@@ -2171,7 +2272,7 @@ function render(rows){
   const offers = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk && !i.perf && !i.xm).reverse(), prods = vis.filter(i=>!i.offer && !i.dia && !i.milk && !i.perf && !i.xm);
 
   // امسح من السلة أي عرض خلص، وحدّث الأسماء باللغة الحالية
-  Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; else cart[id] = cartEntry(ITEMS[id], cart[id].q); }); saveCart();
+  Object.keys(cart).forEach(id=>{ if(ITEMS[id]) cart[id] = cartEntry(ITEMS[id], cart[id].q); else if(!cart[id].stk) delete cart[id]; }); saveCart();
 
   renderHot(hot);
   const allDeals = milk.filter(i=>i.offer).concat(perf, offers, dia.filter(i=>i.offer));   /* الألبان الأول (طلبه 24/10) */
@@ -2245,6 +2346,7 @@ function render(rows){
   if(pCat && !prods.some(p=>p.ck===pCat)) pCat = "";
   $("#products").hidden = $("#navProd").hidden = !prods.length;
   renderProdTabs(); renderProducts(false);
+  loadStockOnly();
   renderPick();
   bindWa(document);
   updateDock();
