@@ -378,7 +378,7 @@ html:not(.pg-milk) #milkList{display:none}
 .pban .db-art .circ .em{filter:none}
 .pban h2{font-size:clamp(25px,5.4vw,46px)}
 /* (6/11، طلبه) BLACK FRIDAY + موشن: الخلفية بتتحرك، شريط جاري تحت، البادج بينبض، الوردة بتعوم */
-.dban.pban{background-size:220% 220%;animation:pbPan 7s ease-in-out infinite alternate;padding-bottom:62px}
+.dban.pban{background-size:220% 220%;animation:pbPan 7s ease-in-out infinite alternate}
 @keyframes pbPan{from{background-position:0% 50%}to{background-position:100% 50%}}
 .pb-bf{background:#0b0b0d;color:var(--yel);font-weight:900;font-size:clamp(16px,2.6vw,22px);letter-spacing:.06em;padding:8px 16px;direction:ltr;animation:pbPulse 1.5s ease-in-out infinite}
 @keyframes pbPulse{0%,100%{transform:rotate(-2deg) scale(1);box-shadow:0 0 0 0 rgba(255,210,63,.65)}50%{transform:rotate(-2deg) scale(1.08);box-shadow:0 0 0 12px rgba(255,210,63,0)}}
@@ -399,6 +399,21 @@ html:not(.pg-dia):not(.pg-milk):not(.pg-perf) #diapers{padding-top:22px!importan
 .pg-perf #perf{padding-top:18px!important}
 .pg-perf .pban .db-cta{display:none}
 nav.links a#navPerf{--nc:#a32a6b}
+/* Christmas Offers (26/11، طلبه): بانر أحمر/أخضر + صفحة ?p=xmas بفلتر النوع */
+.dban.xban{background:linear-gradient(125deg,#6e0f0f 0%,#c8281f 52%,#0f6b3a 100%);box-shadow:0 24px 50px -22px rgba(200,40,31,.85);background-size:220% 220%;animation:pbPan 7s ease-in-out infinite alternate;padding-bottom:62px}
+@media(hover:hover){.dban.xban[href]:hover{box-shadow:0 30px 60px -22px rgba(200,40,31,.95)}}
+.xban h2{font-size:clamp(25px,5.4vw,46px)}
+.xban .db-art .circ{animation:vfloat 3.2s ease-in-out infinite}
+.xban .db-art .circ .em{filter:none}
+.xb-k{background:var(--yel);color:#6e0f0f;font-weight:900;font-size:clamp(14px,2.4vw,20px);letter-spacing:.06em;padding:7px 14px;direction:ltr}
+.xban .pb-strip{background:#0b0b0d}
+#xmas .box-d{background:linear-gradient(180deg,#fff3f0,#fbf8f1);border-color:#f2c9c3}
+html:not(.pg-xmas) #xmasList{display:none}
+html:not(.pg-xmas) #xmas{display:none!important}
+.pg-xmas #hero,.pg-xmas #hot,.pg-xmas #featured,.pg-xmas #offers,.pg-xmas #products,.pg-xmas #diapers,.pg-xmas #milk,.pg-xmas #perf,.pg-xmas #vit,.pg-xmas #bnr{display:none!important}
+.pg-xmas #xmas{padding-top:18px!important}
+.pg-xmas .xban .db-cta{display:none}
+nav.links a#navXmas{--nc:#c8281f}
 .pg-milk .mban .db-cta{display:none}
 .pg-milk .mban .db-sizes span{cursor:pointer;transition:background .2s,transform .2s}
 .pg-milk .mban .db-sizes span:hover{background:var(--yel);color:var(--ink);transform:translateY(-2px)}
@@ -798,6 +813,7 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
       <a href="#offers" data-t="navOffers" id="navOff">العروض</a>
       <a href="#milk" data-t="navMilk" id="navMilk" hidden>ألبان</a>
       <a href="?p=perfumes" data-t="navPerf" id="navPerf" hidden>عطور</a>
+      <a href="?p=xmas" data-t="navXmas" id="navXmas" hidden>Christmas</a>
       <a href="#diapers" data-t="navDia" id="navDia" hidden>حفاضات</a>
       <a href="#products" data-t="navProducts" id="navProd">متوفر عندنا</a>
       <a href="#visit" data-t="navVisit">العنوان</a>
@@ -889,7 +905,6 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
       <i class="bub" style="width:70px;height:70px;left:52%;animation-delay:4s;animation-duration:10s"></i>
       <i class="stripe"></i>
       <div>
-        <span class="db-kick pb-bf">BLACK FRIDAY</span>
         <h2>Perfumes &amp; Body Splashes</h2>
         <p id="pbBrands"></p>
         <span class="btn btn-yel db-cta"><span data-t="perfCta">شوف كل العروض</span><svg class="i"><use href="#i-arrow"/></svg></span>
@@ -898,10 +913,36 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
         <div class="circ"><span class="em" aria-hidden="true">🌸</span></div>
         <div class="burst" id="pbBurst" hidden><div><span data-t="burstMax">خصم لحد</span><b class="num" id="pbPct"></b></div></div>
       </div>
-      <div class="pb-strip" aria-hidden="true"><div class="pb-run"><span>BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★&nbsp;</span><span>BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★ BLACK FRIDAY ★&nbsp;</span></div></div>
     </a>
     <div class="box-d" id="perfList">
       <div class="grid" id="perfGrid"></div>
+    </div>
+  </div>
+</section>
+
+<section id="xmas" style="padding-top:22px;padding-bottom:0" hidden>
+  <div class="wrap">
+    <a class="dban xban" id="xmasBan" href="?p=xmas">
+      <i class="bub" style="width:46px;height:46px;left:8%;animation-delay:0s"></i>
+      <i class="bub" style="width:22px;height:22px;left:30%;animation-delay:2.2s;animation-duration:6s"></i>
+      <i class="bub" style="width:70px;height:70px;left:52%;animation-delay:4s;animation-duration:10s"></i>
+      <i class="stripe"></i>
+      <div>
+        <span class="db-kick xb-k">★ MERRY CHRISTMAS ★</span>
+        <h2>Christmas Offers</h2>
+        <p id="xbLine"></p>
+        <span class="btn btn-yel db-cta"><span data-t="xmasCta">شوف كل العروض</span><svg class="i"><use href="#i-arrow"/></svg></span>
+      </div>
+      <div class="db-art">
+        <div class="circ"><span class="em" aria-hidden="true">🎄</span></div>
+        <div class="burst" id="xbBurst" hidden><div><span data-t="burstMax">خصم لحد</span><b class="num" id="xbPct"></b></div></div>
+      </div>
+      <div class="pb-strip" aria-hidden="true"><div class="pb-run"><span>CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ &nbsp;</span><span>CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ CHRISTMAS OFFERS ★ &nbsp;</span></div></div>
+    </a>
+    <div class="box-d" id="xmasList">
+      <div class="tabs ptabs" id="xtabs"></div>
+      <div class="grid" id="xmasGrid"></div>
+      <div class="pmore"><button class="btn btn-dark" id="xmore" hidden><span data-t="more">عرض المزيد</span></button></div>
     </div>
   </div>
 </section>
@@ -1128,7 +1169,7 @@ const I18N = {
     title:"صيدلية د. أنس نحيلة | صيدلية 24 ساعة في المعمورة الشاطئ، إسكندرية",
     demo:"بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية",
     brand:"د. أنس نحيلة", brandSub:"صيدلية",
-    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", navPerf:"عطور", perfCta:"شوف كل العروض", perfTitle:"Perfumes & Body Splashes | صيدلية د. أنس نحيلة", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
+    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", navPerf:"عطور", navXmas:"Christmas", xmasCta:"شوف كل العروض", xmasTitle:"Christmas Offers | صيدلية د. أنس نحيلة", perfCta:"شوف كل العروض", perfTitle:"Perfumes & Body Splashes | صيدلية د. أنس نحيلة", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
     langBtn:"EN", langAria:"English",
     heroAlt:"واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ",
     hello:"المعمورة الشاطئ، جنب البوابة الرئيسية", openNow:"فاتحين دلوقتي",
@@ -1176,7 +1217,7 @@ const I18N = {
     title:"Dr. Anas Nehila Pharmacy | 24-hour pharmacy in El Maamoura Beach, Alexandria",
     demo:"Demo data. Connect the Google Sheet to show the real offers",
     brand:"Dr. Anas Nehila", brandSub:"Pharmacy",
-    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", navPerf:"Perfumes", perfCta:"See all offers", perfTitle:"Perfumes & Body Splashes | Dr. Anas Nehila Pharmacy", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
+    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", navPerf:"Perfumes", navXmas:"Christmas", xmasCta:"See all offers", xmasTitle:"Christmas Offers | Dr. Anas Nehila Pharmacy", perfCta:"See all offers", perfTitle:"Perfumes & Body Splashes | Dr. Anas Nehila Pharmacy", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
     langBtn:"ع", langAria:"العربية",
     heroAlt:"Dr. Anas Mohamed Nehila pharmacy storefront in El Maamoura Beach",
     hello:"El Maamoura Beach, next to the main gate", openNow:"Open now",
@@ -1265,10 +1306,21 @@ if(PG_PERF){
   const q = new URLSearchParams(location.search); q.set("p","perfumes");
   document.getElementById("perfBan").href = document.getElementById("navPerf").href = "?" + q.toString();
 }
-/* الرئيسية: بانرات الألبان والحفاضات والفيتامينات تتجمع في صف واحد فوق (25/11) */
-if(!PG_DIA && !PG_MILK && !PG_PERF){
+/* صفحة Christmas Offers لوحدها: ?p=xmas (واللينك القصير /xmas/) — 26/11 */
+const PG_XMAS = new URLSearchParams(location.search).get("p") === "xmas";
+if(PG_XMAS){
+  document.documentElement.classList.add("pg-xmas");
+  const back = "./" + (new URLSearchParams(location.search).get("lang")==="en" ? "?lang=en" : "");
+  ["logoA","navOff","navHome","dockHome"].forEach(id=>document.getElementById(id).href = back);
+  document.getElementById("xmasBan").removeAttribute("href");
+}else{
+  const q = new URLSearchParams(location.search); q.set("p","xmas");
+  document.getElementById("xmasBan").href = document.getElementById("navXmas").href = "?" + q.toString();
+}
+/* الرئيسية: بانرات الكريسماس والألبان والحفاضات والفيتامينات تتجمع في صف واحد فوق (25/11) */
+if(!PG_DIA && !PG_MILK && !PG_PERF && !PG_XMAS){
   const row = document.getElementById("bnrow");
-  ["milkBan","diaBan","vitBan"].forEach(id=>row.appendChild(document.getElementById(id)));
+  ["xmasBan","milkBan","diaBan","vitBan"].forEach(id=>row.appendChild(document.getElementById(id)));
   document.getElementById("navDia").setAttribute("href","#bnr");
 }
 const SRC = new URLSearchParams(location.search).get("src") || "";
@@ -1375,8 +1427,9 @@ function toItem(r, i){
     hot: /هوت|hot|ويك/i.test(norm(r["النوع"])),
     dia: /حفاض|حفاظ|بامبرز|diaper|pamper/i.test(norm(r["النوع"]) + " " + norm(r["الفئة"])),   /* قسم الحفاضات المنفصل */
     /* (24/11) الألبان والعطور أقسام «عروض» بس — منتج عادي من كتالوج المتجر فئته فيها «عطور» ميدخلش قسم العروض غلط */
-    milk: norm(r["النوع"]||"عرض") !== "منتج" && /لبن|البان|formula|baby milk/i.test(norm(r["الفئة"])),   /* قسم ألبان الأطفال المنفصل (24/10) */
-    perf: norm(r["النوع"]||"عرض") !== "منتج" && /perfume|splash|عطور/i.test(norm(r["الفئة"]))   /* قسم العطور المنفصل (6/11) */
+    xm: (r["قسم"]||"").trim().toLowerCase() === "xmas",   /* قسم Christmas Offers (26/11) — عمود «قسم» = xmas */
+    milk: norm(r["النوع"]||"عرض") !== "منتج" && !(r["قسم"]||"").trim() && /لبن|البان|formula|baby milk/i.test(norm(r["الفئة"])),   /* قسم ألبان الأطفال المنفصل (24/10) */
+    perf: norm(r["النوع"]||"عرض") !== "منتج" && !(r["قسم"]||"").trim() && /perfume|splash|عطور/i.test(norm(r["الفئة"]))   /* قسم العطور المنفصل (6/11) */
   };
 }
 
@@ -1861,6 +1914,33 @@ function renderMilkBrands(){
   box.innerHTML = `<button class="${mBrand?"":"on"}" data-b="">${t("allMilk")}</button>` +
     list.map(b=>`<button class="${mBrand===b[0]?"on":""}" data-b="${b[0]}" style="--bc:${b[3]}">${L==="en"?b[2]:b[1]}</button>`).join("");
 }
+/* ---------- Christmas Offers: فلتر النوع + عرض المزيد (26/11) ---------- */
+let XM = [], xCat = "", xShown = PAGE;
+function renderXmasTabs(){
+  const counts = {};
+  XM.forEach(p=>{ if(p.ck) counts[p.ck]=(counts[p.ck]||0)+1; });
+  const keys = Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+  const tabs = $("#xtabs");
+  tabs.hidden = keys.length < 2;
+  tabs.innerHTML = `<button class="${xCat?"":"on"}" data-c="">${t("all")}</button>` +
+    keys.map(k=>`<button class="${xCat===k?"on":""}" data-c="${esc(k)}">${esc(catLabel[k])}</button>`).join("");
+}
+function renderXmas(reset){
+  if(reset) xShown = PAGE;
+  const list = XM.filter(p=>!xCat || p.ck===xCat);
+  const g = $("#xmasGrid");
+  g.innerHTML = list.slice(0,xShown).map((it,i)=>offerCard(it,i)).join("");
+  $("#xmore").hidden = list.length <= xShown;
+  bindWa(g);
+}
+$("#xtabs").onclick = e=>{
+  const b = e.target.closest("button"); if(!b) return;
+  xCat = b.dataset.c;
+  $$("#xtabs button").forEach(x=>x.classList.toggle("on", x===b));
+  renderXmas(true); track("xmas_category", {cat: xCat || "all"});
+  anim("#xmasGrid .card");
+};
+$("#xmore").onclick = ()=>{ xShown += PAGE; renderXmas(false); };
 function renderMilkTabs(){
   const st = [...new Set(MILK.filter(mInBrand).flatMap(milkStages))].sort();
   const tabs = $("#mtabs");
@@ -2087,7 +2167,8 @@ function render(rows){
   const milk = vis.filter(i=>i.milk && !i.hot && !i.dia);
   /* الأحدث الأول: آخر سطر في الشيت بيظهر أول كارت (طلبه 15/10) */
   const perf = vis.filter(i=>i.perf && !i.hot);
-  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk && !i.perf).reverse(), prods = vis.filter(i=>!i.offer && !i.dia && !i.milk && !i.perf);
+  const xmas = vis.filter(i=>i.xm && !i.hot);
+  const offers = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk && !i.perf && !i.xm).reverse(), prods = vis.filter(i=>!i.offer && !i.dia && !i.milk && !i.perf && !i.xm);
 
   // امسح من السلة أي عرض خلص، وحدّث الأسماء باللغة الحالية
   Object.keys(cart).forEach(id=>{ if(!ITEMS[id]) delete cart[id]; else cart[id] = cartEntry(ITEMS[id], cart[id].q); }); saveCart();
@@ -2099,7 +2180,7 @@ function render(rows){
   renderFeatured(allDeals);
   /* (6/11، طلبه) العطور بتظهر كمان في أول العروض الحالية، وقسمها زي ما هو */
   /* (25/11، طلبه) الأحدث الأول في كل العروض (العطور مدموجة بترتيب الشيت مش في الأول) */
-  const shown = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk).reverse();
+  const shown = vis.filter(i=>i.offer && !i.hot && !i.dia && !i.milk && !i.xm).reverse();
   renderTabs(shown);
   const oc = $("#offerCount"); oc.hidden = !shown.length; oc.textContent = shown.length ? offersTxt(shown.length) : "";
   const grid = $("#offerGrid");
@@ -2131,7 +2212,7 @@ function render(rows){
   const vit = shown.filter(i=>/vitamin/i.test(i.ck));
   $("#vit").hidden = $("#vitBan").hidden = !vit.length;
   $("#milkBan").hidden = !milk.length; $("#diaBan").hidden = !dia.length;
-  $("#bnr").hidden = !(milk.length || dia.length || vit.length);
+  $("#bnr").hidden = !(milk.length || dia.length || vit.length || xmas.length);
   if(vit.length){
     const en = L==="en", vMax = Math.max(0, ...vit.map(d=>d.pct||0));
     $("#vbK").textContent = en ? "Vitamin offers" : "عروض الفيتامينات";
@@ -2151,6 +2232,15 @@ function render(rows){
   $("#pbBurst").hidden = pMax<5; $("#pbPct").textContent = pMax + "%";
   $("#pbBrands").textContent = [...new Set(perf.map(d=>d.name.split(" ")[0]))].map(n=>n[0]+n.slice(1).toLowerCase()).join("  ·  ");
   $("#perfGrid").innerHTML = perf.map(offerCard).join(""); bindWa($("#perfGrid"));
+  /* Christmas Offers (26/11): بانر في الرئيسية + صفحة ?p=xmas */
+  $("#xmas").hidden = $("#xmasBan").hidden = $("#navXmas").hidden = !xmas.length;
+  if(PG_XMAS) $("#navXmas").hidden = true;
+  XM = xmas;
+  if(xCat && !xmas.some(i=>i.ck===xCat)) xCat = "";
+  const xMax = Math.max(0, ...xmas.map(d=>d.pct||0));
+  $("#xbBurst").hidden = xMax<5; $("#xbPct").textContent = xMax + "%";
+  $("#xbLine").textContent = L==="en" ? "Selected items · while stock lasts" : "أصناف مختارة · لحد نفاد الكمية";
+  renderXmasTabs(); renderXmas(true);
   PRODS = prods;
   if(pCat && !prods.some(p=>p.ck===pCat)) pCat = "";
   $("#products").hidden = $("#navProd").hidden = !prods.length;
@@ -2231,8 +2321,8 @@ function payHTML(){
 function applyLang(){
   const h = document.documentElement;
   h.lang = L; h.dir = L==="en" ? "ltr" : "rtl";
-  document.title = t(PG_DIA ? "diaTitle" : PG_MILK ? "milkTitle" : PG_PERF ? "perfTitle" : "title");
-  if(PG_DIA || PG_MILK || PG_PERF) $("#navOff").textContent = t("navAll");
+  document.title = t(PG_DIA ? "diaTitle" : PG_MILK ? "milkTitle" : PG_PERF ? "perfTitle" : PG_XMAS ? "xmasTitle" : "title");
+  if(PG_DIA || PG_MILK || PG_PERF || PG_XMAS) $("#navOff").textContent = t("navAll");
   $$("[data-t]").forEach(e=>{ e.innerHTML = t(e.dataset.t); });
   $$("[data-ta]").forEach(e=>e.setAttribute("aria-label", t(e.dataset.ta)));
   $$("[data-talt]").forEach(e=>e.setAttribute("alt", t(e.dataset.talt)));
@@ -2261,7 +2351,7 @@ $("#langBtn").onclick = ()=>{
 };
 
 /* "الرئيسية" واللوجو في الصفحة الأولى: يطلع لأول الصفحة */
-if(!PG_DIA && !PG_MILK && !PG_PERF) ["logoA","navHome","dockHome"].forEach(id=>$("#"+id).addEventListener("click", e=>{ e.preventDefault(); scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }));
+if(!PG_DIA && !PG_MILK && !PG_PERF && !PG_XMAS) ["logoA","navHome","dockHome"].forEach(id=>$("#"+id).addEventListener("click", e=>{ e.preventDefault(); scrollTo({top:0, behavior: RM ? "auto" : "smooth"}); }));
 
 /* الهيدر + شريط التقدم + الشريط اللي تحت بيستخبى وإنت نازل بسرعة */
 let lastY = 0, ticking = false;
@@ -2407,6 +2497,7 @@ document.addEventListener("click", e=>{
   if(e.target.closest("#diaBan[href]")) track("diapers_banner_click");
   if(e.target.closest("#milkBan[href]")) track("milk_banner_click");
   if(e.target.closest("#perfBan[href]")) track("perfumes_banner_click");
+  if(e.target.closest("#xmasBan[href]")) track("xmas_banner_click");
 }, true);
 let searchT;
 $("#pq").addEventListener("input", e=>{ clearTimeout(searchT); const q = e.target.value.trim(); if(q.length>=2) searchT = setTimeout(()=>track("search", {search_term: q}), 1200); });
