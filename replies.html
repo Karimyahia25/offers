@@ -249,8 +249,11 @@ const tile = (r, i) => `
     <button class="cp" data-cp="${i}">نسخ</button>
   </div>`;
 /* صف لكل براند (g): هيرو · بيبيلاك · S26 · نان + لبن تاني · Limitless/مولفيكس/إيفرزين · لينك + عنوان */
-$("#grid").innerHTML = [...new Set(REPLIES.map(r => r.g))].map(g =>
-  `<div class="grid grow">${REPLIES.map((r, i) => r.g === g ? tile(r, i) : "").join("")}</div>`).join("");
+/* الصف مستقل عن اللون: نستوجين+لاكتو+أبتاميل+ناتاليا في صف، وبيديا شور+إنشور مع Limitless/مولفيكس/إيفرزين */
+const ROW = {8:7, 9:7, 10:7, 12:5};
+const rowOf = r => ROW[r.g] || r.g;
+$("#grid").innerHTML = [...new Set(REPLIES.map(rowOf))].map(g =>
+  `<div class="grid grow">${REPLIES.map((r, i) => rowOf(r) === g ? tile(r, i) : "").join("")}</div>`).join("");
 
 async function copy(i, btn){
   const text = REPLIES[i].text;
