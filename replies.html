@@ -250,7 +250,7 @@ const tile = (r, i) => `
   </div>`;
 /* صف لكل براند (g): هيرو · بيبيلاك · S26 · نان + لبن تاني · Limitless/مولفيكس/إيفرزين · لينك + عنوان */
 /* الصف مستقل عن اللون: نستوجين+لاكتو+أبتاميل+ناتاليا في صف، وبيديا شور+إنشور مع Limitless/مولفيكس/إيفرزين */
-const ROW = {8:7, 9:7, 10:7, 12:5};
+const ROW = {8:7, 9:7, 10:7, 11:7, 12:5};
 const rowOf = r => ROW[r.g] || r.g;
 $("#grid").innerHTML = [...new Set(REPLIES.map(rowOf))].map(g =>
   `<div class="grid grow">${REPLIES.map((r, i) => rowOf(r) === g ? tile(r, i) : "").join("")}</div>`).join("");
