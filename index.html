@@ -527,6 +527,7 @@ nav.links a#navXmas{--nc:#c8281f}
 .stkbox[hidden],.btn[hidden]{display:none!important}.stkgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
 .stkc{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;justify-content:space-between}
 .stkc .n{font-weight:700;line-height:1.35;overflow-wrap:anywhere}.stkc .pr2{font-family:var(--fh);font-weight:800;font-size:18px}.stkc .pr2 small{font-weight:600;font-size:12px;margin-inline-start:3px}
+.stkc .was{font-family:var(--fh);font-size:13px;font-weight:600;color:var(--muted);text-decoration:line-through;text-decoration-color:var(--red-hot);margin-inline-start:8px}.stkc .stkb{display:inline-block;margin-inline-start:6px;padding:1px 7px;border-radius:99px;background:var(--red-hot);color:#fff;font-size:12px;font-weight:800}
 .stkc .no{font-size:13px;color:var(--muted)}.stkc .btn{min-height:44px;font-size:14px;justify-content:center}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 16px;background:#fff;border:1.5px dashed var(--line);border-radius:var(--r)}
 
@@ -898,6 +899,10 @@ footer{padding:22px 0 26px;font-size:13px;color:var(--muted)}
       <div class="tabs ptabs" id="mtabs"></div>
       <div class="grid" id="milkGrid"></div>
       <div class="pmore"><button class="btn btn-dark" id="mmore" hidden><span data-t="more">عرض المزيد</span></button></div>
+      <div class="stkbox" id="milkAllBox" hidden>
+        <h3 id="milkAllH"></h3><p id="milkAllP"></p>
+        <div class="stkgrid" id="milkAllGrid"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1179,7 +1184,7 @@ const I18N = {
     title:"صيدلية د. أنس نحيلة | صيدلية 24 ساعة في المعمورة الشاطئ، إسكندرية",
     demo:"بيانات تجريبية. اربط Google Sheet علشان تظهر العروض الحقيقية",
     brand:"د. أنس نحيلة", brandSub:"صيدلية",
-    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", navPerf:"عطور", navXmas:"Christmas", xmasCta:"شوف كل العروض", xmasTitle:"Christmas Offers | صيدلية د. أنس نحيلة", perfCta:"شوف كل العروض", perfTitle:"Perfumes & Body Splashes | صيدلية د. أنس نحيلة", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
+    navHome:"الرئيسية", navOffers:"العروض", navDia:"حفاضات", navMilk:"ألبان", navPerf:"عطور", navXmas:"Christmas", xmasCta:"شوف كل العروض", xmasTitle:"Christmas Offers | صيدلية د. أنس نحيلة", perfCta:"شوف كل العروض", perfTitle:"Perfumes & Body Splashes | صيدلية د. أنس نحيلة", milkH:"عروض ألبان الأطفال", milkP:"اختار النوع والمرحلة، والتوصيل لحد باب البيت", mbCta:"شوف كل الألبان", mbR:"ألبان الأطفال <b>خصم {n}% على الكل</b>", milkAllH:"كل أنواع الألبان", milkAllP:"من غير صورة — السعر بعد الخصم والرصيد من سيستم الصيدلية لحظياً", mbH:"ألبان الأطفال بخصم <b>لحد {n}%</b>", mbH0:"ألبان الأطفال <b>في مكان واحد</b>", milkTitle:"عروض ألبان الأطفال | صيدلية د. أنس نحيلة، المعمورة الشاطئ", stage:"مرحلة", allStages:"كل المراحل", allMilk:"كل الأنواع", navProducts:"متوفر عندنا", navVisit:"العنوان",
     langBtn:"EN", langAria:"English",
     heroAlt:"واجهة صيدلية د. أنس محمد نحيلة في المعمورة الشاطئ",
     hello:"المعمورة الشاطئ، جنب البوابة الرئيسية", openNow:"فاتحين دلوقتي",
@@ -1227,7 +1232,7 @@ const I18N = {
     title:"Dr. Anas Nehila Pharmacy | 24-hour pharmacy in El Maamoura Beach, Alexandria",
     demo:"Demo data. Connect the Google Sheet to show the real offers",
     brand:"Dr. Anas Nehila", brandSub:"Pharmacy",
-    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", navPerf:"Perfumes", navXmas:"Christmas", xmasCta:"See all offers", xmasTitle:"Christmas Offers | Dr. Anas Nehila Pharmacy", perfCta:"See all offers", perfTitle:"Perfumes & Body Splashes | Dr. Anas Nehila Pharmacy", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
+    navHome:"Home", navOffers:"Offers", navDia:"Diapers", navMilk:"Baby milk", navPerf:"Perfumes", navXmas:"Christmas", xmasCta:"See all offers", xmasTitle:"Christmas Offers | Dr. Anas Nehila Pharmacy", perfCta:"See all offers", perfTitle:"Perfumes & Body Splashes | Dr. Anas Nehila Pharmacy", milkH:"Baby formula deals", milkP:"Pick the brand and stage, delivered to your door", mbCta:"See all baby milk", mbR:"Baby formula <b>{n}% off, all types</b>", milkAllH:"All baby formula", milkAllP:"No photo — price after discount and stock are live from our system", mbH:"Baby formula <b>up to {n}% off</b>", mbH0:"All baby formula <b>in one place</b>", milkTitle:"Baby formula deals | Dr. Anas Nehila Pharmacy, Mamoura Beach", stage:"Stage", allStages:"All stages", allMilk:"All brands", navProducts:"In stock", navVisit:"Address",
     langBtn:"ع", langAria:"العربية",
     heroAlt:"Dr. Anas Mohamed Nehila pharmacy storefront in El Maamoura Beach",
     hello:"El Maamoura Beach, next to the main gate", openNow:"Open now",
@@ -1742,23 +1747,45 @@ function wordHit(w, hay, p){
   return skHit(s, p);
 }
 /* ---------- كل أصناف السيستم غير الدوائية (stock.json): كروت نصية من غير صورة (26/11، طلبه) ---------- */
-let STK = [], STKMAP = {}, stkLoaded = false, stkShown = 12;
+/* (27/11) خصم الألبان: السيرفر بيكتب في stock.json «السعر بعد الخصم» + قواعد الخصم (rules) — أسعار الألبان هنا من الرصيد الحي مش من الشيت */
+const MILK_CODES = {"MILK-HERO-1":"25986","MILK-HERO-2":"26011","MILK-SENSE-1":"49868","MILK-SENSE-2":"49872","MILK-SENSE-3":"49867","MILK-DEFENSE-1":"30633","MILK-DEFENSE-2":"49869","MILK-DEFENSE-3":"30635","MILK-S26-1":"48972","MILK-S26-2":"64767","MILK-S26-3":"49082","MILK-BEBELAC-1":"1430","MILK-BEBELAC-2":"44692","MILK-BEBELAC-3":"52763"};
+let STK = [], STKMAP = {}, stkLoaded = false, stkShown = 12, MILK_RULE = null, MILKALL = [];
 function loadStockOnly(){
   if(stkLoaded) return; stkLoaded = true;
   try{ fetch("stock.json?t=" + Math.floor(Date.now()/1.8e6)).then(r=>r.ok?r.json():null).then(j=>{
     if(!j || !j.items) return;
-    j.items.forEach(([code, name, price, inS])=>{
+    MILK_RULE = (j.rules||[]).find(r=>/^milk/.test(r.id)) || null;
+    const byCode = {}; j.items.forEach(r=>{ byCode[String(r[0])] = r; });
+    if(MILK_RULE) Object.entries(MILK_CODES).forEach(([rc, sc])=>{          /* كروت الألبان بالصور: السعر من الرصيد الحي */
+      const it = ITEMS[rc], r = byCode[sc];
+      if(it && r && r.length > 5){ it.was = Number(r[2]); it.now = Number(r[4]); it.pct = Math.round((1-it.now/it.was)*100); }
+    });
+    const mapped = new Set(Object.values(MILK_CODES));
+    j.items.forEach(([code, name, price, inS, after, rid])=>{
       code = String(code);
       if(ITEMS[code]) return;                                   /* على الموقع بصورة أو عرض — بيظهر هناك */
-      const it = {id:code, name:String(name), desc:"", was:NaN, now:Number(price), pct:0, cat:"", ck:"__stk", img:"", end:null, code, promo:"", offer:false, hot:false, stk:true, inStock: !!inS};
+      const d = after != null && Number(after) < Number(price);
+      const it = {id:code, name:String(name), desc:"", was: d?Number(price):NaN, now: d?Number(after):Number(price), pct: d?Math.round((1-after/price)*100):0, cat:"", ck:"__stk", img:"", end:null, code, promo:"", offer:false, hot:false, stk:true, inStock: !!inS, rule: d?String(rid||""):""};
       STK.push(it); STKMAP[code] = it;
       if(inS) ITEMS[code] = it;                                 /* يتضاف للسلة */
+      if(d && /^milk/.test(it.rule) && !mapped.has(code)) MILKALL.push(it);
     });
     if(pQ) renderProducts(false);
+    renderMilkAll();
+    if(MILK_RULE && MILK.length){ renderMilkBanner(MILK); renderMilk(false); }
   }).catch(()=>{}); }catch(e){}
 }
+function renderMilkAll(){
+  const box = $("#milkAllBox"); if(!box) return;
+  const list = MILKALL.slice().sort((a,b)=>(b.inStock?1:0)-(a.inStock?1:0) || a.name.localeCompare(b.name));
+  box.hidden = !PG_MILK || !list.length;
+  if(box.hidden) return;
+  $("#milkAllH").textContent = t("milkAllH"); $("#milkAllP").textContent = t("milkAllP");
+  $("#milkAllGrid").innerHTML = list.map(stkCard).join("");
+  bindWa($("#milkAllGrid"));
+}
 function stkCard(it){
-  const price = isNaN(it.now) ? "" : `<div class="pr2">${fmt(it.now)}<small>${t("cur")}</small></div>`;
+  const price = isNaN(it.now) ? "" : `<div class="pr2">${fmt(it.now)}<small>${t("cur")}</small>${it.pct?`<span class="was">${fmt(it.was)}</span><span class="stkb">-${it.pct}%</span>`:""}</div>`;
   const act = it.inStock ? `<div class="act" data-id="${esc(it.id)}">${actHTML(it.id)}</div>`
     : `<div class="no">${t("stkNone")}</div><a class="btn btn-wa" data-wa="${esc(t("waAsk") + it.name)}">${icon("wa","wa")}${t("stkAskBtn")}</a>`;
   return `<div class="stkc"><div class="n">${esc(it.name)}</div>${price}${act}</div>`;
@@ -1994,8 +2021,8 @@ const mHas = (d,k) => !k || milkStages(d).includes(k);
 const mInBrand = d => !mBrand || milkBrand(d)===mBrand;
 const anim = sel => { if(!RM) $$(sel).forEach((c,i)=>c.animate && c.animate([{opacity:0,transform:"translateY(20px) scale(.95)"},{opacity:1,transform:"none"}],{duration:450,delay:i*50,easing:"cubic-bezier(.22,1,.36,1)",fill:"backwards"})); };
 function renderMilkBanner(list){
-  const max = Math.max(0, ...list.map(d=>d.pct||0));
-  $("#mbH").innerHTML = max>=5 ? t("mbH").replace("{n}",max) : t("mbH0");
+  const max = MILK_RULE ? MILK_RULE.pct : Math.max(0, ...list.map(d=>d.pct||0));
+  $("#mbH").innerHTML = MILK_RULE ? t("mbR").replace("{n}",MILK_RULE.pct) : (max>=5 ? t("mbH").replace("{n}",max) : t("mbH0"));
   $("#mbBurst").hidden = max<5;
   $("#mbPct").textContent = max + "%";
   const bs = M_BRANDS.filter(b=>list.some(d=>milkBrand(d)===b[0]));
@@ -2562,7 +2589,8 @@ async function load(){
 })();
 
 /* ---------- تتبع الأحداث في Google Analytics ---------- */
-function track(name, params){ try{ if(window.gtag) gtag("event", name, Object.assign({ad_src: SRC || "(none)", lang: L}, params||{})); }catch(e){} }
+const OFFER = new URLSearchParams(location.search).get("o") || "";                    /* (27/11) كود العرض من اللينك ?o=milk5 */
+function track(name, params){ try{ if(window.gtag) gtag("event", name, Object.assign({ad_src: SRC || "(none)", lang: L}, OFFER ? {offer: OFFER} : {}, params||{})); }catch(e){} }
 /* نفس الأحداث لـ Meta Pixel (21/11): أسماء ميتا القياسية علشان الإعلانات تتعلم منها */
 const FB_EVENTS = {item_link_open:"ViewContent", add_to_cart:"AddToCart", generate_lead:"Lead", whatsapp_click:"Contact", phone_call:"Contact", search:"Search", subscribe_whatsapp:"Subscribe"};
 const _track = track;
