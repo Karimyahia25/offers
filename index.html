@@ -1763,7 +1763,7 @@ function loadStockOnly(){
     const mapped = new Set(Object.values(MILK_CODES));
     if(MILK_RULE) j.items.forEach(r=>{                                          /* (28/11) أصناف الألبان اللي دخلت من الكتالوج بصورة: نفس السعر الحي بعد الخصم */
       const it = ITEMS[String(r[0])];
-      if(it && !it.stk && !mapped.has(String(r[0])) && r.length > 5 && Number(r[4]) < Number(r[2]) && /^milk/.test(String(r[5]))){ it.was = Number(r[2]); it.now = Number(r[4]); it.pct = Math.round((1-it.now/it.was)*100); it.inStock = !!r[3]; }
+      if(it && !it.stk && r.length > 5 && Number(r[4]) < Number(r[2]) && /^milk/.test(String(r[5]))){ it.was = Number(r[2]); it.now = Number(r[4]); it.pct = Math.round((1-it.now/it.was)*100); it.inStock = !!r[3]; }
     });
     j.items.forEach(([code, name, price, inS, after, rid])=>{
       code = String(code);
