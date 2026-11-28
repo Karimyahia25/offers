@@ -1776,7 +1776,14 @@ function loadStockOnly(){
     });
     if(pQ) renderProducts(false);
     renderMilkAll();
-    if(MILK_RULE && MILK.length){ renderMilkBanner(MILK); renderMilk(false); }
+    if(MILK_RULE){                                                /* (28/11) أصناف الألبان بصورة من الكتالوج تظهر في صفحة/قسم الألبان */
+      const have = new Set(MILK.map(d=>String(d.code||d.id)));
+      j.items.forEach(r=>{
+        const c = String(r[0]), it = ITEMS[c];
+        if(it && !it.stk && !mapped.has(c) && !have.has(c) && r.length > 5 && /^milk/.test(String(r[5])) && it.inStock !== false){ MILK.push(it); have.add(c); }
+      });
+    }
+    if(MILK_RULE && MILK.length){ $("#milk").hidden = $("#navMilk").hidden = false; if(PG_MILK) $("#navMilk").hidden = true; renderMilkBanner(MILK); renderMilkBrands(); renderMilkTabs(); renderMilk(false); }
   }).catch(()=>{}); }catch(e){}
 }
 function renderMilkAll(){
@@ -2009,7 +2016,7 @@ $("#dmore").onclick = ()=>{
 /* ---------- قسم ألبان الأطفال (24/10): النوع + المرحلة + عرض المزيد ---------- */
 let MILK = [], mBrand = "", mStage = "", mShown = PAGE;
 /* ترتيب العرض زي ما صاحب الشغل قال: بيبيلاك، هيرو، (سيسنس، نيوتراديفينس)، جولد */
-const M_BRANDS = [["bebelac","بيبيلاك","Bebelac","#e08a00"],["hero","هيرو","Hero Baby","#2aa6d6"],["sense","هيرو سيسنس","Hero Nutrasense","#1f9d55"],["defense","هيرو نيوتراديفينس","Hero Nutradefense","#1f4fa8"],["s26","S-26 جولد","S-26 Gold","#a8740a"]];
+const M_BRANDS = [["bebelac","بيبيلاك","Bebelac","#e08a00"],["hero","هيرو","Hero Baby","#2aa6d6"],["sense","هيرو سيسنس","Hero Nutrasense","#1f9d55"],["defense","هيرو نيوتراديفينس","Hero Nutradefense","#1f4fa8"],["s26","S-26 جولد","S-26 Gold","#a8740a"],["nan","نان","Nan","#c0392b"],["nestogen","نستوجين ونيدو","Nestogen & Nido","#7d5ba6"],["aptamil","أبتاميل","Aptamil","#2f7f8f"],["lacto","لاكتو ونكتاليا","Lacto & Nactalia","#8a6d3b"]];
 function milkBrand(it){
   const n = it.name || "";
   if(/nutrasense/i.test(n)) return "sense";
@@ -2017,6 +2024,10 @@ function milkBrand(it){
   if(/hero/i.test(n)) return "hero";
   if(/s-?26/i.test(n)) return "s26";
   if(/bebelac/i.test(n)) return "bebelac";
+  if(/nan/i.test(n)) return "nan";
+  if(/nestogen|nido/i.test(n)) return "nestogen";
+  if(/aptamil/i.test(n)) return "aptamil";
+  if(/lacto|nactalia/i.test(n)) return "lacto";
   return "";
 }
 /* المرحلة من الاسم: "(2)" أو كارت واحد لكل المراحل "(1-2-3)" (28/10) */
